@@ -1,0 +1,1 @@
+export const DOG_PREDICT_API_URL = "http://localhost:8000/predict";

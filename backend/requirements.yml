@@ -1,0 +1,19 @@
+name: dogbreed_backend
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11.13
+  - pip
+  - opencv=4.8.*        # conda-forge opencv package (binary)
+  - pip:
+    - streamlit==1.29.0
+    - tensorflow==2.18.0
+    - numpy==1.26.4
+    - pillow==10.1.0
+    - pandas==2.2.3
+    - "uvicorn[standard]"
+    - fastapi
+    - python-multipart
+
+#these versions are required to simulate same environment as when model was trained using kaggle

@@ -1,0 +1,20 @@
+# Node.js dependencies
+node_modules/
+
+# Python cache/compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment files
+.env
+
+# Model weights / checkpoints (large files)
+*.h5
+*.keras
+*.pt
+*.ckpt
+
+# macOS system files
+.DS_Store
