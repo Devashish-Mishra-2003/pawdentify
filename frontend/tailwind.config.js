@@ -1,14 +1,24 @@
 /** @type {import('tailwindcss').Config} */
-export const content = [
+module.exports = {
+  darkMode: "class",
+  content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
-];
-export const theme = {
+  ],
+  theme: {
     extend: {
-        fontFamily: {
-            alfa: ['"Alfa Slab One"', 'cursive'],
-            archivo: ['Archivo', 'sans-serif'],
-        },
+      fontFamily: {
+        alfa: ['"Alfa Slab One"', 'cursive'],
+        archivo: ['Archivo', 'sans-serif'],
+      },
+      colors: {
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        background: "var(--background)",
+        text: "var(--text)",
+        accent: "var(--accent)",
+      },
     },
+  },
+  plugins: [],
 };
-export const plugins = [];

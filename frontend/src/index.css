@@ -1,11 +1,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Archivo:wght@400;600;700&display=swap');
-
 @import "tailwindcss";
 
 body {
   font-family: 'Archivo', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background-color: white; /* default background */
+  color: black;            /* default text */
 }
 
 h1, h2, h3 {
   font-family: 'Alfa Slab One', cursive;
 }
+
+/* Nav link underline + hover */
+.nav-link {
+  position: relative;
+  color: white; /* default link color */
+  transition: color .25s ease;
+  text-decoration: none;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: white;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .28s ease;
+}
+.nav-link:hover {
+  color: #ffffff; /* pink-300 on hover */
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Button hover effect */
+.btn-hover {
+  background: white;
+  color: #6b21a8; /* purple-800 */
+  transition: all .3s ease;
+  transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.btn-hover:hover {
+  background: #e9d5ff; /* purple-200 */
+  color: #4c1d95;      /* darker purple */
+  transform: translateY(-3px); /* rise up */
+  box-shadow: 0 8px 14px rgba(0,0,0,0.2); /* stronger shadow */
+}
+
+
