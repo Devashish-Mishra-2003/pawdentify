@@ -69,7 +69,7 @@ const Footer = () => (
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <motion.div
-          className="flex items-center space-x-3 text-4xl font-alfa tracking-widest relative"
+          className="flex items-center space-x-3 text-3xl font-archivo font-bold tracking-widest relative"
           whileHover={{ scale: 1.03 }}
           transition={{ duration: 0.3 }}
         >
@@ -94,7 +94,7 @@ const Footer = () => (
             }}
           />
 
-          <span>WS</span>
+          <span>WDENTIFY</span>
 
           {/* subtle moving sheen */}
           <motion.div
