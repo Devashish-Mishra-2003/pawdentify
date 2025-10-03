@@ -52,4 +52,31 @@ h1, h2, h3 {
   box-shadow: 0 8px 14px rgba(0,0,0,0.2); /* stronger shadow */
 }
 
+/* subtle violet tint + smooth 3D-like hover lift for settings sections */
+.section-card {
+  position: relative;                    /* ensure stacking context works for children */
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(245,243,255,0.9), rgba(255,255,255,1));
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s, z-index .01s;
+  transform-style: preserve-3d;
+  will-change: transform;
+  pointer-events: auto;                  /* ensure children remain clickable */
+}
 
+.section-card:hover {
+  transform: translateY(-10px) scale(1.03); /* removed translateZ to avoid layer issues */
+  box-shadow: 0 20px 40px rgba(99,102,241,0.12), 0 6px 18px rgba(0,0,0,0.06);
+  z-index: 20;                            /* bring it above siblings on hover */
+}
+
+/* button hover animation */
+.btn-anim {
+  position: relative;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .12s ease;
+  will-change: transform;
+  pointer-events: auto;
+}
+.btn-anim:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(99,102,241,0.12);
+}

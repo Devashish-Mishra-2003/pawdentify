@@ -1,130 +1,178 @@
-// src/components/BreedInfoDisplay.jsx
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import BREEDS_JSON from "../pawdentify_final_corrected.json";
 import TextCard from "./cards/TextCard";
+import ListCard from "./cards/ListCard";
+import BreedTabs from "./BreedTabs";
+import { motion, AnimatePresence } from "framer-motion";
 
-/* small helper - tolerant lookup (id / breed string) */
+const SECTIONS = [
+  { key: "physical_traits", label: "Physical" },
+  { key: "social_traits", label: "Temperament" },
+  { key: "care_grooming", label: "Care" },
+  { key: "environmental_traits", label: "Environment" },
+  { key: "health", label: "Health" },
+  { key: "nutrition_requirements", label: "Nutrition" },
+  { key: "trainability_exercise", label: "Train & Exercise" },
+  { key: "lifestyle_suitability", label: "Lifestyle" },
+  // Know More removed
+];
+
 function findBreedEntry(ALL_BREEDS, predId, predBreedName) {
   if (!ALL_BREEDS || !ALL_BREEDS.length) return null;
-
   if (predId != null) {
     const byId = ALL_BREEDS.find((b) => String(b.id) === String(predId) || Number(b.id) === Number(predId));
     if (byId) return byId;
   }
-
   if (predBreedName) {
-    const key = (predBreedName || "").toLowerCase().trim();
+    const key = predBreedName.toLowerCase().trim();
     const direct = ALL_BREEDS.find((b) =>
       [(b.breed || ""), (b.name || ""), (b.pretty_name || "")]
         .filter(Boolean)
         .some((v) => v.toLowerCase() === key)
     );
     if (direct) return direct;
-
-    // partial fallback
     const first = key.split(/\s+/)[0];
-    return ALL_BREEDS.find((b) => ((b.breed || b.name || "").toLowerCase().includes(first)));
+    return ALL_BREEDS.find((b) => (b.breed || b.name || "").toLowerCase().includes(first));
   }
-
   return null;
 }
 
-/* robust funFact extractor */
-function extractFunFact(b) {
-  if (!b) return "No fun fact available.";
-  // fun_unique_facts
-  const fu = b.fun_unique_facts;
+function extractFunFact(breedEntry) {
+  if (!breedEntry) return "No fun fact available.";
+  const fu = breedEntry.fun_unique_facts;
   if (fu) {
     if (typeof fu === "string" && fu.trim()) return fu;
     if (fu.fun_fact && fu.fun_fact.trim()) return fu.fun_fact;
-    if (Array.isArray(fu.quick_trivia) && fu.quick_trivia.length && fu.quick_trivia[0].trim()) return fu.quick_trivia[0];
+    if (Array.isArray(fu.quick_trivia) && fu.quick_trivia.length) return fu.quick_trivia[0];
   }
-  // direct field
-  if (b.fun_fact && String(b.fun_fact).trim()) return b.fun_fact;
-  // extended_fun_facts.interesting_facts
-  const ef = b.extended_fun_facts;
-  if (ef && Array.isArray(ef.interesting_facts) && ef.interesting_facts.length && ef.interesting_facts[0].trim()) return ef.interesting_facts[0];
-  // alternate possible fields
-  if (Array.isArray(b.fascinating_breed_trivia) && b.fascinating_breed_trivia.length && b.fascinating_breed_trivia[0].trim()) return b.fascinating_breed_trivia[0];
-  if (b.quick_trivia && typeof b.quick_trivia === "string" && b.quick_trivia.trim()) return b.quick_trivia;
   return "No fun fact available.";
 }
 
 export default function BreedInfoDisplay({ predictionResult }) {
   if (!predictionResult) return null;
 
+  const navigate = useNavigate();
   const { id: predId, breed: predBreedName, previewUrl } = predictionResult;
-
   const ALL_BREEDS = Array.isArray(BREEDS_JSON) ? BREEDS_JSON : (BREEDS_JSON.breeds || []);
+  const breedEntry = useMemo(
+    () => findBreedEntry(ALL_BREEDS, predId, predBreedName),
+    [ALL_BREEDS, predId, predBreedName]
+  );
 
-  const breedEntry = useMemo(() => findBreedEntry(ALL_BREEDS, predId, predBreedName), [
-    ALL_BREEDS,
-    predId,
-    predBreedName,
-  ]);
+  const [activeTab, setActiveTab] = useState(SECTIONS[0].key);
+  const infoRef = useRef(null);
 
-  // If not found, show minimal message but keep the area
+  const renderTextCardsFromObject = (obj) => {
+  if (!obj) return null;
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <AnimatePresence>
+        {Object.entries(obj).map(([key, value]) => {
+          if (!value) return null;
+          const title = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+          const text = Array.isArray(value) ? value.join(", ") : (typeof value === "string" ? value : "");
+          return (
+            <motion.div
+              key={key}
+              layout
+              initial={{ opacity: 0, y: 10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
+              <TextCard title={title} text={text} />
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+
   if (!breedEntry) {
     return (
-      <section id="info" className="py-16 max-w-5xl mx-auto px-6">
-        <div className="text-center">
-          <h4 className="inline-block text-3xl md:text-4xl font-archivo font-bold mr-2">Name :</h4>
-          <span className="inline-block text-3xl md:text-4xl font-archivo font-bold text-purple-600">
-            {predBreedName || "Unknown"}
-          </span>
-        </div>
-
-        <p className="text-center mt-4 md:mt-6 max-w-3xl mx-auto font-archivo font-semibold text-gray-700">
+      <section id="info" className="py-16 max-w-5xl mx-auto px-6 text-center">
+        <h4 className="text-3xl font-archivo font-bold text-purple-600">
+          {predBreedName || "Unknown"}
+        </h4>
+        <p className="mt-4 font-archivo font-semibold text-gray-700">
           No detailed info found for the predicted breed.
         </p>
-
-        <div className="w-full flex justify-center mt-8">
-          <div className="w-48 h-48 md:w-56 md:h-56 rounded-[18%_/12%] overflow-hidden shadow-md">
-            <img src={previewUrl || ""} alt={predBreedName || "preview"} className="w-full h-full object-cover" />
-          </div>
+        <div className="mt-6 w-48 h-48 rounded-[18%_/12%] overflow-hidden shadow-md mx-auto">
+          <img
+            src={previewUrl || ""}
+            alt={predBreedName || "preview"}
+            className="w-full h-full object-cover"
+          />
         </div>
       </section>
     );
   }
 
-  // simple fields used for the example TextCard
-  const coatType = breedEntry.physical_traits?.coat_type || breedEntry.coat_type || "Unknown";
   const funFact = extractFunFact(breedEntry);
 
   return (
-    <section id="info" className="py-16 max-w-6xl mx-auto px-6">
-      {/* Inline Name + Breed */}
-      <div className="text-center">
-        <h4 className="inline-block text-3xl md:text-4xl font-archivo font-bold mr-2">Name :</h4>
-        <span className="inline-block text-3xl md:text-4xl font-archivo font-bold text-purple-600">
+    <section ref={infoRef} id="info" className="pt-20 pb-16 max-w-6xl mx-auto px-6">
+      {/* Breed Name */}
+      <div className="text-center mb-6">
+        <h2 className="text-4xl font-archivo font-bold text-purple-700">
           {breedEntry.breed || breedEntry.name || predBreedName}
-        </span>
+        </h2>
       </div>
 
-      {/* Fun fact (bold Archivo) */}
-      <p className="text-center mt-4 md:mt-6 max-w-3xl mx-auto font-archivo font-semibold text-gray-700">{funFact}</p>
-
-      {/* squircle preview (no border) */}
-      <div className="w-full flex justify-center mt-8">
+      {/* Preview Image + Fun Fact */}
+      <div className="w-full flex flex-col items-center gap-6 mb-8">
         <div className="w-48 h-48 md:w-56 md:h-56 rounded-[18%_/12%] overflow-hidden shadow-md">
-          <img src={previewUrl || breedEntry.image_url || ""} alt={breedEntry.breed || predBreedName} className="w-full h-full object-cover" />
+          <img
+            src={previewUrl || breedEntry.image_url || ""}
+            alt={breedEntry.breed || predBreedName}
+            className="w-full h-full object-cover"
+          />
         </div>
+        <p className="text-xl font-archivo font-semibold text-gray-700 text-center max-w-3xl">
+          {funFact}
+        </p>
       </div>
 
-      {/* ========== PLACE TO ATTACH CARDS ========== */}
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {/* Example simple string card (coat type) - this is the card we will perfect first */}
-        <TextCard
-          title="Coat type"
-          text={coatType}
-          icon={
-            <svg className="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3C7 3 5 6 5 9c0 3 2 6 7 9 5-3 7-6 7-9 0-3-2-6-7-6z" /></svg>
+      {/* Know More Button */}
+      <div className="text-center mb-6">
+        <button
+          onClick={() =>
+            navigate("/know-more", {
+              state: { knowMoreData: breedEntry.know_more, breedEntry },
+            })
           }
-        />
+          className="bg-purple-600 text-white px-6 py-3 rounded-xl font-archivo hover:bg-purple-700 transition"
+        >
+          Know More
+        </button>
+      </div>
+
+      {/* Tabs */}
+      <BreedTabs activeSection={activeTab} onTabClick={(k) => setActiveTab(k)} />
+
+
+      {/* Active tab content */}
+      <div className="mt-6">
+        {SECTIONS.map(
+          ({ key }) =>
+            activeTab === key && (
+              <div key={key}>
+                {renderTextCardsFromObject(breedEntry[key])}
+              </div>
+            )
+        )}
+      </div>
+
+      {/* Back to Top Button */}
+      <div
+        className="fixed bottom-4 right-4 bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg cursor-pointer hover:bg-purple-700 transition"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        ↑
       </div>
     </section>
   );
 }
-
-
-
