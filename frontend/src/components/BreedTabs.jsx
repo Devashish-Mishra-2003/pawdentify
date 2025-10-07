@@ -1,38 +1,34 @@
+// Updated BreedTabs.jsx - removed sticky
 import React, { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
 
-// Single emoji per tab
 const icons = {
   physical_traits: <span role="img" aria-label="ruler">📏</span>,
   social_traits: <span role="img" aria-label="heart">💜</span>,
   care_grooming: <span role="img" aria-label="brush">🔍</span>,
-  environmental_traits: <span role="img" aria-label="home">🏠</span>,
-  health: <span role="img" aria-label="health">🩺</span>,
-  nutrition_requirements: <span role="img" aria-label="nutrition">🍽️</span>,
   trainability_exercise: <span role="img" aria-label="exercise">🏃‍♂️</span>,
   lifestyle_suitability: <span role="img" aria-label="lifestyle">🌎</span>,
 };
 
+// Filtered sections for tabs (5 sections)
 const sections = [
-  { id: "physical_traits", label: "Physical" },
-  { id: "social_traits", label: "Temperament" },
-  { id: "care_grooming", label: "Care" },
-  { id: "environmental_traits", label: "Environment" },
-  { id: "health", label: "Health" },
-  { id: "nutrition_requirements", label: "Nutrition" },
-  { id: "trainability_exercise", label: "Train & Exercise" },
-  { id: "lifestyle_suitability", label: "Lifestyle" },
+  { id: "physical_traits", label: "breedInfo.tabs.physical" },
+  { id: "social_traits", label: "breedInfo.tabs.temperament" },
+  { id: "care_grooming", label: "breedInfo.tabs.care" },
+  { id: "trainability_exercise", label: "breedInfo.tabs.trainExercise" },
+  { id: "lifestyle_suitability", label: "breedInfo.tabs.lifestyle" },
 ];
 
 export default function BreedTabs({ activeSection, onTabClick }) {
+  const { t } = useTranslation();
   const containerRef = useRef(null);
   const btnRefs = useRef({});
 
-  // callback ref to store DOM node refs reliably
   const setBtnRef = (id) => (el) => {
     if (el) btnRefs.current[id] = el;
   };
 
-  // Center the active button in the container
   useEffect(() => {
     const container = containerRef.current;
     const btn = btnRefs.current[activeSection];
@@ -42,16 +38,12 @@ export default function BreedTabs({ activeSection, onTabClick }) {
     const btnLeft = btn.offsetLeft;
     const btnWidth = btn.offsetWidth;
 
-    // target left so button is centered
     let targetScroll = Math.round(btnLeft - (containerWidth - btnWidth) / 2);
-
-    // clamp bounds
     targetScroll = Math.max(0, Math.min(targetScroll, container.scrollWidth - containerWidth));
 
     container.scrollTo({ left: targetScroll, behavior: "smooth" });
   }, [activeSection]);
 
-  // keyboard nav (Left/Right)
   const onKeyDown = (e) => {
     if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
       e.preventDefault();
@@ -69,25 +61,113 @@ export default function BreedTabs({ activeSection, onTabClick }) {
       onKeyDown={onKeyDown}
       tabIndex={0}
       aria-label="Breed sections"
-      className="flex gap-4 bg-white rounded-xl shadow-lg px-4 py-3 my-8 sticky top-0 z-30 w-full max-w-5xl mx-auto overflow-x-auto"
+      className="rounded-xl px-6 py-5 my-8 w-full max-w-5xl mx-auto"
+      style={{
+        backgroundColor: "var(--color-tabs-bg)",
+      }}
       role="tablist"
     >
-      {sections.map(({ id, label }) => (
-        <button
-          key={id}
-          ref={setBtnRef(id)}
-          role="tab"
-          aria-selected={activeSection === id}
-          onClick={() => onTabClick(id)}
-          className={`flex items-center gap-2 px-5 py-2 rounded-xl font-semibold transition whitespace-nowrap min-w-max ${
-            activeSection === id ? "bg-purple-600 text-white shadow-md" : "bg-transparent text-purple-700"
-          }`}
-        >
-          <span>{icons[id]}</span>
-          <span>{label}</span>
-        </button>
-      ))}
+      {/* Row 1: First 3 tabs */}
+      <div className="flex justify-center gap-4 mb-4">
+        {sections.slice(0, 3).map(({ id, label }) => (
+          <motion.button
+            key={id}
+            ref={setBtnRef(id)}
+            role="tab"
+            aria-selected={activeSection === id}
+            onClick={() => onTabClick(id)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            className="relative flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap border-2"
+            style={
+              activeSection === id
+                ? {
+                    color: "var(--color-tab-active-text)",
+                    borderColor: "var(--color-tab-active-bg)",
+                    boxShadow: "var(--color-tab-active-shadow)",
+                  }
+                : {
+                    backgroundColor: "var(--color-tab-inactive-bg)",
+                    color: "var(--color-tab-inactive-text)",
+                    borderColor: "var(--color-tab-inactive-text)",
+                  }
+            }
+          >
+            {/* Animated background for active tab */}
+            {activeSection === id && (
+              <motion.div
+                layoutId="activeTabBackground"
+                className="absolute inset-0 -m-0.5 rounded-xl"
+                style={{
+                  backgroundColor: "var(--color-tab-active-bg)",
+                  opacity: 0.85,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                }}
+              />
+            )}
+            <span className="relative z-10">{icons[id]}</span>
+            <span className="relative z-10">{t(label)}</span>
+          </motion.button>
+        ))}
+      </div>
+
+      {/* Row 2: Last 2 tabs */}
+      <div className="flex justify-center gap-4">
+        {sections.slice(3).map(({ id, label }) => (
+          <motion.button
+            key={id}
+            ref={setBtnRef(id)}
+            role="tab"
+            aria-selected={activeSection === id}
+            onClick={() => onTabClick(id)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            className="relative flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap border-2"
+            style={
+              activeSection === id
+                ? {
+                    color: "var(--color-tab-active-text)",
+                    borderColor: "var(--color-tab-active-bg)",
+                    boxShadow: "var(--color-tab-active-shadow)",
+                  }
+                : {
+                    backgroundColor: "var(--color-tab-inactive-bg)",
+                    color: "var(--color-tab-inactive-text)",
+                    borderColor: "var(--color-tab-inactive-text)",
+                  }
+            }
+          >
+            {/* Animated background for active tab */}
+            {activeSection === id && (
+              <motion.div
+                layoutId="activeTabBackground"
+                className="absolute inset-0 -m-0.5 rounded-xl"
+                style={{
+                  backgroundColor: "var(--color-tab-active-bg)",
+                  opacity: 0.85,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                }}
+              />
+            )}
+            <span className="relative z-10">{icons[id]}</span>
+            <span className="relative z-10">{t(label)}</span>
+          </motion.button>
+        ))}
+      </div>
     </nav>
   );
 }
+
+
+
+
+
 

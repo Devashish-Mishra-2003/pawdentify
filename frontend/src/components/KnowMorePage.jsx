@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const KnowMorePage = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { knowMoreData, breedEntry } = location.state || {};
@@ -10,8 +12,19 @@ const KnowMorePage = () => {
   if (!knowMoreData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>No data available. Please go back and select a breed.</p>
-        <button onClick={() => navigate(-1)} className="ml-4 bg-purple-600 text-white px-4 py-2 rounded">Back</button>
+        <p style={{ color: "var(--color-knowmore-no-data-text)" }}>
+          {t('knowMore.noData')}
+        </p>
+        <button
+          onClick={() => navigate(-1)}
+          className="ml-4 px-4 py-2 rounded"
+          style={{
+            backgroundColor: "var(--color-knowmore-back-btn-bg)",
+            color: "var(--color-knowmore-back-btn-text)",
+          }}
+        >
+          {t('knowMore.back')}
+        </button>
       </div>
     );
   }
@@ -34,7 +47,6 @@ const KnowMorePage = () => {
 
   const splitIntoLines = (text) => {
     if (!text) return [];
-    // split on semicolon or newline, keep order, trim
     return text
       .split(/\n|;/)
       .map(s => s.trim())
@@ -56,8 +68,6 @@ const KnowMorePage = () => {
           {Object.entries(obj).map(([k, v]) => {
             if (isEmptyValue(v)) return null;
 
-            // If v is a plain object whose immediate children are all primitives,
-            // render them as separate bullet lines so each key starts on a new line.
             if (typeof v === 'object' && v !== null && !Array.isArray(v)) {
               const subEntries = Object.entries(v);
               const allPrimitives = subEntries.length > 0 && subEntries.every(([, subV]) =>
@@ -66,15 +76,22 @@ const KnowMorePage = () => {
 
               if (allPrimitives) {
                 return (
-                  <div key={k} className="bg-white shadow-lg rounded-xl p-6 hover:transform hover:scale-105 transition-transform duration-300 overflow-hidden">
-                    <h3 className="text-xl font-semibold text-purple-600 mb-3 mt-2">
+                  <div
+                    key={k}
+                    className="shadow-lg rounded-xl p-6 hover:transform hover:scale-105 transition-transform duration-300 overflow-hidden"
+                    style={{
+                      backgroundColor: "var(--color-knowmore-card-bg)",
+                      boxShadow: "var(--color-knowmore-card-shadow)",
+                    }}
+                  >
+                    <h3 className="text-xl mb-3 mt-2" style={{ color: "var(--color-knowmore-card-title)" }}>
                       {k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
                     </h3>
                     <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
                       {subEntries.map(([subK, subV]) => (
-                        <li key={subK} className="text-gray-700">
+                        <li key={subK} style={{ color: "var(--color-knowmore-text)" }}>
                           <span className="font-semibold">{subK.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}:</span>{' '}
-                          <span className="text-gray-800">{renderAny(subV)}</span>
+                          <span style={{ color: "var(--color-knowmore-text-dark)" }}>{renderAny(subV)}</span>
                         </li>
                       ))}
                     </ul>
@@ -83,19 +100,24 @@ const KnowMorePage = () => {
               }
             }
 
-            // NEW: if v is a string that actually contains multiple key/value pieces joined by `;` or newline,
-            // split it and render each piece as its own bullet.
             if (typeof v === 'string' && (v.includes(';') || v.includes('\n'))) {
               const lines = splitIntoLines(v);
               if (lines.length > 1) {
                 return (
-                  <div key={k} className="bg-white shadow-lg rounded-xl p-6 hover:transform hover:scale-105 transition-transform duration-300 overflow-hidden">
-                    <h3 className="text-xl font-semibold text-purple-600 mb-3 mt-2">
+                  <div
+                    key={k}
+                    className="shadow-lg rounded-xl p-6 hover:transform hover:scale-105 transition-transform duration-300 overflow-hidden"
+                    style={{
+                      backgroundColor: "var(--color-knowmore-card-bg)",
+                      boxShadow: "var(--color-knowmore-card-shadow)",
+                    }}
+                  >
+                    <h3 className="text-xl mb-3 mt-2" style={{ color: "var(--color-knowmore-card-title)" }}>
                       {k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
                     </h3>
                     <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
                       {lines.map((ln, i) => (
-                        <li key={i} className="text-gray-700">{ln}</li>
+                        <li key={i} style={{ color: "var(--color-knowmore-text)" }}>{ln}</li>
                       ))}
                     </ul>
                   </div>
@@ -103,48 +125,62 @@ const KnowMorePage = () => {
               }
             }
 
-            // Fallback: existing behavior (strings, arrays, or complex nested objects)
             return (
-              <div key={k} className="bg-white shadow-lg rounded-xl p-6 hover:transform hover:scale-105 transition-transform duration-300 overflow-hidden">
-                <h3 className="text-xl font-semibold text-purple-600 mb-2 mt-4">
+              <div
+                key={k}
+                className="shadow-lg rounded-xl p-6 hover:transform hover:scale-105 transition-transform duration-300 overflow-hidden"
+                style={{
+                  backgroundColor: "var(--color-knowmore-card-bg)",
+                  boxShadow: "var(--color-knowmore-card-shadow)",
+                }}
+              >
+                <h3 className="text-xl mb-2 mt-4" style={{ color: "var(--color-knowmore-card-title)" }}>
                   {k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
                 </h3>
 
                 {typeof v === 'string' ? (
                   <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
-                    <li className="text-gray-700">{v}</li>
+                    <li style={{ color: "var(--color-knowmore-text)" }}>{v}</li>
                   </ul>
                 ) : Array.isArray(v) ? (
                   <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
                     {v.map((item, idx) => (
-                      <li key={idx} className="text-gray-700">{typeof item === 'string' ? item : renderAny(item)}</li>
+                      <li key={idx} style={{ color: "var(--color-knowmore-text)" }}>
+                        {typeof item === 'string' ? item : renderAny(item)}
+                      </li>
                     ))}
                   </ul>
                 ) : (typeof v === 'object' && v !== null) ? (
                   <div className="pl-6">
                     {Object.entries(v).map(([subK, subV]) => (
                       <div key={subK} className="mb-4">
-                        <h4 className="text-lg font-semibold text-black mb-1">
+                        <h4 className="text-lg font-semibold mb-1" style={{ color: "var(--color-knowmore-subtitle)" }}>
                           {subK.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
                         </h4>
                         {typeof subV === 'string' ? (
                           <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
-                            <li className="text-gray-700">{subV}</li>
+                            <li style={{ color: "var(--color-knowmore-text)" }}>{subV}</li>
                           </ul>
                         ) : Array.isArray(subV) ? (
                           <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
                             {subV.map((item, idx) => (
-                              <li key={idx} className="text-gray-700">{typeof item === 'string' ? item : renderAny(item)}</li>
+                              <li key={idx} style={{ color: "var(--color-knowmore-text)" }}>
+                                {typeof item === 'string' ? item : renderAny(item)}
+                              </li>
                             ))}
                           </ul>
                         ) : (
-                          <pre className="whitespace-pre-wrap text-gray-700">{renderAny(subV)}</pre>
+                          <pre className="whitespace-pre-wrap" style={{ color: "var(--color-knowmore-text)" }}>
+                            {renderAny(subV)}
+                          </pre>
                         )}
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-700">No details available.</p>
+                  <p style={{ color: "var(--color-knowmore-text)" }}>
+                    {t('knowMore.noDetails')}
+                  </p>
                 )}
               </div>
             );
@@ -152,24 +188,27 @@ const KnowMorePage = () => {
         </div>
       );
     } else {
-      // Nested levels: render as indented bullet points without cards
       return Object.entries(obj).map(([k, v]) => (
         <div key={k} className="pl-6 mb-4">
-          <h4 className="text-lg font-semibold text-black mb-1">
+          <h4 className="text-lg font-semibold mb-1" style={{ color: "var(--color-knowmore-subtitle)" }}>
             {k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
           </h4>
           {typeof v === 'string' ? (
             <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
-              <li className="text-gray-700">{v}</li>
+              <li style={{ color: "var(--color-knowmore-text)" }}>{v}</li>
             </ul>
           ) : Array.isArray(v) ? (
             <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
               {v.map((item, idx) => (
-                <li key={idx} className="text-gray-700">{typeof item === 'string' ? item : renderAny(item)}</li>
+                <li key={idx} style={{ color: "var(--color-knowmore-text)" }}>
+                  {typeof item === 'string' ? item : renderAny(item)}
+                </li>
               ))}
             </ul>
           ) : (
-            <pre className="whitespace-pre-wrap text-gray-700">{renderAny(v)}</pre>
+            <pre className="whitespace-pre-wrap" style={{ color: "var(--color-knowmore-text)" }}>
+              {renderAny(v)}
+            </pre>
           )}
         </div>
       ));
@@ -182,13 +221,18 @@ const KnowMorePage = () => {
       const displayText = isLong && !expandedSections[key] ? value.substring(0, 300) + '...' : value;
       return (
         <div>
-          <p className="leading-relaxed break-words text-base md:text-lg text-gray-700">{displayText}</p>
+          <p className="leading-relaxed break-words text-base md:text-lg" style={{ color: "var(--color-knowmore-text)" }}>
+            {displayText}
+          </p>
           {isLong && (
             <button
               onClick={() => toggleExpanded(key)}
-              className="text-purple-600 hover:text-purple-800 font-semibold mt-2"
+              className="font-semibold mt-2"
+              style={{
+                color: "var(--color-knowmore-read-more)",
+              }}
             >
-              {expandedSections[key] ? 'Read less' : 'Read more'}
+              {expandedSections[key] ? t('knowMore.readLess') : t('knowMore.readMore')}
             </button>
           )}
         </div>
@@ -198,7 +242,9 @@ const KnowMorePage = () => {
       return (
         <ul className="list-disc list-inside space-y-2 text-base md:text-lg break-words">
           {value.map((item, idx) => (
-            <li key={idx} className="text-gray-700">{typeof item === 'string' ? item : renderAny(item)}</li>
+            <li key={idx} style={{ color: "var(--color-knowmore-text)" }}>
+              {typeof item === 'string' ? item : renderAny(item)}
+            </li>
           ))}
         </ul>
       );
@@ -206,22 +252,38 @@ const KnowMorePage = () => {
     if (typeof value === 'object' && value !== null) {
       return renderObject(value);
     }
-    return <p className="leading-relaxed break-words text-base md:text-lg text-gray-700">{renderAny(value)}</p>;
+    return (
+      <p className="leading-relaxed break-words text-base md:text-lg" style={{ color: "var(--color-knowmore-text)" }}>
+        {renderAny(value)}
+      </p>
+    );
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-28 py-20 px-6">
+    <div className="min-h-screen pt-28 py-20 px-6" style={{ backgroundColor: "var(--color-knowmore-bg)" }}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-archivo font-bold text-purple-700 mb-4">
-            Know More: {breedEntry?.breed || breedEntry?.name || 'Breed'}
+          <h1 className="text-4xl font-alfa mb-4" style={{ color: "var(--color-knowmore-title)" }}>
+            {t('knowMore.title')} {breedEntry?.breed || breedEntry?.name || t('knowMore.defaultBreed')}
           </h1>
-          {/* Back button removed (navigation handled in header) */}
         </div>
 
         {Object.entries(knowMoreData).map(([sectionKey, sectionValue]) => (
-          <div key={sectionKey} className="max-w-6xl mx-auto w-full bg-white shadow-md rounded-xl p-8 mb-10 overflow-hidden">
-            <h2 className="text-2xl font-bold text-purple-600 mb-4 border-b pb-2">
+          <div
+            key={sectionKey}
+            className="max-w-6xl mx-auto w-full shadow-md rounded-xl p-8 mb-10 overflow-hidden"
+            style={{
+              backgroundColor: "var(--color-knowmore-section-bg)",
+              boxShadow: "var(--color-knowmore-section-shadow)",
+            }}
+          >
+            <h2
+              className="text-2xl mb-4 border-b pb-2"
+              style={{
+                color: "var(--color-knowmore-section-title)",
+                borderColor: "var(--color-knowmore-section-border)",
+              }}
+            >
               {sectionKey.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
             </h2>
             {renderValue(sectionValue, sectionKey)}
@@ -233,6 +295,7 @@ const KnowMorePage = () => {
 };
 
 export default KnowMorePage;
+
 
 
 

@@ -1,10 +1,10 @@
 // src/components/PredictionUpload.jsx
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import paw from "../assets/icons8-cat-footprint-64.png";
 import { DOG_PREDICT_API_URL } from "../constants";
 
-/* Small SVG helper icons */
 const IconCamera = ({ className = "w-4 h-4 inline-block mr-2" }) => (
   <svg
     className={className}
@@ -27,7 +27,18 @@ const handleScrollTo = (id) => {
     window.scrollTo({ top: element.offsetTop - 80, behavior: "smooth" });
 };
 
-const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
+// Convert File to base64 data URL
+const fileToDataURL = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
+const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPrediction, existingPrediction }) => {
+  const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -38,42 +49,55 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
   const fileInputRef = useRef(null);
   const progressTimerRef = useRef(null);
 
+  // Restore preview if coming back from another page
+  useEffect(() => {
+    if (existingPrediction && existingPrediction.previewUrl && !previewUrl) {
+      setPreviewUrl(existingPrediction.previewUrl);
+    }
+  }, [existingPrediction, previewUrl]);
+
   useEffect(() => {
     return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
       clearInterval(progressTimerRef.current);
     };
-  }, [previewUrl]);
+  }, []);
 
   const resetStates = useCallback(() => {
     setSelectedFile(null);
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
-      setPreviewUrl(null);
-    }
+    setPreviewUrl(null);
     setIsLoading(false);
     setError(null);
     setProgress(0);
     setLiveMessage("");
     if (fileInputRef.current) fileInputRef.current.value = "";
-  }, [previewUrl]);
+    // Notify parent to clear prediction
+    if (onClearPrediction) {
+      onClearPrediction();
+    }
+  }, [onClearPrediction]);
 
   const handleFile = useCallback(
-    (file) => {
+    async (file) => {
       if (file && file.type && file.type.startsWith("image/")) {
         setError(null);
-        if (previewUrl) URL.revokeObjectURL(previewUrl);
-        const url = URL.createObjectURL(file);
-        setSelectedFile(file);
-        setPreviewUrl(url);
-        setLiveMessage("Image selected. Ready to upload.");
+        try {
+          // Convert to base64 data URL so it persists across navigation
+          const dataUrl = await fileToDataURL(file);
+          setSelectedFile(file);
+          setPreviewUrl(dataUrl);
+          setLiveMessage("Image selected. Ready to upload.");
+        } catch (err) {
+          console.error("Failed to convert file to data URL", err);
+          setError(t("upload.errors.invalidFileType"));
+          setLiveMessage(t("upload.errors.invalidFileType"));
+        }
       } else {
-        setError("Invalid file type. Please upload an image (JPG, PNG).");
-        setLiveMessage("Invalid file type.");
+        setError(t("upload.errors.invalidFileType"));
+        setLiveMessage(t("upload.errors.invalidFileType"));
         resetStates();
       }
     },
-    [previewUrl, resetStates]
+    [resetStates, t]
   );
 
   const handleDragOver = useCallback((e) => {
@@ -128,7 +152,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
 
   const handlePrediction = async () => {
     if (!selectedFile) {
-      const msg = "Please select an image file first.";
+      const msg = t("upload.errors.selectImageFirst");
       setError(msg);
       setLiveMessage(msg);
       onPredictionFail?.(msg);
@@ -150,7 +174,6 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
       });
       const result = await response.json();
 
-      // CHECKPOINT: backend response
       console.log("[PredictionUpload] /predict response:", {
         ok: response.ok,
         status: response.status,
@@ -173,8 +196,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
       }
 
       if (result.low_confidence) {
-        const msg =
-          "Low confidence in prediction. Please try a clearer image.";
+        const msg = t("upload.errors.lowConfidence");
         console.log(
           "[PredictionUpload] low confidence returned:",
           result
@@ -183,11 +205,10 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
         setLiveMessage(msg);
         onPredictionFail?.(msg);
       } else {
-        // CHECKPOINT: what we'll send up to App
         const payload = {
           breed: result.prediction || "Unknown Breed",
           id: result.prediction_id ?? null,
-          previewUrl,
+          previewUrl, // This is now a base64 data URL
         };
         console.log(
           "[PredictionUpload] calling onPredictionSuccess with:",
@@ -199,8 +220,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
       }
     } catch (err) {
       console.error("[PredictionUpload] API Error:", err);
-      const msg =
-        "Failed to connect to the prediction service. Check console for details.";
+      const msg = t("upload.errors.connectError");
       setError(msg);
       setLiveMessage(msg);
       onPredictionFail?.(msg);
@@ -214,13 +234,14 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
   const baseBox =
     "w-full max-w-3xl mx-auto rounded-3xl transition-all duration-500 relative overflow-hidden";
   const glassBox =
-    "bg-white/40 backdrop-blur-md border border-white/30 shadow-xl px-10 py-14";
-  const dragBoxExtra = "ring-2 ring-indigo-300/40";
+    "backdrop-blur-md border shadow-xl px-10 py-14";
+  const dragBoxExtra = "ring-2";
 
   return (
     <motion.section
       id="predict"
-      className="py-16 bg-gradient-to-br from-gray-50 via-purple-50 to-indigo-50 font-archivo relative overflow-hidden"
+      className="py-16 font-archivo relative overflow-hidden"
+      style={{ background: "var(--color-upload-bg)" }}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -251,20 +272,26 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
 
       <div className="max-w-3xl mx-auto px-6 text-left relative z-10">
         <motion.h3
-          className="text-5xl md:text-4xl font-archivo font-bold mb-8 text-gray-900 tracking-wider"
+          className="text-4xl md:text-4xl font-alfa mb-8"
+          style={{ color: "var(--color-upload-title)" }}
           align="center"
-          initial={{ y: 24, opacity: 0 }}
+          initial={{ y: 50, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Upload a Photo
+          {t("upload.title")}
         </motion.h3>
 
         <motion.div
           className={`${baseBox} ${glassBox} ${
             isDragging ? dragBoxExtra : ""
           } dz-focus`}
+          style={{
+            backgroundColor: "var(--color-upload-card-bg)",
+            borderColor: "var(--color-upload-card-border)",
+            boxShadow: "var(--color-upload-card-shadow)",
+          }}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
@@ -302,10 +329,16 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
             </div>
 
             <div className="flex-1">
-              <p className="text-2xl md:text-3xl font-archivo font-bold text-gray-900 mb-3">
+              <p
+                className="text-2xl md:text-3xl font-archivo font-bold mb-3"
+                style={{ color: "var(--color-upload-text-primary)" }}
+              >
                 Drag & drop an image
               </p>
-              <p className="text-base text-gray-600 mb-6">
+              <p
+                className="text-base mb-6"
+                style={{ color: "var(--color-upload-text-secondary)" }}
+              >
                 We recommend a clear, front-facing photo. Images are processed
                 locally before sending to the model.
               </p>
@@ -323,11 +356,12 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
 
                 <motion.button
                   onClick={handleBrowseClick}
-                  className={`px-6 py-3 rounded-full font-alfa text-white shadow-md focus:outline-none focus:ring-4 focus:ring-purple-300/30 transition-all ${
-                    previewUrl
-                      ? "bg-gradient-to-r from-purple-500 to-indigo-500"
-                      : "bg-gradient-to-r from-purple-600 to-indigo-600"
-                  }`}
+                  className="px-6 py-3 rounded-full font-alfa text-white shadow-md focus:outline-none focus:ring-4 focus:ring-purple-300/30 transition-all"
+                  style={{
+                    background: previewUrl
+                      ? "var(--color-upload-btn-browse-selected)"
+                      : "var(--color-upload-btn-browse)",
+                  }}
                   whileHover={{ translateY: -3, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -337,13 +371,19 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
                 <motion.button
                   onClick={handlePrediction}
                   disabled={isLoading}
-                  className="px-6 py-3 rounded-full bg-white text-purple-700 font-semibold shadow-md border border-white/30 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-purple-200 transition-all flex items-center gap-2"
+                  className="px-6 py-3 rounded-full font-semibold shadow-md border hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-purple-200 transition-all flex items-center gap-2"
+                  style={{
+                    backgroundColor: "var(--color-upload-btn-run-bg)",
+                    color: "var(--color-upload-btn-run-text)",
+                    borderColor: "var(--color-upload-btn-run-border)",
+                  }}
                   whileHover={{ translateY: -3, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   {isLoading ? (
                     <svg
-                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-purple-700"
+                      className="animate-spin -ml-1 mr-2 h-4 w-4"
+                      style={{ color: "var(--color-upload-spinner)" }}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -358,20 +398,27 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
                       ></circle>
                     </svg>
                   ) : null}
-                  <span>{isLoading ? "Predicting..." : "Run"}</span>
+                  <span>{isLoading ? t("upload.predicting") : "Run"}</span>
                 </motion.button>
 
                 {previewUrl && (
                   <button
                     onClick={resetStates}
-                    className="ml-2 px-4 py-2 border rounded-full bg-white/60 text-gray-700 hover:bg-white focus:outline-none focus:ring-3 focus:ring-purple-200 transition"
+                    className="ml-2 px-4 py-2 border rounded-full hover:bg-white focus:outline-none focus:ring-3 focus:ring-purple-200 transition"
+                    style={{
+                      backgroundColor: "var(--color-upload-btn-cancel-bg)",
+                      color: "var(--color-upload-btn-cancel-text)",
+                    }}
                   >
                     Cancel
                   </button>
                 )}
               </div>
 
-              <div className="mt-2 text-sm text-gray-500 flex flex-wrap gap-6">
+              <div
+                className="mt-2 text-sm flex flex-wrap gap-6"
+                style={{ color: "var(--color-upload-text-hint)" }}
+              >
                 <div className="flex items-center">
                   <IconCamera />
                   <span>Recommended: 800×800+</span>
@@ -392,13 +439,22 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
               </div>
 
               <div className="mt-6">
-                <div className="h-1 w-full bg-white/30 rounded-full overflow-hidden">
+                <div
+                  className="h-1 w-full rounded-full overflow-hidden"
+                  style={{ backgroundColor: "var(--color-upload-progress-bg)" }}
+                >
                   <div
-                    className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all"
-                    style={{ width: `${progress}%` }}
+                    className="h-full transition-all"
+                    style={{
+                      background: "var(--color-upload-progress-fill)",
+                      width: `${progress}%`,
+                    }}
                   />
                 </div>
-                <div className="text-xs text-gray-500 mt-3">
+                <div
+                  className="text-xs mt-3"
+                  style={{ color: "var(--color-upload-text-hint)" }}
+                >
                   {progress > 0 && progress < 100
                     ? `Uploading… ${Math.round(progress)}%`
                     : ""}
@@ -410,13 +466,18 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
 
         {error && (
           <motion.div
-            className="mt-8 p-4 max-w-3xl mx-auto bg-gradient-to-r from-red-50 to-rose-50 text-red-700 border border-red-200 rounded-2xl shadow relative overflow-hidden"
+            className="mt-8 p-4 max-w-3xl mx-auto border rounded-2xl shadow relative overflow-hidden"
+            style={{
+              background: "var(--color-upload-error-bg)",
+              color: "var(--color-upload-error-text)",
+              borderColor: "var(--color-upload-error-border)",
+            }}
             initial={{ y: 8, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
           >
             <div className="font-semibold">{error}</div>
             <button onClick={resetStates} className="mt-3 underline text-sm">
-              Try again
+              {t("common.tryAgain")}
             </button>
           </motion.div>
         )}
@@ -426,5 +487,9 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail }) => {
 };
 
 export default PredictionUpload;
+
+
+
+
 
 

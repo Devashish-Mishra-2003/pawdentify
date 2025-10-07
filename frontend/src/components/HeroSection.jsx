@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import heroVideo from "../assets/hero_section_video.mp4"; // preserved
+import { useTranslation } from "react-i18next";
+import heroVideo from "../assets/hero_section_video.mp4";
 import breedsIcon from "../assets/breeds_icon.png";
 import accuracyIcon from "../assets/accuracy_icon.png";
 import speedIcon from "../assets/speed_icon.png";
@@ -26,6 +27,8 @@ const cardVariants = {
 };
 
 const HeroSection = () => {
+  const { t } = useTranslation();
+
   return (
     <motion.section
       id="hero"
@@ -46,17 +49,26 @@ const HeroSection = () => {
       />
 
       {/* Violet overlay tint */}
-      <div className="absolute inset-0 bg-[#8c52ff] opacity-30 mix-blend-multiply pointer-events-none z-10"></div>
+      <div
+        className="absolute inset-0 mix-blend-multiply pointer-events-none z-10"
+        style={{
+          backgroundColor: "var(--color-hero-overlay)",
+          opacity: "var(--color-hero-overlay-opacity)",
+        }}
+      ></div>
 
-      {/* Content (moved slightly up to make room for cards) */}
-      <div className="relative z-20 max-w-5xl mx-auto w-full px-6 text-center text-white -translate-y-6">
+      {/* Content */}
+      <div
+        className="relative z-20 max-w-5xl mx-auto w-full px-6 text-center -translate-y-6"
+        style={{ color: "var(--color-hero-text)" }}
+      >
         <motion.h1
           className="font-alfa text-5xl md:text-6xl leading-tight"
           initial={{ y: 40, opacity: 0, scale: 0.95 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.3, type: "spring", stiffness: 90, damping: 12 }}
         >
-          Man&apos;s best friend
+          {t("hero.title")}
         </motion.h1>
 
         <motion.div
@@ -66,14 +78,14 @@ const HeroSection = () => {
           transition={{ duration: 0.9, delay: 0.6 }}
         >
           <p>
-            Get to know your dog the best you can and give them a home they deserve.
+            {t("hero.description.part1")}
             <br />
             <br />
-            Our website lets you identify over 100+ breeds of doggos and gives you up to date information about them.
+            {t("hero.description.part2")}
           </p>
         </motion.div>
 
-        {/* Predict button (animation preserved) */}
+        {/* Predict button */}
         <motion.div
           className="mt-10 flex justify-center"
           initial={{ y: 40, opacity: 0, scale: 0.96 }}
@@ -87,16 +99,15 @@ const HeroSection = () => {
             }}
             className="font-alfa text-xl md:text-2xl px-10 py-4 rounded-full shadow-lg transition-all relative overflow-hidden group"
             style={{
-              background: "linear-gradient(180deg, #f3e8ff, #e9d5ff)",
-              color: "#4b0082",
-              boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
+              background: "var(--color-hero-button-bg)",
+              color: "var(--color-hero-button-text)",
+              boxShadow: "var(--color-hero-button-shadow)",
               maxWidth: "300px",
             }}
             whileHover={{
               scale: 1.08,
               y: -4,
-              boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-              background: "linear-gradient(180deg, #faf5ff, #f3e8ff)",
+              boxShadow: "var(--color-hero-button-hover-shadow)",
             }}
             whileTap={{ scale: 0.95, y: -2 }}
             animate={{ y: [0, -8, 0] }}
@@ -123,23 +134,28 @@ const HeroSection = () => {
               }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
-              Predict
+              {t("hero.predictButton")}
             </motion.span>
           </motion.button>
         </motion.div>
 
-        {/* --- Pill cards (increased gap, animated + hover lift) --- */}
+        {/* Pill cards */}
         <motion.div
           className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6"
           variants={cardContainerVariants}
           initial="hidden"
           animate="show"
         >
-          {/* Card 1 */}
+          {/* Card 1 - Breeds */}
           <motion.div
             variants={cardVariants}
             whileHover={{ y: -6, scale: 1.02 }}
-            className="flex items-center bg-white text-[#8c52ff] font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] hover:shadow-xl transition-shadow"
+            className="flex items-center font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] transition-shadow"
+            style={{
+              backgroundColor: "var(--color-hero-card-bg)",
+              color: "var(--color-hero-card-text)",
+              boxShadow: "var(--color-hero-card-shadow)",
+            }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
             <motion.div
@@ -147,19 +163,24 @@ const HeroSection = () => {
               animate={{ y: [-4, 4, -4] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
-              <img src={breedsIcon} alt="breeds" className="w-full h-full object-contain" />
+              <img src={breedsIcon} alt={t("hero.cards.breeds")} className="w-full h-full object-contain" />
             </motion.div>
             <div className="text-left">
               <div className="text-sm">120</div>
-              <div className="text-xs opacity-80">breeds</div>
+              <div className="text-xs opacity-80">{t("hero.cards.breeds")}</div>
             </div>
           </motion.div>
 
-          {/* Card 2 */}
+          {/* Card 2 - Accuracy */}
           <motion.div
             variants={cardVariants}
             whileHover={{ y: -6, scale: 1.02 }}
-            className="flex items-center bg-white text-[#8c52ff] font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] hover:shadow-xl transition-shadow"
+            className="flex items-center font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] transition-shadow"
+            style={{
+              backgroundColor: "var(--color-hero-card-bg)",
+              color: "var(--color-hero-card-text)",
+              boxShadow: "var(--color-hero-card-shadow)",
+            }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
             <motion.div
@@ -167,19 +188,24 @@ const HeroSection = () => {
               animate={{ y: [-4, 4, -4] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
             >
-              <img src={accuracyIcon} alt="accuracy" className="w-full h-full object-contain" />
+              <img src={accuracyIcon} alt={t("hero.cards.accuracy")} className="w-full h-full object-contain" />
             </motion.div>
             <div className="text-left">
               <div className="text-sm">89%</div>
-              <div className="text-xs opacity-80">accuracy</div>
+              <div className="text-xs opacity-80">{t("hero.cards.accuracy")}</div>
             </div>
           </motion.div>
 
-          {/* Card 3 */}
+          {/* Card 3 - Response */}
           <motion.div
             variants={cardVariants}
             whileHover={{ y: -6, scale: 1.02 }}
-            className="flex items-center bg-white text-[#8c52ff] font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] hover:shadow-xl transition-shadow"
+            className="flex items-center font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] transition-shadow"
+            style={{
+              backgroundColor: "var(--color-hero-card-bg)",
+              color: "var(--color-hero-card-text)",
+              boxShadow: "var(--color-hero-card-shadow)",
+            }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
             <motion.div
@@ -187,11 +213,11 @@ const HeroSection = () => {
               animate={{ y: [-4, 4, -4] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
             >
-              <img src={speedIcon} alt="speed" className="w-full h-full object-contain" />
+              <img src={speedIcon} alt={t("hero.cards.response")} className="w-full h-full object-contain" />
             </motion.div>
             <div className="text-left">
               <div className="text-sm">&lt;3s</div>
-              <div className="text-xs opacity-80">response</div>
+              <div className="text-xs opacity-80">{t("hero.cards.response")}</div>
             </div>
           </motion.div>
         </motion.div>
@@ -201,6 +227,7 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
 
 
 

@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(dotenv_path=BASE_DIR.parent.joinpath(".env"))
 
 MODEL_PATH = os.getenv("MODEL_PATH", str(BASE_DIR.joinpath("model/efficientnetv2b2_320.keras")))
-CONF_THRESHOLD = float(os.getenv("CONFIDENCE_THRESHOLD", 0.6))
+CONF_THRESHOLD = float(os.getenv("CONFIDENCE_THRESHOLD", 0.4))
 
 BREED_INFO_PATH = BASE_DIR.joinpath("breed_info_final.json")
 

@@ -1,23 +1,493 @@
-@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Archivo:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ultra&family=Archivo:wght@400;600;700&display=swap');
 @import "tailwindcss";
 
+/* ===== THEME COLOR VARIABLES ===== */
+:root {
+  /* Header */
+  --color-header-bg: #8c52ff;
+  --color-nav-link: white;
+  --color-nav-link-hover: white;
+  --color-nav-link-underline: white;
+  
+  /* Buttons */
+  --color-button-bg: white;
+  --color-button-text: #6b21a8;
+  --color-button-hover-bg: #e9d5ff;
+  --color-button-hover-text: hsl(264, 67%, 35%);
+  --color-button-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --color-button-hover-shadow: 0 8px 14px rgba(0,0,0,0.2);
+  
+  /* Settings icon */
+  --color-settings-icon: white;
+  --color-settings-hover-bg: rgba(255, 255, 255, 0.2);
+  --color-settings-hover-text: white;
+  
+  /* Body */
+  --color-body-bg: white;
+  --color-body-text: black;
+  
+  /* Section cards */
+  --color-card-bg-start: rgba(245,243,255,0.9);
+  --color-card-bg-end: rgba(255,255,255,1);
+  --color-card-shadow: 0 20px 40px rgba(99,102,241,0.12), 0 6px 18px rgba(0,0,0,0.06);
+  --color-btn-anim-shadow: 0 10px 24px rgba(99,102,241,0.12);
+
+    /* Hero Section */
+  --color-hero-overlay: #8c52ff;
+  --color-hero-overlay-opacity: 0.3;
+  --color-hero-text: rgb(255, 255, 255);
+  --color-hero-button-bg: linear-gradient(180deg, #f3e8ff, #e9d5ff);
+  --color-hero-button-text: #4b0082;
+  --color-hero-button-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  --color-hero-button-hover-bg: linear-gradient(180deg, #faf5ff, #f3e8ff);
+  --color-hero-button-hover-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  --color-hero-card-bg: white;
+  --color-hero-card-text: #8c52ff;
+  --color-hero-card-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  --color-hero-card-hover-shadow: 0 8px 24px rgba(0,0,0,0.15);
+
+   /* Prediction Guidelines */
+  --color-guidelines-bg: linear-gradient(to bottom right, #f9fafb, white);
+  --color-guidelines-title: #1f2937;
+  --color-guidelines-decorative-do: linear-gradient(to right, #d1fae5, #fecaca);
+  --color-guidelines-decorative-dont: linear-gradient(to right, #d1fae5, #fecaca);
+  
+  /* Do's card */
+  --color-do-card-bg: white;
+  --color-do-card-border: rgba(134, 239, 172, 0.5);
+  --color-do-card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --color-do-card-hover-shadow: 0 25px 50px rgba(34, 197, 94, 0.15);
+  --color-do-card-gradient: linear-gradient(to bottom right, #f0fdf4, #d1fae5);
+  --color-do-title: #15803d;
+  --color-do-text: #374151;
+  --color-do-icon: #16a34a;
+  --color-do-hover-text: #166534;
+  --color-do-particle: #86efac;
+  
+  /* Don'ts card */
+  --color-dont-card-bg: white;
+  --color-dont-card-border: rgba(252, 165, 165, 0.5);
+  --color-dont-card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --color-dont-card-hover-shadow: 0 25px 50px rgba(239, 68, 68, 0.15);
+  --color-dont-card-gradient: linear-gradient(to bottom right, #fef2f2, #fecaca);
+  --color-dont-title: #b91c1c;
+  --color-dont-text: #374151;
+  --color-dont-icon: #dc2626;
+  --color-dont-hover-text: #991b1b;
+  --color-dont-particle: #fca5a5;
+
+   /* Prediction Upload */
+  --color-upload-bg: linear-gradient(to bottom right, #f9fafb, #faf5ff, #eef2ff);
+  --color-upload-title: #111827;
+  --color-upload-card-bg: rgba(255, 255, 255, 0.4);
+  --color-upload-card-border: rgba(255, 255, 255, 0.3);
+  --color-upload-card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --color-upload-card-drag-ring: rgba(165, 180, 252, 0.4);
+  
+  --color-upload-text-primary: #111827;
+  --color-upload-text-secondary: #4b5563;
+  --color-upload-text-hint: #6b7280;
+  
+  --color-upload-preview-bg: rgba(255, 255, 255, 0.08);
+  --color-upload-preview-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  --color-upload-btn-browse: linear-gradient(to right, #9333ea, #4f46e5);
+  --color-upload-btn-browse-selected: linear-gradient(to right, #a855f7, #6366f1);
+  --color-upload-btn-run-bg: white;
+  --color-upload-btn-run-text: #7c3aed;
+  --color-upload-btn-run-border: rgba(255, 255, 255, 0.3);
+  --color-upload-btn-cancel-bg: rgba(255, 255, 255, 0.6);
+  --color-upload-btn-cancel-text: #374151;
+  --color-upload-btn-cancel-hover: white;
+  
+  --color-upload-progress-bg: rgba(255, 255, 255, 0.3);
+  --color-upload-progress-fill: linear-gradient(to right, #a855f7, #6366f1);
+  
+  --color-upload-error-bg: linear-gradient(to right, #fef2f2, #fff1f2);
+  --color-upload-error-text: #b91c1c;
+  --color-upload-error-border: #fecaca;
+  
+  --color-upload-spinner: #7c3aed;
+
+   /* FAQ Page */
+  --color-faq-bg: linear-gradient(to bottom right, #f9fafb, #faf5ff, #eef2ff);
+  --color-faq-title: #111827;
+  --color-faq-card-bg: white;
+  --color-faq-card-border: #e9d5ff;
+  --color-faq-card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --color-faq-question: #6b21a8;
+  --color-faq-answer: #374151;
+  --color-faq-help-text: #4b5563;
+  --color-faq-contact-bg: linear-gradient(to right, #9333ea, #4f46e5);
+  --color-faq-contact-text: white;
+  --color-faq-contact-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --color-faq-contact-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+   /* Settings Page */
+  --color-settings-page-bg: white;
+  --color-settings-header-bg: #8c52ff;
+  --color-settings-back-btn-bg: rgba(255, 255, 255, 0.2);
+  --color-settings-back-btn-hover: rgba(255, 255, 255, 0.3);
+  --color-settings-back-btn-text: white;
+  
+  --color-settings-title: #111827;
+  --color-settings-subtitle: #4b5563;
+  
+  --color-settings-section-title: #111827;
+  --color-settings-label: #374151;
+  --color-settings-description: #4b5563;
+  --color-settings-border: #d1d5db;
+  
+  --color-settings-btn-active-bg: linear-gradient(to right, #9333ea, #4f46e5);
+  --color-settings-btn-active-text: white;
+  --color-settings-btn-active-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --color-settings-btn-inactive-bg: #f3f4f6;
+  --color-settings-btn-inactive-text: #374151;
+  --color-settings-btn-inactive-hover: #e5e7eb;
+  
+  --color-settings-toggle-active: linear-gradient(to right, #9333ea, #4f46e5);
+  --color-settings-toggle-inactive: #d1d5db;
+  --color-settings-toggle-knob: white;
+  
+  --color-settings-select-bg: white;
+  --color-settings-select-border: #d1d5db;
+  
+  --color-settings-btn-danger-bg: #ef4444;
+  --color-settings-btn-danger-hover: #dc2626;
+  --color-settings-btn-danger-text: white;
+  --color-settings-btn-danger-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  --color-settings-btn-gray-bg: #6b7280;
+  --color-settings-btn-gray-hover: #4b5563;
+  --color-settings-btn-gray-text: white;
+  --color-settings-btn-gray-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  --color-settings-about-bg: white;
+  --color-settings-about-text: #374151;
+  --color-settings-link: #9333ea;
+  --color-settings-link-hover: #7e22ce;
+
+   /* Footer */
+  --color-footer-bg: #8c52ff;
+  --color-footer-text: white;
+  --color-footer-text-muted: #e9d5ff;
+  --color-footer-link: #e9d5ff;
+  --color-footer-link-hover: #c4b5fd;
+  --color-footer-heading-glow: rgba(255, 255, 255, 0.25);
+  --color-footer-wave-bg: linear-gradient(to right, #a855f7, #6366f1, #a855f7);
+  --color-footer-gradient-overlay: rgba(147, 51, 234, 0.28);
+
+    /* Breed Info Display */
+  --color-breed-info-bg: white;
+  --color-breed-title: #7c3aed;
+  --color-breed-fun-fact: #374151;
+  --color-breed-no-info: #7c3aed;
+  --color-breed-no-info-text: #374151;
+  --color-breed-know-more-bg: #9333ea;
+  --color-breed-know-more-hover: #7e22ce;
+  --color-breed-know-more-text: white;
+  --color-breed-back-to-top-bg: #9333ea;
+  --color-breed-back-to-top-hover: #7e22ce;
+  --color-breed-back-to-top-text: white;
+  --color-breed-back-to-top-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Breed Tabs */
+  --color-tabs-bg: white;
+  --color-tabs-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --color-tab-active-bg: #9333ea;
+  --color-tab-active-text: white;
+  --color-tab-active-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --color-tab-inactive-bg: transparent;
+  --color-tab-inactive-text: #7c3aed;
+  
+  /* Info Card */
+  --color-card-bg: linear-gradient(to bottom right, #faf5ff, #f3e8ff);
+  --color-card-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 3px rgba(0,0,0,0.1);
+  --color-card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --color-card-icon: #9333ea;
+  --color-card-title: #1f2937;
+  --color-card-text: #374151;
+
+   /* Know More Page */
+  --color-knowmore-bg: #f9fafb;
+  --color-knowmore-title: #7c3aed;
+  --color-knowmore-section-bg: white;
+  --color-knowmore-section-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --color-knowmore-section-title: #9333ea;
+  --color-knowmore-section-border: #e5e7eb;
+  --color-knowmore-card-bg: white;
+  --color-knowmore-card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --color-knowmore-card-title: #9333ea;
+  --color-knowmore-text: #374151;
+  --color-knowmore-text-dark: #1f2937;
+  --color-knowmore-subtitle: #111827;
+  --color-knowmore-read-more: #9333ea;
+  --color-knowmore-read-more-hover: #7e22ce;
+  --color-knowmore-back-btn-bg: #9333ea;
+  --color-knowmore-back-btn-text: white;
+  --color-knowmore-no-data-text: #374151;
+
+  /* Range Card */
+  --color-range-bar-bg: rgba(148, 163, 184, 0.2);
+  --color-range-fill-gradient: linear-gradient(to right, #a78bfa, #6366f1);
+  --color-range-marker-bg: white;
+  --color-range-marker-border-start: #a78bfa;
+  --color-range-marker-border-end: #6366f1;
+  --color-range-marker-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    /* Accordion Card */
+  --color-accordion-bg: white;
+  --color-accordion-border: #e5e7eb;
+  --color-accordion-title: #111827;
+  --color-accordion-chevron: #6b7280;
+  --color-accordion-label: #374151;
+  --color-accordion-value: #1f2937;
+}
+
+/* ===== DARK MODE THEME ===== */
+.dark {
+  /* Body */
+  --color-body-bg: #0f172a;
+  --color-body-text: #e2e8f0;
+  
+  /* Header */
+  --color-header-bg: #6b21a8;
+  --color-nav-link: #f1f5f9;
+  --color-nav-link-hover: #ffffff;
+  --color-nav-link-underline: #f1f5f9;
+  --color-button-bg: #1e293b;
+  --color-button-text: #e9d5ff;
+  --color-button-hover-bg: #334155;
+  --color-button-hover-text: #f3e8ff;
+  --color-button-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --color-button-hover-shadow: 0 8px 14px rgba(0,0,0,0.4);
+  --color-settings-icon: #f1f5f9;
+  --color-settings-hover-bg: rgba(255, 255, 255, 0.15);
+  --color-settings-hover-text: #ffffff;
+  
+  /* Hero Section */
+  --color-hero-overlay: #6b21a8;
+  --color-hero-overlay-opacity: 0.5;
+  --color-hero-text: #f8fafc;
+  --color-hero-button-bg: linear-gradient(180deg, #4c1d95, #5b21b6);
+  --color-hero-button-text: #f3e8ff;
+  --color-hero-button-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  --color-hero-button-hover-bg: linear-gradient(180deg, #5b21b6, #6b21a8);
+  --color-hero-button-hover-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  --color-hero-card-bg: #1e293b;
+  --color-hero-card-text: #c4b5fd;
+  --color-hero-card-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --color-hero-card-hover-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  
+  /* Prediction Guidelines */
+  --color-guidelines-bg: linear-gradient(to bottom right, #0f172a, #1e1b4b);
+  --color-guidelines-title: #e2e8f0;
+  --color-guidelines-decorative-do: linear-gradient(to right, #065f46, #7f1d1d);
+  --color-guidelines-decorative-dont: linear-gradient(to right, #065f46, #7f1d1d);
+  
+  --color-do-card-bg: #1e293b;
+  --color-do-card-border: rgba(34, 197, 94, 0.3);
+  --color-do-card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  --color-do-card-hover-shadow: 0 25px 50px rgba(34, 197, 94, 0.2);
+  --color-do-card-gradient: linear-gradient(to bottom right, #1e3a2e, #14532d);
+  --color-do-title: #4ade80;
+  --color-do-text: #d1d5db;
+  --color-do-icon: #22c55e;
+  --color-do-hover-text: #86efac;
+  --color-do-particle: #4ade80;
+  
+  --color-dont-card-bg: #1e293b;
+  --color-dont-card-border: rgba(239, 68, 68, 0.3);
+  --color-dont-card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  --color-dont-card-hover-shadow: 0 25px 50px rgba(239, 68, 68, 0.2);
+  --color-dont-card-gradient: linear-gradient(to bottom right, #3a1e1e, #450a0a);
+  --color-dont-title: #fb7185;
+  --color-dont-text: #d1d5db;
+  --color-dont-icon: #ef4444;
+  --color-dont-hover-text: #fca5a5;
+  --color-dont-particle: #fb7185;
+  
+  /* Prediction Upload */
+  --color-upload-bg: linear-gradient(to bottom right, #0f172a, #1e1b4b, #1e3a8a);
+  --color-upload-title: #f1f5f9;
+  --color-upload-card-bg: rgba(30, 41, 59, 0.8);
+  --color-upload-card-border: rgba(148, 163, 184, 0.2);
+  --color-upload-card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  --color-upload-card-drag-ring: rgba(165, 180, 252, 0.5);
+  --color-upload-text-primary: #f1f5f9;
+  --color-upload-text-secondary: #cbd5e1;
+  --color-upload-text-hint: #94a3b8;
+  --color-upload-preview-bg: rgba(30, 41, 59, 0.6);
+  --color-upload-preview-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --color-upload-btn-browse: linear-gradient(to right, #7c3aed, #4f46e5);
+  --color-upload-btn-browse-selected: linear-gradient(to right, #8b5cf6, #6366f1);
+  --color-upload-btn-run-bg: #1e293b;
+  --color-upload-btn-run-text: #c4b5fd;
+  --color-upload-btn-run-border: rgba(148, 163, 184, 0.2);
+  --color-upload-btn-cancel-bg: rgba(30, 41, 59, 0.8);
+  --color-upload-btn-cancel-text: #cbd5e1;
+  --color-upload-btn-cancel-hover: #334155;
+  --color-upload-progress-bg: rgba(71, 85, 105, 0.5);
+  --color-upload-progress-fill: linear-gradient(to right, #8b5cf6, #6366f1);
+  --color-upload-error-bg: linear-gradient(to right, #450a0a, #500);
+  --color-upload-error-text: #fca5a5;
+  --color-upload-error-border: #7f1d1d;
+  --color-upload-spinner: #a78bfa;
+  
+  /* FAQ Page */
+  --color-faq-bg: linear-gradient(to bottom right, #0f172a, #1e1b4b, #1e3a8a);
+  --color-faq-title: #f1f5f9;
+  --color-faq-card-bg: #1e293b;
+  --color-faq-card-border: #7c3aed;
+  --color-faq-card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  --color-faq-question: #c4b5fd;
+  --color-faq-answer: #cbd5e1;
+  --color-faq-help-text: #94a3b8;
+  --color-faq-contact-bg: linear-gradient(to right, #7c3aed, #4f46e5);
+  --color-faq-contact-text: white;
+  --color-faq-contact-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --color-faq-contact-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  
+  /* Settings Page */
+  --color-settings-page-bg: #0f172a;
+  --color-settings-header-bg: #6b21a8;
+  --color-settings-back-btn-bg: rgba(255, 255, 255, 0.15);
+  --color-settings-back-btn-hover: rgba(255, 255, 255, 0.25);
+  --color-settings-back-btn-text: white;
+  --color-settings-title: #f1f5f9;
+  --color-settings-subtitle: #cbd5e1;
+  --color-settings-section-title: #f1f5f9;
+  --color-settings-label: #e2e8f0;
+  --color-settings-description: #94a3b8;
+  --color-settings-border: #334155;
+  --color-settings-btn-active-bg: linear-gradient(to right, #7c3aed, #4f46e5);
+  --color-settings-btn-active-text: white;
+  --color-settings-btn-active-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --color-settings-btn-inactive-bg: #1e293b;
+  --color-settings-btn-inactive-text: #cbd5e1;
+  --color-settings-btn-inactive-hover: #334155;
+  --color-settings-toggle-active: linear-gradient(to right, #7c3aed, #4f46e5);
+  --color-settings-toggle-inactive: #475569;
+  --color-settings-toggle-knob: white;
+  --color-settings-select-bg: #1e293b;
+  --color-settings-select-border: #475569;
+  --color-settings-btn-danger-bg: #dc2626;
+  --color-settings-btn-danger-hover: #b91c1c;
+  --color-settings-btn-danger-text: white;
+  --color-settings-btn-danger-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --color-settings-btn-gray-bg: #475569;
+  --color-settings-btn-gray-hover: #334155;
+  --color-settings-btn-gray-text: white;
+  --color-settings-btn-gray-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --color-settings-about-bg: #1e293b;
+  --color-settings-about-text: #cbd5e1;
+  --color-settings-link: #a78bfa;
+  --color-settings-link-hover: #c4b5fd;
+  
+  /* Footer */
+  --color-footer-bg: #6b21a8;
+  --color-footer-text: #f8fafc;
+  --color-footer-text-muted: #c4b5fd;
+  --color-footer-link: #ddd6fe;
+  --color-footer-link-hover: #f3e8ff;
+  --color-footer-heading-glow: rgba(255, 255, 255, 0.35);
+  --color-footer-wave-bg: linear-gradient(to right, #8b5cf6, #6366f1, #8b5cf6);
+  --color-footer-gradient-overlay: rgba(124, 58, 237, 0.3);
+  
+  /* Breed Info Display */
+  --color-breed-info-bg: #0f172a;
+  --color-breed-title: #a78bfa;
+  --color-breed-fun-fact: #cbd5e1;
+  --color-breed-no-info: #a78bfa;
+  --color-breed-no-info-text: #cbd5e1;
+  --color-breed-know-more-bg: #7c3aed;
+  --color-breed-know-more-hover: #6d28d9;
+  --color-breed-know-more-text: white;
+  --color-breed-back-to-top-bg: #7c3aed;
+  --color-breed-back-to-top-hover: #6d28d9;
+  --color-breed-back-to-top-text: white;
+  --color-breed-back-to-top-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  
+  /* Breed Tabs */
+  --color-tabs-bg: #1e293b;
+  --color-tabs-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --color-tab-active-bg: #7c3aed;
+  --color-tab-active-text: white;
+  --color-tab-active-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --color-tab-inactive-bg: transparent;
+  --color-tab-inactive-text: #c4b5fd;
+  
+  /* Info Card */
+  --color-card-bg: linear-gradient(to bottom right, #1e293b, #312e81);
+  --color-card-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.1), 0 1px 3px rgba(0,0,0,0.3);
+  --color-card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  --color-card-icon: #a78bfa;
+  --color-card-title: #f1f5f9;
+  --color-card-text: #cbd5e1;
+  
+  /* Know More Page */
+  --color-knowmore-bg: #0f172a;
+  --color-knowmore-title: #a78bfa;
+  --color-knowmore-section-bg: #1e293b;
+  --color-knowmore-section-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --color-knowmore-section-title: #c4b5fd;
+  --color-knowmore-section-border: #334155;
+  --color-knowmore-card-bg: #1e293b;
+  --color-knowmore-card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  --color-knowmore-card-title: #c4b5fd;
+  --color-knowmore-text: #cbd5e1;
+  --color-knowmore-text-dark: #e2e8f0;
+  --color-knowmore-subtitle: #f1f5f9;
+  --color-knowmore-read-more: #a78bfa;
+  --color-knowmore-read-more-hover: #c4b5fd;
+  --color-knowmore-back-btn-bg: #7c3aed;
+  --color-knowmore-back-btn-text: white;
+  --color-knowmore-no-data-text: #cbd5e1;
+  
+  /* Section Cards (for Settings) */
+  --color-card-bg-start: rgba(30, 41, 59, 0.9);
+  --color-card-bg-end: rgba(15, 23, 42, 1);
+  --color-card-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0,0,0,0.2);
+  --color-btn-anim-shadow: 0 10px 24px rgba(124, 58, 237, 0.2);
+
+   
+  /* Range Card - Dark Mode */
+  --color-range-bar-bg: rgba(71, 85, 105, 0.3);
+  --color-range-fill-gradient: linear-gradient(to right, #8b5cf6, #6366f1);
+  --color-range-marker-bg: #1e293b;
+  --color-range-marker-border-start: #a78bfa;
+  --color-range-marker-border-end: #6366f1;
+  --color-range-marker-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+
+  /* Accordion Card - Dark Mode */
+--color-accordion-bg: #1e293b; 
+--color-accordion-border: #475569; 
+--color-accordion-title: #f1f5f9; 
+--color-accordion-chevron: #a78bfa; 
+--color-accordion-label: #cbd5e1; 
+--color-accordion-value: #e2e8f0; 
+}
+
+
+/* ===== BASE STYLES ===== */
 body {
   font-family: 'Archivo', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background-color: white; /* default background */
-  color: black;            /* default text */
+  background-color: var(--color-body-bg);
+  color: var(--color-body-text);
 }
 
 h1, h2, h3 {
-  font-family: 'Alfa Slab One', cursive;
+  font-family: 'Ultra', cursive;
 }
 
-/* Nav link underline + hover */
+/* ===== NAV LINK WITH UNDERLINE ANIMATION ===== */
 .nav-link {
   position: relative;
-  color: white; /* default link color */
+  color: var(--color-nav-link);
   transition: color .25s ease;
   text-decoration: none;
 }
+
 .nav-link::after {
   content: "";
   position: absolute;
@@ -25,58 +495,80 @@ h1, h2, h3 {
   bottom: -6px;
   width: 100%;
   height: 2px;
-  background: white;
+  background: var(--color-nav-link-underline);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .28s ease;
 }
+
 .nav-link:hover {
-  color: #ffffff; /* pink-300 on hover */
+  color: var(--color-nav-link-hover);
 }
+
 .nav-link:hover::after {
   transform: scaleX(1);
 }
 
-/* Button hover effect */
+/* ===== BUTTON HOVER EFFECT ===== */
 .btn-hover {
-  background: white;
-  color: #6b21a8; /* purple-800 */
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
   transition: all .3s ease;
   transform: translateY(0);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-.btn-hover:hover {
-  background: #e9d5ff; /* purple-200 */
-  color: #4c1d95;      /* darker purple */
-  transform: translateY(-3px); /* rise up */
-  box-shadow: 0 8px 14px rgba(0,0,0,0.2); /* stronger shadow */
+  box-shadow: var(--color-button-shadow);
 }
 
-/* subtle violet tint + smooth 3D-like hover lift for settings sections */
+.btn-hover:hover {
+  background: var(--color-button-hover-bg);
+  color: var(--color-button-hover-text);
+  transform: translateY(-3px);
+  box-shadow: var(--color-button-hover-shadow);
+}
+
+/* ===== SETTINGS BUTTON ===== */
+.header-settings {
+  color: var(--color-settings-icon);
+  transition: all .2s ease;
+  border-radius: 9999px;
+  padding: 0.5rem;
+}
+
+.header-settings:hover {
+  background-color: var(--color-settings-hover-bg);
+  color: var(--color-settings-hover-text);
+}
+
+/* ===== SECTION CARD (for Settings page) ===== */
 .section-card {
-  position: relative;                    /* ensure stacking context works for children */
+  position: relative;
   z-index: 0;
-  background: linear-gradient(180deg, rgba(245,243,255,0.9), rgba(255,255,255,1));
+  background: linear-gradient(180deg, var(--color-card-bg-start), var(--color-card-bg-end));
   transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s, z-index .01s;
   transform-style: preserve-3d;
   will-change: transform;
-  pointer-events: auto;                  /* ensure children remain clickable */
+  pointer-events: auto;
 }
 
 .section-card:hover {
-  transform: translateY(-10px) scale(1.03); /* removed translateZ to avoid layer issues */
-  box-shadow: 0 20px 40px rgba(99,102,241,0.12), 0 6px 18px rgba(0,0,0,0.06);
-  z-index: 20;                            /* bring it above siblings on hover */
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: var(--color-card-shadow);
+  z-index: 20;
 }
 
-/* button hover animation */
+/* ===== BUTTON ANIMATION (for Settings page buttons) ===== */
 .btn-anim {
   position: relative;
   transition: transform .18s ease, box-shadow .18s ease, background-color .12s ease;
   will-change: transform;
   pointer-events: auto;
 }
+
 .btn-anim:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 10px 24px rgba(99,102,241,0.12);
+  box-shadow: var(--color-btn-anim-shadow);
+}
+
+/* ===== HEADER SPECIFIC ===== */
+.header-root {
+  background-color: var(--color-header-bg);
 }

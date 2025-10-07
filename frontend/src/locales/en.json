@@ -12,62 +12,215 @@
       "response": "response"
     }
   },
-  "uploadPhoto": "Upload a Photo",
-  "dragOrDrop": "Drag or Drop",
-  "yourPhotoHere": "your Photo here",
-  "orClickToBrowse": "or click to browse",
-  "browseFiles": "Browse Files",
-  "cropYourImage": "Crop Your Image",
-  "zoom": "Zoom",
-  "rotation": "Rotation",
-  "aspectRatio": "Aspect Ratio",
-  "square": "1:1 (Square)",
-  "fourThree": "4:3",
-  "sixteenNine": "16:9",
-  "threeFour": "3:4",
-  "nineSixteen": "9:16",
-  "free": "Free",
-  "undo": "Undo",
-  "cropImage": "Crop Image",
-  "cancel": "Cancel",
-  "selected": "Selected",
-  "runPrediction": "Run Prediction",
-  "predicting": "Predicting...",
-  "invalidFileType": "Invalid file type. Please upload an image (JPG, PNG).",
-  "failedToCrop": "Failed to crop image. Please try again.",
-  "lowConfidence": "Low confidence in prediction. Please try a clearer image.",
-  "connectError": "Failed to connect to the prediction service. Check console for details.",
-  "selectImageFirst": "Please select an image file first.",
-  "home": "Home",
-  "predict": "Predict",
-  "info": "Info",
+"guidelines": {
+  "title": "Prediction Guidelines",
+  "dos": {
+    "title": "Do's",
+    "items": {
+      "clearPhoto": "Clear, front-facing photo",
+      "goodLighting": "Good natural lighting",
+      "singleDog": "Only one dog",
+      "frontView": "Entire dog visible"
+    }
+  },
+  "donts": {
+    "title": "Don'ts",
+    "items": {
+      "blurry": "Blurry, Dark photos",
+      "obstructed": "Dog obscured",
+      "multipleDogs": "Multiple dogs",
+      "distantShots": "Distant/angled shots"
+    }
+  },
+  "note": "Following these guidelines will help our AI provide more accurate breed predictions."
+},
+  "upload": {
+    "title": "Upload a Photo",
+    "dragDrop": "Drag or Drop",
+    "yourPhotoHere": "your Photo here",
+    "orClickToBrowse": "or click to browse",
+    "browseFiles": "Browse Files",
+    "selected": "Selected",
+    "runPrediction": "Run Prediction",
+    "predicting": "Predicting...",
+    "errors": {
+      "invalidFileType": "Invalid file type. Please upload an image (JPG, PNG).",
+      "selectImageFirst": "Please select an image file first.",
+      "lowConfidence": "Low confidence in prediction. Please try a clearer image.",
+      "connectError": "Failed to connect to the prediction service. Check console for details."
+    }
+  },
+  "crop": {
+    "title": "Crop Your Image",
+    "zoom": "Zoom",
+    "rotation": "Rotation",
+    "aspectRatio": "Aspect Ratio",
+    "ratios": {
+      "square": "1:1 (Square)",
+      "fourThree": "4:3",
+      "sixteenNine": "16:9",
+      "threeFour": "3:4",
+      "nineSixteen": "9:16",
+      "free": "Free"
+    },
+    "undo": "Undo",
+    "cropImage": "Crop Image",
+    "cancel": "Cancel",
+    "errors": {
+      "failedToCrop": "Failed to crop image. Please try again."
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "questions": {
+      "whatIs": {
+        "question": "What is Pawdentify?",
+        "answer": "Pawdentify is an AI-powered dog breed identification app that helps you identify your dog's breed by uploading a photo."
+      },
+      "accuracy": {
+        "question": "How accurate is the breed prediction?",
+        "answer": "Our AI model provides high accuracy predictions, but results may vary based on image quality and clarity. For best results, upload clear, well-lit photos of your dog's face."
+      },
+      "multiplePhotos": {
+        "question": "Can I upload multiple photos?",
+        "answer": "Currently, you can upload one photo at a time for prediction. We're working on batch processing features for future updates."
+      },
+      "formats": {
+        "question": "What image formats are supported?",
+        "answer": "We support common image formats including JPG, PNG, and JPEG. Make sure your image is under 10MB in size."
+      },
+      "security": {
+        "question": "Is my data secure?",
+        "answer": "Yes, we take privacy seriously. Uploaded images are processed securely and not stored permanently on our servers."
+      }
+    },
+    "stillNeedHelp": "Still need help?",
+    "contactUs": "Contact Us"
+  },
+  "common": {
+    "tryAgain": "Try again"
+  }
+  ,
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your Pawdentify experience",
+    "backToHome": "Back to Home",
+    "appearance": {
+      "title": "Appearance",
+      "theme": {
+        "label": "Theme",
+        "description": "Choose between light and dark themes",
+        "light": "Light",
+        "dark": "Dark"
+      }
+    },
+    "functionality": {
+      "title": "Functionality",
+      "imageQuality": {
+        "label": "Image Quality",
+        "description": "Processing quality for uploaded images",
+        "high": "High Quality",
+        "medium": "Medium Quality",
+        "low": "Low Quality (Faster)"
+      },
+      "language": {
+        "label": "Language",
+        "description": "Select your preferred language"
+      }
+    },
+    "privacy": {
+      "title": "Privacy & Data",
+      "saveHistory": {
+        "label": "Save History",
+        "description": "Keep track of your identifications locally"
+      },
+      "anonymousMode": {
+        "label": "Anonymous Mode",
+        "description": "Don't store any personal data"
+      },
+      "clearData": {
+        "title": "Clear All Data",
+        "description": "Remove all stored Pawdentify data",
+        "button": "Clear All Data",
+        "confirm": "Clear all Pawdentify data? This cannot be undone.",
+        "success": "All Pawdentify data removed.",
+        "error": "Failed to clear data — see console."
+      }
+    },
+    "advanced": {
+      "title": "Advanced",
+      "cache": {
+        "title": "Cache Management",
+        "description": "Clear cached data to free space",
+        "button": "Clear Cache",
+        "confirm": "Clear cached data?",
+        "success": "Cache cleared (placeholder)."
+      }
+    },
+    "about": {
+      "title": "About",
+      "version": "Version:",
+      "versionNumber": "2.0.0",
+      "lastUpdated": "Last Updated:",
+      "lastUpdatedDate": "October 2025",
+      "breedsDatabase": "Breeds Database:",
+      "breedsDatabaseCount": "120+ breeds",
+      "support": "Support:",
+      "supportEmail": "support@pawdentify.com"
+    }
+  },
+   "footer": {
+    "logo": "PAWDENTIFY",
+    "copyright": "PAWDENTIFY. All rights reserved.",
+    "navigation": {
+      "title": "Navigation",
+      "home": "Home",
+      "predict": "Predict"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "support@paws.com",
+      "phone": "+1 (555) 123-4567"
+    }
+  },
+  "breedInfo": {
+    "noInfoFound": "No detailed info found for the predicted breed.",
+    "unknownBreed": "Unknown",
+    "knowMore": "Know More",
+    "backToTop": "Back to Top",
+    "noFunFact": "No fun fact available.",
+    "tabs": {
+      "physical": "Physical",
+      "temperament": "Temperament",
+      "care": "Care",
+      "environment": "Environment",
+      "health": "Health",
+      "nutrition": "Nutrition",
+      "trainExercise": "Train & Exercise",
+      "lifestyle": "Lifestyle"
+    }
+  },
+  "knowMore": {
+    "title": "Know More:",
+    "noData": "No data available. Please go back and select a breed.",
+    "back": "Back",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "noDetails": "No details available.",
+    "defaultBreed": "Breed"
+  },
+  "header": {
+  "logoAlt": "PAWS Logo",
+  "nav": {
+    "home": "Home",
+    "predict": "Predict",
+    "info": "Info"
+  },
+  "back": "Back",
+  "faq": "FAQ",
   "getStarted": "Get Started",
-  "tryAgain": "Try again",
-  "faqTitle": "Frequently Asked Questions",
-  "faq1Question": "What is Pawdentify?",
-  "faq1Answer": "Pawdentify is an AI-powered dog breed identification app that helps you identify your dog's breed by uploading a photo.",
-  "faq2Question": "How accurate is the breed prediction?",
-  "faq2Answer": "Our AI model provides high accuracy predictions, but results may vary based on image quality and clarity. For best results, upload clear, well-lit photos of your dog's face.",
-  "faq3Question": "Can I upload multiple photos?",
-  "faq3Answer": "Currently, you can upload one photo at a time for prediction. We're working on batch processing features for future updates.",
-  "faq4Question": "What image formats are supported?",
-  "faq4Answer": "We support common image formats including JPG, PNG, and JPEG. Make sure your image is under 10MB in size.",
-  "faq5Question": "Is my data secure?",
-  "faq5Answer": "Yes, we take privacy seriously. Uploaded images are processed securely and not stored permanently on our servers.",
-  "stillNeedHelp": "Still need help?",
-  "contactUs": "Contact Us",
-  "predictionGuidelines": "Prediction Guidelines",
-  "dos": "Do's",
-  "donts": "Don'ts",
-  "doClearPhoto": "Use clear, high-quality photos",
-  "doFaceFocus": "Focus on the dog's face and head",
-  "doGoodLighting": "Ensure good lighting and avoid shadows",
-  "doSingleDog": "Upload photos of a single dog only",
-  "doFrontView": "Prefer front or side view of the dog",
-  "dontBlurry": "Don't use blurry or out-of-focus images",
-  "dontDark": "Don't use dark or poorly lit photos",
-  "dontMultipleDogs": "Don't include multiple dogs in one photo",
-  "dontObstructed": "Don't upload photos where the dog's face is obstructed",
-  "dontSmallImage": "Don't use very small or low-resolution images",
-  "guidelinesNote": "Following these guidelines will help our AI provide more accurate breed predictions."
+  "settings": "Settings",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode"
+}
 }
