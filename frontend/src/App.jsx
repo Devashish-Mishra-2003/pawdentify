@@ -17,6 +17,7 @@ import Settings from './components/Settings';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import Dashboard from './pages/Dashboard';
+import Services from './pages/Services';
 
 const PREDICTION_STORAGE_KEY = 'pawdentify-current-prediction';
 
@@ -134,6 +135,14 @@ const App = () => {
             
             {/* Protected Routes */}
             <Route 
+              path="/services" 
+              element={
+                <ProtectedRoute>
+                  <Services />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/dashboard" 
               element={
                 <ProtectedRoute>
@@ -165,5 +174,6 @@ const App = () => {
 };
 
 export default App;
+
 
 

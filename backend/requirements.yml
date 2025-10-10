@@ -19,5 +19,6 @@ dependencies:
     - "pyjwt[crypto]"     # ← CHANGED: Add [crypto] extras
     - python-dotenv       # ← ADDED: For loading .env files
     - cloudinary
+    - httpx
 
 #these versions are required to simulate same environment as when model was trained using kaggle

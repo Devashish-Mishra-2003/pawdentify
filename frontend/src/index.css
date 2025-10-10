@@ -271,6 +271,24 @@
 --color-auth-social-btn-bg: #ffffff;
 --color-auth-social-btn-border: #d1d5db;
 --color-auth-social-btn-hover: #f9fafb;
+
+ /* Services Page Colors */
+  --color-services-bg: #f8f9fa;
+  --color-services-title: #1e293b;
+  --color-services-subtitle: #64748b;
+  --color-services-card-bg: #ffffff;
+  --color-services-card-border: #e2e8f0;
+  --color-services-card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --color-services-card-hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --color-services-category-btn-bg: #ffffff;
+  --color-services-category-btn-border: #e2e8f0;
+  --color-services-category-btn-text: #475569;
+  --color-services-category-btn-active-bg: #8c52ff;
+  --color-services-category-btn-active-text: #ffffff;
+  --color-services-phone-badge-bg: rgba(34, 197, 94, 0.1);
+  --color-services-phone-badge-text: #16a34a;
+  --color-services-no-phone-badge-bg: rgba(249, 115, 22, 0.1);
+  --color-services-no-phone-badge-text: #ea580c;
 }
 
 /* ===== DARK MODE THEME ===== */
@@ -524,6 +542,24 @@
 --color-auth-social-btn-bg: #1e293b;
 --color-auth-social-btn-border: #475569;
 --color-auth-social-btn-hover: #334155;
+
+ /* Services Page Colors - Dark Mode */
+  --color-services-bg: #0f172a;
+  --color-services-title: #f1f5f9;
+  --color-services-subtitle: #94a3b8;
+  --color-services-card-bg: #1e293b;
+  --color-services-card-border: #334155;
+  --color-services-card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --color-services-card-hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --color-services-category-btn-bg: #1e293b;
+  --color-services-category-btn-border: #334155;
+  --color-services-category-btn-text: #cbd5e1;
+  --color-services-category-btn-active-bg: #8c52ff;
+  --color-services-category-btn-active-text: #ffffff;
+  --color-services-phone-badge-bg: rgba(34, 197, 94, 0.2);
+  --color-services-phone-badge-text: #4ade80;
+  --color-services-no-phone-badge-bg: rgba(249, 115, 22, 0.2);
+  --color-services-no-phone-badge-text: #fb923c;
 }
 
 

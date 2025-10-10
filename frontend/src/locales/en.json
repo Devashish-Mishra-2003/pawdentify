@@ -2,7 +2,7 @@
   "hero": {
     "title": "Man's best friend",
     "description": {
-      "part1": "Get to know your dog the best you can and give them a home they deserve cause as Man's best friend, they deserve the best!",
+      "part1": "Get to know your dog the best you can and give them a home they deserve.",
       "part2": "Our website lets you identify over 100+ breeds of doggos and gives you up to date information about them."
     },
     "predictButton": "Predict",
@@ -12,33 +12,32 @@
       "response": "response"
     }
   },
-"guidelines": {
-  "title": "Prediction Guidelines",
-  "dos": {
-    "title": "Do's",
-    "items": {
-      "clearPhoto": "Clear, front-facing photo",
-      "goodLighting": "Good natural lighting",
-      "singleDog": "Only one dog",
-      "frontView": "Entire dog visible"
-    }
+  "guidelines": {
+    "title": "Prediction Guidelines",
+    "dos": {
+      "title": "Do's",
+      "items": {
+        "clearPhoto": "Clear, front-facing photo",
+        "goodLighting": "Good natural lighting",
+        "singleDog": "Only one dog",
+        "frontView": "Entire dog visible"
+      }
+    },
+    "donts": {
+      "title": "Don'ts",
+      "items": {
+        "blurry": "Blurry, Dark photos",
+        "obstructed": "Dog obscured",
+        "multipleDogs": "Multiple dogs",
+        "distantShots": "Distant/angled shots"
+      }
+    },
+    "note": "Following these guidelines will help our AI provide more accurate breed predictions."
   },
-  "donts": {
-    "title": "Don'ts",
-    "items": {
-      "blurry": "Blurry, Dark photos",
-      "obstructed": "Dog obscured",
-      "multipleDogs": "Multiple dogs",
-      "distantShots": "Distant/angled shots"
-    }
-  },
-  "note": "Following these guidelines will help our AI provide more accurate breed predictions."
-},
- "upload": {
+  "upload": {
     "title": "Upload & Predict",
     "dragDropTitle": "Drag & drop an image",
     "description": "We recommend a clear, front-facing photo. Images are processed locally before sending to the model.",
-    "historySaveMessage": "Results will be automatically saved to your history",
     "ariaLabel": "Upload image file. Press Enter to browse files or drop an image here.",
     "previewAlt": "Selected preview",
     "pawIconAlt": "paw icon",
@@ -67,6 +66,57 @@
       "connectError": "Failed to connect to server",
       "serverError": "Prediction failed due to server error."
     }
+  },
+  "header": {
+    "nav": {
+      "home": "Home",
+      "info": "Info",
+      "services": "Services"
+    },
+    "faq": "FAQ",
+    "services": "Services",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "signOut": "Sign Out",
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "back": "Back",
+    "getStarted": "Get Started",
+    "logoAlt": "Pawdentify Logo",
+    "lightMode": "Switch to Light Mode",
+    "darkMode": "Switch to Dark Mode"
+  },
+  "services": {
+    "title": "Find Pet Services Near You",
+    "subtitle": "Discover veterinary clinics, pet stores, shelters, and more in your area",
+    "signInRequired": "Please sign in to access Services",
+    "categories": {
+      "vet": "Veterinary Clinics",
+      "pet_store": "Pet Stores",
+      "food_store": "Pet Food Stores",
+      "shelter": "Pet Adoption Near Me",
+      "ngo": "Animal Welfare NGOs"
+    },
+    "searchRadius": "Search Radius",
+    "radiusOptions": {
+      "2km": "2 km",
+      "5km": "5 km",
+      "10km": "10 km",
+      "20km": "20 km"
+    },
+    "enableLocation": "Enable location to find services near you",
+    "locationError": "Unable to access your location. Please enable location services.",
+    "withPhone": "Places with Contact Number",
+    "withoutPhone": "Places without Contact Number",
+    "noResults": "No places found in this category",
+    "distance": "{{distance}} km away",
+    "getDirections": "Get Directions",
+    "call": "Call",
+    "email": "Email",
+    "website": "Website",
+    "loading": "Loading nearby places...",
+    "selectCategory": "Select a category to see nearby places",
+    "showingResults": "Showing {{count}} places within {{radius}} km"
   },
   "faq": {
     "title": "Frequently Asked Questions",
@@ -100,12 +150,11 @@
     "subtitle": "Customize your Pawdentify experience",
     "backToHome": "Back to Home",
     "saving": "Saving",
-    "syncMessage": "Your settings are synced across all devices",
     "functionality": {
       "title": "Functionality",
       "imageQuality": {
         "label": "Image Quality",
-        "description": "Processing quality for uploaded images",
+        "description": "Higher quality provides better predictions but uses more data. Lower quality is faster and uses less bandwidth.",
         "high": "High Quality",
         "medium": "Medium Quality",
         "low": "Low Quality (Faster)"
@@ -155,68 +204,7 @@
       "supportEmail": "support@pawdentify.com"
     }
   },
-  "common": {
-    "loading": "Loading",
-    "tryAgain": "Try Again"
-  },
-   "footer": {
-    "logo": "PAWDENTIFY",
-    "copyright": "PAWDENTIFY. All rights reserved.",
-    "navigation": {
-      "title": "Navigation",
-      "home": "Home",
-      "predict": "Predict"
-    },
-    "contact": {
-      "title": "Contact",
-      "email": "support@paws.com",
-      "phone": "+1 (555) 123-4567"
-    }
-  },
-  "breedInfo": {
-    "noInfoFound": "No detailed info found for the predicted breed.",
-    "unknownBreed": "Unknown",
-    "knowMore": "Know More",
-    "backToTop": "Back to Top",
-    "noFunFact": "No fun fact available.",
-    "tabs": {
-      "physical": "Physical",
-      "temperament": "Temperament",
-      "care": "Care",
-      "environment": "Environment",
-      "health": "Health",
-      "nutrition": "Nutrition",
-      "trainExercise": "Train & Exercise",
-      "lifestyle": "Lifestyle"
-    }
-  },
-  "knowMore": {
-    "title": "Know More:",
-    "noData": "No data available. Please go back and select a breed.",
-    "back": "Back",
-    "readMore": "Read more",
-    "readLess": "Read less",
-    "noDetails": "No details available.",
-    "defaultBreed": "Breed"
-  },
-     "header": {
-    "logoAlt": "Pawdentify Logo",
-    "nav": {
-      "home": "Home",
-      "info": "Info"
-    },
-    "faq": "FAQ",
-    "getStarted": "Get Started",
-    "back": "Back",
-    "lightMode": "Switch to Light Mode",
-    "darkMode": "Switch to Dark Mode",
-    "settings": "Settings",
-    "signIn": "Sign In",
-    "signUp": "Sign Up",
-    "dashboard": "Dashboard",
-    "signOut": "Sign Out"
-  },
-"auth": {
+  "auth": {
     "signUp": {
       "title": "Create Account",
       "subtitle": "Join Pawdentify today",
@@ -264,7 +252,7 @@
       "passwordMismatch": "Passwords don't match"
     }
   },
-"dashboard": {
+  "dashboard": {
     "profile": {
       "joined": "Joined",
       "location": "Location"
@@ -284,8 +272,10 @@
       "age": "Age",
       "yearsOld": "years old",
       "monthsOld": "months old",
+      "petBreed": "Breed",
+      "addedOn": "Added on",
       "addPetModal": {
-         "saving": "Saving...",
+        "saving": "Saving...",
         "title": "Add Your Pet",
         "petName": "Pet Name",
         "petNamePlaceholder": "e.g., Max, Luna, Buddy",
@@ -320,11 +310,9 @@
           "other": "Other"
         }
       },
-      "adoptTitle": "Looking to Adopt ?",
+      "adoptTitle": "Looking to Adopt?",
       "adoptDesc": "Millions of pets are waiting for their forever home. Discover the joy of adoption and learn why it's one of the most rewarding decisions you can make.",
-      "adoptCTA": "Find Pets to Adopt",
-      "petBreed": "Breed",
-      "addedOn": "Added on"
+      "adoptCTA": "Find Pets to Adopt"
     },
     "history": {
       "title": "Search History",
@@ -336,5 +324,57 @@
       "searchedOn": "Searched on",
       "viewDetails": "View Details"
     }
+  },
+  "breedInfo": {
+    "noInfoFound": "No detailed info found for the predicted breed.",
+    "unknownBreed": "Unknown",
+    "knowMore": "Know More",
+    "backToTop": "Back to Top",
+    "noFunFact": "No fun fact available.",
+    "tabs": {
+      "physical": "Physical",
+      "temperament": "Temperament",
+      "care": "Care",
+      "environment": "Environment",
+      "health": "Health",
+      "nutrition": "Nutrition",
+      "trainExercise": "Train & Exercise",
+      "lifestyle": "Lifestyle"
+    }
+  },
+  "knowMore": {
+    "title": "Know More:",
+    "noData": "No data available. Please go back and select a breed.",
+    "back": "Back",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "noDetails": "No details available.",
+    "defaultBreed": "Breed"
+  },
+  "footer": {
+    "logo": "PAWDENTIFY",
+    "copyright": "PAWDENTIFY. All rights reserved.",
+    "navigation": {
+      "title": "Navigation",
+      "home": "Home",
+      "predict": "Predict"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "support@paws.com",
+      "phone": "+1 (555) 123-4567"
+    }
+  },
+  "common": {
+    "loading": "Loading",
+    "tryAgain": "Try Again",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back"
   }
 }

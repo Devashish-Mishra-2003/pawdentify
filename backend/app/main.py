@@ -11,7 +11,7 @@ from typing import Optional
 from .preprocessing import preprocess_image_bytes, load_model_from_path, predict_top
 
 # --- NEW: Import routers for pets and history ---
-from .routes import pets, history, settings
+from .routes import pets, history, settings,  places
 
 # Load environment (expect backend/.env or backend/.env.example)
 BASE_DIR = Path(__file__).resolve().parent
@@ -37,6 +37,7 @@ app.add_middleware(
 app.include_router(pets.router)
 app.include_router(history.router)
 app.include_router(settings.router)
+app.include_router(places.router)
 
 # Load breed info
 if not BREED_INFO_PATH.exists():
