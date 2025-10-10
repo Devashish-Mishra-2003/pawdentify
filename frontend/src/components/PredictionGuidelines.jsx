@@ -39,7 +39,7 @@ const PredictionGuidelines = () => {
       clearInterval(a);
       clearInterval(b);
     };
-  }, []);
+  }, [doImages.length, dontImages.length]);
 
   const doItems = [
     t("guidelines.dos.items.clearPhoto"),
@@ -61,50 +61,18 @@ const PredictionGuidelines = () => {
       className="py-20 font-archivo relative overflow-hidden"
       style={{ background: "var(--color-guidelines-bg)" }}
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full opacity-20"
-            style={{
-              background: "var(--color-guidelines-decorative-do)",
-              width: `${40 + i * 15}px`,
-              height: `${40 + i * 15}px`,
-              left: `${10 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
-            }}
-            animate={{ y: [-10, 10, -10], x: [-5, 5, -5], rotate: [0, 180, 360] }}
-            transition={{ duration: 8 + i * 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
-          />
-        ))}
-      </div>
-
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         <motion.h2
           className="text-center text-4xl font-alfa mb-12 relative"
           style={{ color: "var(--color-guidelines-title)" }}
           initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <motion.span
-            animate={{
-              textShadow: [
-                "0 0 20px rgba(0,0,0,0.1)",
-                "0 0 30px rgba(0,0,0,0.2)",
-                "0 0 20px rgba(0,0,0,0.1)",
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            {t("guidelines.title")}
-          </motion.span>
+          {t("guidelines.title")}
         </motion.h2>
 
         <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
@@ -117,8 +85,7 @@ const PredictionGuidelines = () => {
               boxShadow: "var(--color-do-card-shadow)",
             }}
             initial={{ x: -100, opacity: 0, scale: 0.9 }}
-            whileInView={{ x: 0, opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            animate={{ x: 0, opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 100 }}
             whileHover={{ scale: 1.02, y: -5, boxShadow: "var(--color-do-card-hover-shadow)" }}
           >
@@ -145,34 +112,11 @@ const PredictionGuidelines = () => {
                   transition={{ duration: 0.3 }}
                 />
 
-                {/* Floating particles */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  {[...Array(4)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-2 h-2 rounded-full opacity-30"
-                      style={{
-                        backgroundColor: "var(--color-do-particle)",
-                        left: `${10 + i * 20}%`,
-                        top: `${20 + i * 15}%`,
-                      }}
-                      animate={{ y: [-8, 8, -8], opacity: [0.3, 0.7, 0.3] }}
-                      transition={{
-                        duration: 3 + i * 0.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: i * 0.3,
-                      }}
-                    />
-                  ))}
-                </div>
-
                 <motion.h3
                   className="text-2xl font-alfa mb-6 flex items-center space-x-3 relative z-10"
                   style={{ color: "var(--color-do-title)" }}
                   initial={{ y: 20, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  viewport={{ once: true }}
+                  animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
                   <motion.div whileHover={{ rotate: 360, scale: 1.2 }} transition={{ duration: 0.5 }}>
@@ -187,8 +131,7 @@ const PredictionGuidelines = () => {
                       key={item}
                       className="flex items-start space-x-3 group/item"
                       initial={{ x: -20, opacity: 0 }}
-                      whileInView={{ x: 0, opacity: 1 }}
-                      viewport={{ once: true }}
+                      animate={{ x: 0, opacity: 1 }}
                       transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
                       whileHover={{ x: 5 }}
                     >
@@ -218,8 +161,7 @@ const PredictionGuidelines = () => {
               boxShadow: "var(--color-dont-card-shadow)",
             }}
             initial={{ x: 100, opacity: 0, scale: 0.9 }}
-            whileInView={{ x: 0, opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            animate={{ x: 0, opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 100 }}
             whileHover={{ scale: 1.02, y: -5, boxShadow: "var(--color-dont-card-hover-shadow)" }}
           >
@@ -232,33 +174,11 @@ const PredictionGuidelines = () => {
                   transition={{ duration: 0.3 }}
                 />
 
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  {[...Array(4)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-2 h-2 rounded-full opacity-30"
-                      style={{
-                        backgroundColor: "var(--color-dont-particle)",
-                        left: `${10 + i * 20}%`,
-                        top: `${20 + i * 15}%`,
-                      }}
-                      animate={{ y: [-8, 8, -8], opacity: [0.3, 0.7, 0.3] }}
-                      transition={{
-                        duration: 3 + i * 0.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: i * 0.3,
-                      }}
-                    />
-                  ))}
-                </div>
-
                 <motion.h3
                   className="text-2xl font-alfa mb-6 flex items-center space-x-3 relative z-10"
                   style={{ color: "var(--color-dont-title)" }}
                   initial={{ y: 20, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  viewport={{ once: true }}
+                  animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
                   <motion.div whileHover={{ rotate: 360, scale: 1.2 }} transition={{ duration: 0.5 }}>
@@ -273,8 +193,7 @@ const PredictionGuidelines = () => {
                       key={item}
                       className="flex items-start space-x-3 group/item"
                       initial={{ x: 20, opacity: 0 }}
-                      whileInView={{ x: 0, opacity: 1 }}
-                      viewport={{ once: true }}
+                      animate={{ x: 0, opacity: 1 }}
                       transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
                       whileHover={{ x: -5 }}
                     >
@@ -315,6 +234,8 @@ const PredictionGuidelines = () => {
 };
 
 export default PredictionGuidelines;
+
+
 
 
 

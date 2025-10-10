@@ -2,7 +2,7 @@
   "hero": {
     "title": "Man's best friend",
     "description": {
-      "part1": "Get to know your dog the best you can and give them a home they deserve.",
+      "part1": "Get to know your dog the best you can and give them a home they deserve cause as Man's best friend, they deserve the best!",
       "part2": "Our website lets you identify over 100+ breeds of doggos and gives you up to date information about them."
     },
     "predictButton": "Predict",
@@ -34,40 +34,38 @@
   },
   "note": "Following these guidelines will help our AI provide more accurate breed predictions."
 },
-  "upload": {
-    "title": "Upload a Photo",
-    "dragDrop": "Drag or Drop",
-    "yourPhotoHere": "your Photo here",
-    "orClickToBrowse": "or click to browse",
-    "browseFiles": "Browse Files",
-    "selected": "Selected",
-    "runPrediction": "Run Prediction",
+ "upload": {
+    "title": "Upload & Predict",
+    "dragDropTitle": "Drag & drop an image",
+    "description": "We recommend a clear, front-facing photo. Images are processed locally before sending to the model.",
+    "historySaveMessage": "Results will be automatically saved to your history",
+    "ariaLabel": "Upload image file. Press Enter to browse files or drop an image here.",
+    "previewAlt": "Selected preview",
+    "pawIconAlt": "paw icon",
     "predicting": "Predicting...",
-    "errors": {
-      "invalidFileType": "Invalid file type. Please upload an image (JPG, PNG).",
-      "selectImageFirst": "Please select an image file first.",
-      "lowConfidence": "Low confidence in prediction. Please try a clearer image.",
-      "connectError": "Failed to connect to the prediction service. Check console for details."
-    }
-  },
-  "crop": {
-    "title": "Crop Your Image",
-    "zoom": "Zoom",
-    "rotation": "Rotation",
-    "aspectRatio": "Aspect Ratio",
-    "ratios": {
-      "square": "1:1 (Square)",
-      "fourThree": "4:3",
-      "sixteenNine": "16:9",
-      "threeFour": "3:4",
-      "nineSixteen": "9:16",
-      "free": "Free"
+    "buttons": {
+      "browse": "Browse",
+      "change": "Change",
+      "run": "Run",
+      "cancel": "Cancel"
     },
-    "undo": "Undo",
-    "cropImage": "Crop Image",
-    "cancel": "Cancel",
+    "hints": {
+      "recommended": "Recommended: 800×800+",
+      "fileTypes": "File types: JPG, PNG"
+    },
+    "progress": "Uploading… {{percent}}%",
+    "messages": {
+      "imageSelected": "Image selected. Ready to upload.",
+      "uploading": "Uploading image and requesting prediction...",
+      "predictionFailed": "Prediction failed.",
+      "predictionSuccess": "Prediction succeeded: {{breed}}"
+    },
     "errors": {
-      "failedToCrop": "Failed to crop image. Please try again."
+      "selectImageFirst": "Please select an image first",
+      "invalidFileType": "Please upload a valid image file",
+      "lowConfidence": "Low confidence prediction. Please try another image.",
+      "connectError": "Failed to connect to server",
+      "serverError": "Prediction failed due to server error."
     }
   },
   "faq": {
@@ -97,23 +95,12 @@
     "stillNeedHelp": "Still need help?",
     "contactUs": "Contact Us"
   },
-  "common": {
-    "tryAgain": "Try again"
-  }
-  ,
   "settings": {
     "title": "Settings",
     "subtitle": "Customize your Pawdentify experience",
     "backToHome": "Back to Home",
-    "appearance": {
-      "title": "Appearance",
-      "theme": {
-        "label": "Theme",
-        "description": "Choose between light and dark themes",
-        "light": "Light",
-        "dark": "Dark"
-      }
-    },
+    "saving": "Saving",
+    "syncMessage": "Your settings are synced across all devices",
     "functionality": {
       "title": "Functionality",
       "imageQuality": {
@@ -131,20 +118,19 @@
     "privacy": {
       "title": "Privacy & Data",
       "saveHistory": {
-        "label": "Save History",
-        "description": "Keep track of your identifications locally"
-      },
-      "anonymousMode": {
-        "label": "Anonymous Mode",
-        "description": "Don't store any personal data"
+        "label": "Save Search History",
+        "description": "Automatically save your dog breed predictions to view later. When disabled, your searches remain completely private.",
+        "warning": "Anonymous mode: Your predictions will not be saved"
       },
       "clearData": {
         "title": "Clear All Data",
-        "description": "Remove all stored Pawdentify data",
+        "description": "Remove all stored Pawdentify data from this device and cloud",
         "button": "Clear All Data",
         "confirm": "Clear all Pawdentify data? This cannot be undone.",
+        "confirmCloudData": "Do you also want to clear your cloud data (pets and history)?",
         "success": "All Pawdentify data removed.",
-        "error": "Failed to clear data — see console."
+        "error": "Failed to clear data — see console.",
+        "cloudError": "Failed to clear cloud data. Please try again."
       }
     },
     "advanced": {
@@ -154,20 +140,24 @@
         "description": "Clear cached data to free space",
         "button": "Clear Cache",
         "confirm": "Clear cached data?",
-        "success": "Cache cleared (placeholder)."
+        "success": "Cache cleared successfully."
       }
     },
     "about": {
       "title": "About",
       "version": "Version:",
-      "versionNumber": "2.0.0",
+      "versionNumber": "1.0.0",
       "lastUpdated": "Last Updated:",
-      "lastUpdatedDate": "October 2025",
-      "breedsDatabase": "Breeds Database:",
-      "breedsDatabaseCount": "120+ breeds",
+      "lastUpdatedDate": "January 2025",
+      "breedsDatabase": "Breeds:",
+      "breedsDatabaseCount": "120+",
       "support": "Support:",
       "supportEmail": "support@pawdentify.com"
     }
+  },
+  "common": {
+    "loading": "Loading",
+    "tryAgain": "Try Again"
   },
    "footer": {
     "logo": "PAWDENTIFY",
@@ -209,18 +199,142 @@
     "noDetails": "No details available.",
     "defaultBreed": "Breed"
   },
-  "header": {
-  "logoAlt": "PAWS Logo",
-  "nav": {
-    "home": "Home",
-    "predict": "Predict",
-    "info": "Info"
+     "header": {
+    "logoAlt": "Pawdentify Logo",
+    "nav": {
+      "home": "Home",
+      "info": "Info"
+    },
+    "faq": "FAQ",
+    "getStarted": "Get Started",
+    "back": "Back",
+    "lightMode": "Switch to Light Mode",
+    "darkMode": "Switch to Dark Mode",
+    "settings": "Settings",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "dashboard": "Dashboard",
+    "signOut": "Sign Out"
   },
-  "back": "Back",
-  "faq": "FAQ",
-  "getStarted": "Get Started",
-  "settings": "Settings",
-  "darkMode": "Dark Mode",
-  "lightMode": "Light Mode"
-}
+"auth": {
+    "signUp": {
+      "title": "Create Account",
+      "subtitle": "Join Pawdentify today",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "submitButton": "Create Account",
+      "alreadyHaveAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "verifyTitle": "Verify Email",
+      "verifySubtitle": "Enter the code sent to",
+      "verificationCode": "Verification Code",
+      "verificationPlaceholder": "000000",
+      "verifyButton": "Verify & Continue",
+      "googleButton": "Continue with Google",
+      "divider": "or"
+    },
+    "signIn": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your account",
+      "email": "Email Address",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Forgot password?",
+      "submitButton": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up",
+      "resetTitle": "Reset Password",
+      "resetSubtitle": "Enter your email to receive a reset code",
+      "resetButton": "Send Reset Code",
+      "backToSignIn": "Back to Sign In",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "resetPasswordButton": "Reset Password",
+      "googleButton": "Continue with Google",
+      "divider": "or"
+    },
+    "errors": {
+      "generic": "Something went wrong",
+      "invalidCode": "Invalid verification code",
+      "passwordMismatch": "Passwords don't match"
+    }
+  },
+"dashboard": {
+    "profile": {
+      "joined": "Joined",
+      "location": "Location"
+    },
+    "tabs": {
+      "pets": "My Pets",
+      "history": "Search History"
+    },
+    "pets": {
+      "title": "My Pets",
+      "noPets": "You haven't added any pets yet",
+      "addPet": "Add Your Pet",
+      "viewDetails": "View Details",
+      "delete": "Delete",
+      "confirmDelete": "Are you sure you want to delete",
+      "birthday": "Birthday",
+      "age": "Age",
+      "yearsOld": "years old",
+      "monthsOld": "months old",
+      "addPetModal": {
+         "saving": "Saving...",
+        "title": "Add Your Pet",
+        "petName": "Pet Name",
+        "petNamePlaceholder": "e.g., Max, Luna, Buddy",
+        "petBreed": "Breed",
+        "petBreedPlaceholder": "e.g., Golden Retriever, Beagle",
+        "petBirthday": "Birthday (Optional)",
+        "petImage": "Pet Photo",
+        "uploadImage": "Upload Photo",
+        "changeImage": "Change Photo",
+        "cancel": "Cancel",
+        "save": "Save Pet",
+        "imageRequired": "Please upload a photo of your pet"
+      },
+      "petDetails": {
+        "title": "Pet Details",
+        "journal": "Pet Journal",
+        "addNote": "Add Note",
+        "noNotes": "No journal entries yet. Start documenting your pet's journey!",
+        "notePlaceholder": "Write about your pet...",
+        "noteCategory": "Category",
+        "saveNote": "Save Note",
+        "deleteNote": "Delete",
+        "close": "Close",
+        "filterByCategory": "Filter by category",
+        "allCategories": "All Categories",
+        "categories": {
+          "health": "Health",
+          "vaccination": "Vaccination",
+          "treats": "Treats & Rewards",
+          "dailyLife": "Daily Life",
+          "milestone": "Milestone",
+          "other": "Other"
+        }
+      },
+      "adoptTitle": "Looking to Adopt ?",
+      "adoptDesc": "Millions of pets are waiting for their forever home. Discover the joy of adoption and learn why it's one of the most rewarding decisions you can make.",
+      "adoptCTA": "Find Pets to Adopt",
+      "petBreed": "Breed",
+      "addedOn": "Added on"
+    },
+    "history": {
+      "title": "Search History",
+      "noHistory": "No search history yet",
+      "searchDesc": "Upload a photo to identify your dog's breed",
+      "startSearch": "Identify a Breed",
+      "breed": "Breed",
+      "confidence": "Confidence",
+      "searchedOn": "Searched on",
+      "viewDetails": "View Details"
+    }
+  }
 }

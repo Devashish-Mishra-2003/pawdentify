@@ -21,8 +21,7 @@ const Footer = () => {
       className="text-white font-archivo py-16 relative overflow-hidden"
       style={{ backgroundColor: "var(--color-footer-bg)" }}
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       {/* Animated gradient overlay */}
@@ -41,14 +40,13 @@ const Footer = () => {
         <motion.div
           className="flex flex-col space-y-4 items-center md:items-start"
           initial={{ x: -40, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <motion.div
             className="flex items-center space-x-3 text-3xl font-archivo font-bold tracking-widest relative"
             whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
           >
             <span>P</span>
 
@@ -57,38 +55,21 @@ const Footer = () => {
               alt="paw"
               className="w-14 h-14"
               style={{ filter: 'brightness(0) invert(1)' }}
-              animate={{
-                rotate: [-6, 6, -6],
-                y: [-2, 2, -2],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
               whileHover={{
                 rotate: 360,
                 scale: 1.15,
               }}
+              transition={{ duration: 0.4 }}
             />
 
             <span>WDENTIFY</span>
-
-            {/* subtle moving sheen */}
-            <motion.div
-              className="absolute inset-0 bg-white/0 pointer-events-none"
-              animate={{ x: [-60, 60, -60], opacity: [0, 0.08, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-              aria-hidden="true"
-            />
           </motion.div>
 
           <motion.p
             className="text-sm"
             style={{ color: "var(--color-footer-text-muted)" }}
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
             &copy; {new Date().getFullYear()} {t('footer.copyright')}
@@ -99,23 +80,12 @@ const Footer = () => {
         <motion.div
           className="flex flex-col space-y-3 items-center md:items-start"
           initial={{ y: 40, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.35 }}
         >
-          <motion.h4
-            className="text-xl font-alfa mb-2 relative"
-            animate={{
-              textShadow: [
-                `0 0 10px var(--color-footer-heading-glow)`,
-                '0 0 20px rgba(255,255,255,0.45)',
-                `0 0 10px var(--color-footer-heading-glow)`,
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          >
+          <h4 className="text-xl font-alfa mb-2">
             {t('footer.navigation.title')}
-          </motion.h4>
+          </h4>
 
           {[
             ['#hero', t('footer.navigation.home')],
@@ -124,29 +94,25 @@ const Footer = () => {
             <motion.a
               key={href}
               href={href}
-              className="transition-all duration-300 cursor-pointer relative group"
+              className="font-bold text-base cursor-pointer relative group"
               style={{ color: "var(--color-footer-link)" }}
               onClick={(e) => {
                 e.preventDefault();
                 handleScrollTo(href);
               }}
               initial={{ x: 16, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true }}
+              animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.55 + index * 0.08 }}
-              whileHover={{
-                x: 6,
-                color: 'var(--color-footer-link-hover)',
-                textShadow: '0 0 8px rgba(196, 181, 253, 0.45)',
-              }}
+              whileHover={{ scale: 1.05 }}
             >
-              {label}
-              <motion.div
-                className="absolute bottom-0 left-0 h-0.5 origin-left"
+              <span className="relative z-10 transition-colors duration-150 group-hover:text-white">
+                {label}
+              </span>
+              
+              {/* Animated underline */}
+              <span 
+                className="absolute bottom-0 left-0 w-full h-0.5 origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"
                 style={{ backgroundColor: "var(--color-footer-link-hover)" }}
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.28 }}
               />
             </motion.a>
           ))}
@@ -156,55 +122,50 @@ const Footer = () => {
         <motion.div
           className="flex flex-col space-y-3 items-center md:items-start"
           initial={{ x: 40, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <motion.h4
-            className="text-xl font-alfa mb-2 relative"
-            animate={{
-              textShadow: [
-                `0 0 10px var(--color-footer-heading-glow)`,
-                '0 0 20px rgba(255,255,255,0.45)',
-                `0 0 10px var(--color-footer-heading-glow)`,
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          >
+          <h4 className="text-xl font-alfa mb-2">
             {t('footer.contact.title')}
-          </motion.h4>
+          </h4>
 
           <motion.a
             href={`mailto:${t('footer.contact.email')}`}
-            className="transition-colors duration-300 cursor-pointer"
+            className="font-bold text-base cursor-pointer relative group"
             style={{ color: "var(--color-footer-link)" }}
             initial={{ y: 10, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.82 }}
-            whileHover={{
-              scale: 1.04,
-              color: 'var(--color-footer-link-hover)',
-              textShadow: '0 0 8px rgba(196, 181, 253, 0.45)',
-            }}
+            whileHover={{ scale: 1.05 }}
           >
-            {t('footer.contact.email')}
+            <span className="relative z-10 transition-colors duration-150 group-hover:text-white">
+              {t('footer.contact.email')}
+            </span>
+            
+            {/* Animated underline */}
+            <span 
+              className="absolute bottom-0 left-0 w-full h-0.5 origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"
+              style={{ backgroundColor: "var(--color-footer-link-hover)" }}
+            />
           </motion.a>
 
           <motion.p
-            className="transition-colors duration-300 cursor-pointer"
+            className="font-bold text-base cursor-pointer relative group"
             style={{ color: "var(--color-footer-link)" }}
             initial={{ y: 10, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.92 }}
-            whileHover={{
-              scale: 1.04,
-              color: 'var(--color-footer-link-hover)',
-              textShadow: '0 0 8px rgba(196, 181, 253, 0.45)',
-            }}
+            whileHover={{ scale: 1.05 }}
           >
-            {t('footer.contact.phone')}
+            <span className="relative z-10 transition-colors duration-150 group-hover:text-white">
+              {t('footer.contact.phone')}
+            </span>
+            
+            {/* Animated underline */}
+            <span 
+              className="absolute bottom-0 left-0 w-full h-0.5 origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"
+              style={{ backgroundColor: "var(--color-footer-link-hover)" }}
+            />
           </motion.p>
         </motion.div>
       </div>
@@ -222,4 +183,6 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
 

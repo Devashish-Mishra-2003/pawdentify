@@ -1,6 +1,7 @@
 // src/App.jsx
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { SignedIn, SignedOut, RedirectToSignIn, AuthenticateWithRedirectCallback } from '@clerk/clerk-react';
 
 import { ThemeProvider } from './contexts/ThemeContext';
 import GlobalStyles from './components/GlobalStyles';
@@ -13,14 +14,27 @@ import KnowMorePage from './components/KnowMorePage';
 import FAQ from './pages/FAQ';
 import Footer from './components/Footer';
 import Settings from './components/Settings';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
+import Dashboard from './pages/Dashboard';
 
 const PREDICTION_STORAGE_KEY = 'pawdentify-current-prediction';
+
+// Component to conditionally render Header and Footer
+function Layout({ children, showHeaderFooter }) {
+  return (
+    <>
+      {showHeaderFooter && <Header />}
+      {children}
+      {showHeaderFooter && <Footer />}
+    </>
+  );
+}
 
 const App = () => {
   const [predictionResult, setPredictionResult] = useState(null);
   const [predictionError, setPredictionError] = useState(null);
 
-  // Load prediction from localStorage on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem(PREDICTION_STORAGE_KEY);
@@ -33,7 +47,6 @@ const App = () => {
     }
   }, []);
 
-  // Save prediction to localStorage whenever it changes
   useEffect(() => {
     try {
       if (predictionResult) {
@@ -87,26 +100,70 @@ const App = () => {
     return <Settings onBack={() => navigate(-1)} />;
   }
 
+  function ProtectedRoute({ children }) {
+    return (
+      <>
+        <SignedIn>{children}</SignedIn>
+        <SignedOut>
+          <RedirectToSignIn />
+        </SignedOut>
+      </>
+    );
+  }
+
+  // Hook to check current location
+  function AppRoutes() {
+    const location = useLocation();
+    const authRoutes = ['/sign-in', '/sign-up', '/sso-callback'];
+    const isAuthRoute = authRoutes.some(route => location.pathname.startsWith(route));
+
+    return (
+      <>
+        <GlobalStyles />
+        <Layout showHeaderFooter={!isAuthRoute}>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={HomeContent} />
+            <Route path="/know-more" element={<KnowMorePage />} />
+            <Route path="/faq" element={<FAQ />} />
+            
+            {/* Auth Routes */}
+            <Route path="/sign-in/*" element={<SignInPage />} />
+            <Route path="/sign-up/*" element={<SignUpPage />} />
+            <Route path="/sso-callback" element={<AuthenticateWithRedirectCallback />} />
+            
+            {/* Protected Routes */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/settings" 
+              element={
+                <ProtectedRoute>
+                  <SettingsPageWrapper />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
+        </Layout>
+      </>
+    );
+  }
+
   return (
     <ThemeProvider>
       <BrowserRouter>
-        <GlobalStyles />
-        <Header showInfo={!!predictionResult} />
-        <Routes>
-          <Route path="/" element={HomeContent} />
-          <Route path="/know-more" element={<KnowMorePage />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/settings" element={<SettingsPageWrapper />} />
-        </Routes>
-        <Footer />
+        <AppRoutes />
       </BrowserRouter>
     </ThemeProvider>
   );
 };
 
 export default App;
-
-
-
 
 

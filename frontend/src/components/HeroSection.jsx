@@ -158,13 +158,9 @@ const HeroSection = () => {
             }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
-            <motion.div
-              className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden"
-              animate={{ y: [-4, 4, -4] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
+            <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
               <img src={breedsIcon} alt={t("hero.cards.breeds")} className="w-full h-full object-contain" />
-            </motion.div>
+            </div>
             <div className="text-left">
               <div className="text-sm">120</div>
               <div className="text-xs opacity-80">{t("hero.cards.breeds")}</div>
@@ -183,13 +179,9 @@ const HeroSection = () => {
             }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
-            <motion.div
-              className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden"
-              animate={{ y: [-4, 4, -4] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-            >
+            <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
               <img src={accuracyIcon} alt={t("hero.cards.accuracy")} className="w-full h-full object-contain" />
-            </motion.div>
+            </div>
             <div className="text-left">
               <div className="text-sm">89%</div>
               <div className="text-xs opacity-80">{t("hero.cards.accuracy")}</div>
@@ -208,13 +200,9 @@ const HeroSection = () => {
             }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
-            <motion.div
-              className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden"
-              animate={{ y: [-4, 4, -4] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-            >
+            <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
               <img src={speedIcon} alt={t("hero.cards.response")} className="w-full h-full object-contain" />
-            </motion.div>
+            </div>
             <div className="text-left">
               <div className="text-sm">&lt;3s</div>
               <div className="text-xs opacity-80">{t("hero.cards.response")}</div>

@@ -10,6 +10,9 @@ from typing import Optional
 
 from .preprocessing import preprocess_image_bytes, load_model_from_path, predict_top
 
+# --- NEW: Import routers for pets and history ---
+from .routes import pets, history, settings
+
 # Load environment (expect backend/.env or backend/.env.example)
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(dotenv_path=BASE_DIR.parent.joinpath(".env"))
@@ -29,6 +32,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# --- NEW: Register routers for pets and history ---
+app.include_router(pets.router)
+app.include_router(history.router)
+app.include_router(settings.router)
 
 # Load breed info
 if not BREED_INFO_PATH.exists():
@@ -80,7 +88,7 @@ def get_breeds():
 async def predict(file: UploadFile = File(...)):
     """
     Accept an image file. If top prediction confidence >= CONF_THRESHOLD,
-    return id, pretty name, and low_confidence flag.
+    return id, pretty name, confidence, and low_confidence flag.
     """
     if MODEL is None:
         raise HTTPException(status_code=501, detail="Model not loaded on server.")
@@ -96,16 +104,20 @@ async def predict(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {e}")
 
+    # --- MODIFIED: Always return confidence score ---
     if top_prob >= CONF_THRESHOLD:
         pretty = ID_TO_PRETTY.get(top_idx, ID_TO_NAME.get(top_idx, "Unknown"))
         return JSONResponse({
             "low_confidence": False,
             "prediction": pretty,
-            "prediction_id": int(top_idx)   # <-- added id
+            "prediction_id": int(top_idx),   # <-- added id
+            "confidence": round(float(top_prob), 4)
         })
     else:
         return JSONResponse({
             "low_confidence": True,
             "prediction_id": int(top_idx),  # still return id for debugging
-            "prediction": ID_TO_PRETTY.get(top_idx, "Unknown")
+            "prediction": ID_TO_PRETTY.get(top_idx, "Unknown"),
+            "confidence": round(float(top_prob), 4)
         })
+

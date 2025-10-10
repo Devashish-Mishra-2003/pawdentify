@@ -3,6 +3,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
+// Export ThemeContext so it can be imported in other files
+export { ThemeContext };
+
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
@@ -66,3 +69,4 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
+

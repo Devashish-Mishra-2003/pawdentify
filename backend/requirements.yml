@@ -15,5 +15,9 @@ dependencies:
     - "uvicorn[standard]"
     - fastapi
     - python-multipart
+    - motor
+    - "pyjwt[crypto]"     # ← CHANGED: Add [crypto] extras
+    - python-dotenv       # ← ADDED: For loading .env files
+    - cloudinary
 
 #these versions are required to simulate same environment as when model was trained using kaggle

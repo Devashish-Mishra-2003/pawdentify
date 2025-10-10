@@ -242,6 +242,35 @@
   --color-accordion-chevron: #6b7280;
   --color-accordion-label: #374151;
   --color-accordion-value: #1f2937;
+
+  /* Clerk Authentication Components */
+--clerk-color-primary: #8c52ff;
+--clerk-color-danger: #dc2626;
+--clerk-color-success: #22c55e;
+--clerk-color-warning: #f59e0b;
+--clerk-color-text-on-primary-bg: #ffffff;
+--clerk-color-text-primary: #111827;
+--clerk-color-text-secondary: #4b5563;
+--clerk-color-background: #ffffff;
+--clerk-color-background-secondary: #f9fafb;
+--clerk-color-input-bg: #ffffff;
+--clerk-color-input-border: #d1d5db;
+--clerk-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+--clerk-border-radius: 0.5rem;
+
+/* Auth Page Specific */
+--color-auth-page-bg: linear-gradient(to bottom right, #f9fafb, #faf5ff, #eef2ff);
+--color-auth-card-bg: rgba(255, 255, 255, 0.95);
+--color-auth-card-border: rgba(140, 82, 255, 0.1);
+--color-auth-card-shadow: 0 20px 40px rgba(140, 82, 255, 0.15);
+--color-auth-title: #111827;
+--color-auth-subtitle: #4b5563;
+--color-auth-link: #8c52ff;
+--color-auth-link-hover: #6b21a8;
+--color-auth-divider: #e5e7eb;
+--color-auth-social-btn-bg: #ffffff;
+--color-auth-social-btn-border: #d1d5db;
+--color-auth-social-btn-hover: #f9fafb;
 }
 
 /* ===== DARK MODE THEME ===== */
@@ -466,6 +495,35 @@
 --color-accordion-chevron: #a78bfa; 
 --color-accordion-label: #cbd5e1; 
 --color-accordion-value: #e2e8f0; 
+
+/* Clerk Authentication Components - Dark Mode */
+--clerk-color-primary: #8c52ff;
+--clerk-color-danger: #ef4444;
+--clerk-color-success: #22c55e;
+--clerk-color-warning: #f59e0b;
+--clerk-color-text-on-primary-bg: #ffffff;
+--clerk-color-text-primary: #f1f5f9;
+--clerk-color-text-secondary: #cbd5e1;
+--clerk-color-background: #1e293b;
+--clerk-color-background-secondary: #0f172a;
+--clerk-color-input-bg: #1e293b;
+--clerk-color-input-border: #475569;
+--clerk-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+--clerk-border-radius: 0.5rem;
+
+/* Auth Page Specific - Dark Mode */
+--color-auth-page-bg: linear-gradient(to bottom right, #0f172a, #1e1b4b, #1e3a8a);
+--color-auth-card-bg: rgba(30, 41, 59, 0.95);
+--color-auth-card-border: rgba(140, 82, 255, 0.3);
+--color-auth-card-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+--color-auth-title: #f1f5f9;
+--color-auth-subtitle: #cbd5e1;
+--color-auth-link: #a78bfa;
+--color-auth-link-hover: #c4b5fd;
+--color-auth-divider: #475569;
+--color-auth-social-btn-bg: #1e293b;
+--color-auth-social-btn-border: #475569;
+--color-auth-social-btn-hover: #334155;
 }
 
 

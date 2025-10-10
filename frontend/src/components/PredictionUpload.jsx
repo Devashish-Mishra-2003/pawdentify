@@ -2,8 +2,11 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useAuth } from '@clerk/clerk-react';
 import paw from "../assets/icons8-cat-footprint-64.png";
 import { DOG_PREDICT_API_URL } from "../constants";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const IconCamera = ({ className = "w-4 h-4 inline-block mr-2" }) => (
   <svg
@@ -27,6 +30,57 @@ const handleScrollTo = (id) => {
     window.scrollTo({ top: element.offsetTop - 80, behavior: "smooth" });
 };
 
+// Helper function to compress image based on quality setting
+const compressImage = async (file, quality) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        
+        // Resize based on quality setting
+        const maxDimension = quality === 'high' ? 1024 : quality === 'medium' ? 800 : 512;
+        
+        if (width > height) {
+          if (width > maxDimension) {
+            height = (height * maxDimension) / width;
+            width = maxDimension;
+          }
+        } else {
+          if (height > maxDimension) {
+            width = (width * maxDimension) / height;
+            height = maxDimension;
+          }
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Compression quality
+        const compressionQuality = quality === 'high' ? 0.95 : quality === 'medium' ? 0.85 : 0.75;
+        
+        canvas.toBlob(
+          (blob) => {
+            resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+          },
+          'image/jpeg',
+          compressionQuality
+        );
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
 // Convert File to base64 data URL
 const fileToDataURL = (file) => {
   return new Promise((resolve, reject) => {
@@ -39,6 +93,7 @@ const fileToDataURL = (file) => {
 
 const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPrediction, existingPrediction }) => {
   const { t } = useTranslation();
+  const { getToken, isSignedIn } = useAuth();
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -85,7 +140,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
           const dataUrl = await fileToDataURL(file);
           setSelectedFile(file);
           setPreviewUrl(dataUrl);
-          setLiveMessage("Image selected. Ready to upload.");
+          setLiveMessage(t("upload.messages.imageSelected"));
         } catch (err) {
           console.error("Failed to convert file to data URL", err);
           setError(t("upload.errors.invalidFileType"));
@@ -150,6 +205,54 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
     setTimeout(() => setProgress(0), 700);
   };
 
+  // Save prediction to history (only for signed-in users with saveHistory enabled)
+  const saveToHistory = async (prediction, confidence, imageUrl) => {
+    if (!isSignedIn) {
+      console.log("[PredictionUpload] User not signed in, skipping history save");
+      return;
+    }
+
+    // Check if user has saveHistory enabled
+    try {
+      const savedSettings = localStorage.getItem('pawdentify-settings');
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        if (!settings.saveHistory) {
+          console.log("[PredictionUpload] Save history is disabled, skipping");
+          return;
+        }
+      }
+    } catch (e) {
+      console.error("Failed to read settings", e);
+    }
+
+    try {
+      const token = await getToken();
+      const response = await fetch(`${API_URL}/api/history`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          breed: prediction,
+          confidence: confidence,
+          image_url: imageUrl
+        })
+      });
+
+      if (response.ok) {
+        console.log("[PredictionUpload] Successfully saved to history");
+      } else {
+        const errorData = await response.json();
+        console.error("[PredictionUpload] Failed to save to history:", errorData);
+      }
+    } catch (err) {
+      console.error("[PredictionUpload] Error saving to history:", err);
+      // Don't show error to user - history saving is optional
+    }
+  };
+
   const handlePrediction = async () => {
     if (!selectedFile) {
       const msg = t("upload.errors.selectImageFirst");
@@ -161,13 +264,28 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
 
     setIsLoading(true);
     setError(null);
-    setLiveMessage("Uploading image and requesting prediction...");
+    setLiveMessage(t("upload.messages.uploading"));
     startProgress();
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
     try {
+      // Get image quality setting from localStorage
+      let imageQuality = 'high';
+      try {
+        const savedSettings = localStorage.getItem('pawdentify-settings');
+        if (savedSettings) {
+          const settings = JSON.parse(savedSettings);
+          imageQuality = settings.imageQuality || 'high';
+        }
+      } catch (e) {
+        console.error("Failed to read image quality setting", e);
+      }
+
+      // Compress image based on quality setting
+      const compressedFile = await compressImage(selectedFile, imageQuality);
+      
+      const formData = new FormData();
+      formData.append("file", compressedFile);
+
       const response = await fetch(DOG_PREDICT_API_URL, {
         method: "POST",
         body: formData,
@@ -184,13 +302,13 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
 
       if (!response.ok) {
         const message =
-          result.detail || "Prediction failed due to server error.";
+          result.detail || t("upload.errors.serverError");
         console.log(
           "[PredictionUpload] response not ok, message:",
           message
         );
         setError(message);
-        setLiveMessage("Prediction failed.");
+        setLiveMessage(t("upload.messages.predictionFailed"));
         onPredictionFail?.(message);
         return;
       }
@@ -210,12 +328,22 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
           id: result.prediction_id ?? null,
           previewUrl, // This is now a base64 data URL
         };
+        
         console.log(
           "[PredictionUpload] calling onPredictionSuccess with:",
           payload
         );
+
+        // Save to history before showing the result
+        const confidencePercentage = `${(result.confidence * 100).toFixed(1)}%`;
+        await saveToHistory(
+          result.prediction, 
+          confidencePercentage, 
+          previewUrl
+        );
+
         onPredictionSuccess?.(payload);
-        setLiveMessage(`Prediction succeeded: ${result.prediction}`);
+        setLiveMessage(t("upload.messages.predictionSuccess", { breed: result.prediction }));
         setSelectedFile(null);
       }
     } catch (err) {
@@ -243,8 +371,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
       className="py-16 font-archivo relative overflow-hidden"
       style={{ background: "var(--color-upload-bg)" }}
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       <div
@@ -276,8 +403,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
           style={{ color: "var(--color-upload-title)" }}
           align="center"
           initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
           {t("upload.title")}
@@ -298,10 +424,9 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
           role="button"
           tabIndex={0}
           onKeyDown={handleDropzoneKey}
-          aria-label="Upload image file. Press Enter to browse files or drop an image here."
+          aria-label={t("upload.ariaLabel")}
           initial={{ y: 12, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.08 }}
           whileHover={{ scale: 1.005 }}
         >
@@ -311,7 +436,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
                 <div className="squircle w-40 h-52 md:w-48 md:h-64 shadow-lg bg-white/8">
                   <img
                     src={previewUrl}
-                    alt="Selected preview"
+                    alt={t("upload.previewAlt")}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -319,7 +444,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
                 <div className="squircle w-40 h-52 md:w-48 md:h-64 flex items-center justify-center bg-white/8 shadow-md">
                   <motion.img
                     src={paw}
-                    alt="paw icon"
+                    alt={t("upload.pawIconAlt")}
                     className="w-16 h-16"
                     animate={{ y: [-6, 6, -6] }}
                     transition={{ duration: 3.5, repeat: Infinity }}
@@ -333,14 +458,13 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
                 className="text-2xl md:text-3xl font-archivo font-bold mb-3"
                 style={{ color: "var(--color-upload-text-primary)" }}
               >
-                Drag & drop an image
+                {t("upload.dragDropTitle")}
               </p>
               <p
                 className="text-base mb-6"
                 style={{ color: "var(--color-upload-text-secondary)" }}
               >
-                We recommend a clear, front-facing photo. Images are processed
-                locally before sending to the model.
+                {t("upload.description")}
               </p>
 
               <div className="flex items-center gap-4 mb-6">
@@ -365,7 +489,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
                   whileHover={{ translateY: -3, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {previewUrl ? "Change" : "Browse"}
+                  {previewUrl ? t("upload.buttons.change") : t("upload.buttons.browse")}
                 </motion.button>
 
                 <motion.button
@@ -398,7 +522,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
                       ></circle>
                     </svg>
                   ) : null}
-                  <span>{isLoading ? t("upload.predicting") : "Run"}</span>
+                  <span>{isLoading ? t("upload.predicting") : t("upload.buttons.run")}</span>
                 </motion.button>
 
                 {previewUrl && (
@@ -410,7 +534,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
                       color: "var(--color-upload-btn-cancel-text)",
                     }}
                   >
-                    Cancel
+                    {t("upload.buttons.cancel")}
                   </button>
                 )}
               </div>
@@ -421,7 +545,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
               >
                 <div className="flex items-center">
                   <IconCamera />
-                  <span>Recommended: 800×800+</span>
+                  <span>{t("upload.hints.recommended")}</span>
                 </div>
                 <div className="flex items-center">
                   <svg
@@ -434,7 +558,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
                     <path d="M5 12h14" />
                     <path d="M12 5v14" />
                   </svg>
-                  <span>File types: JPG, PNG</span>
+                  <span>{t("upload.hints.fileTypes")}</span>
                 </div>
               </div>
 
@@ -456,7 +580,7 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
                   style={{ color: "var(--color-upload-text-hint)" }}
                 >
                   {progress > 0 && progress < 100
-                    ? `Uploading… ${Math.round(progress)}%`
+                    ? t("upload.progress", { percent: Math.round(progress) })
                     : ""}
                 </div>
               </div>
@@ -487,9 +611,3 @@ const PredictionUpload = ({ onPredictionSuccess, onPredictionFail, onClearPredic
 };
 
 export default PredictionUpload;
-
-
-
-
-
-
