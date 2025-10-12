@@ -86,74 +86,49 @@ Setup
 -----
 
 Clone repository\
+```
 git clone <https://github.com/yourusername/pawdentify.git>\
 cd pawdentify
+```
 
 Frontend setup\
+```
 npm install\
 cp .env.example .env\
 Add VITE_API_URL and VITE_CLERK_PUBLISHABLE_KEY\
 npm run dev
+```
 
 Backend setup\
+```
 cd backend\
 python -m venv venv\
 source venv/bin/activate\
 pip install -r requirements.txt\
 cp .env.example .env\
-Add MONGODB_URI, CLERK_SECRET_KEY, AWS credentials\
+```
+Add MONGODB_URI, CLERK_SECRET_KEY, ClOUDINARY, MAPMYINDIA credentials\
+```
 uvicorn main:app --reload
+```
 
 Environment Variables
 ---------------------
 
 Frontend .env:\
+```
 VITE_API_URL=[http://localhost:8000](http://localhost:8000/)\
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
+```
 
 Backend .env:\
+```
 MONGODB_URI=mongodb://localhost:27017/pawdentify\
 CLERK_SECRET_KEY=sk_test_...\
 AWS_ACCESS_KEY_ID=your_key\
 AWS_SECRET_ACCESS_KEY=your_secret\
 MODEL_PATH=./models/breed_classifier.h5
-
-API Endpoints
--------------
-
-POST /api/predict\
-GET /api/breeds?search=golden\
-GET /api/history
-
-Deployment
-----------
-
-Frontend (Vercel)\
-npm install -g vercel\
-vercel --prod
-
-Backend build: pip install -r requirements.txt\
-Backend start: uvicorn main:app --host 0.0.0.0 --port $PORT
-
-Contributing
-------------
-
-git checkout -b feature/NewFeature\
-git commit -m 'Add NewFeature'\
-git push origin feature/NewFeature\
-Create Pull Request
-
-License
--------
-
-MIT License
-
-Support
--------
-
--   GitHub Issues
-
--   Email: <support@pawdentify.com>
+```
 
 Roadmap
 -------
