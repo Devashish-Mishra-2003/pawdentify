@@ -10,8 +10,8 @@ from typing import Optional
 
 from .preprocessing import preprocess_image_bytes, load_model_from_path, predict_top
 
-# --- NEW: Import routers for pets and history ---
-from .routes import pets, history, settings,  places
+# --- Import routers ---
+from .routes import pets, history, settings, places, feedback, breeds  # <-- ADDED breeds
 
 # Load environment (expect backend/.env or backend/.env.example)
 BASE_DIR = Path(__file__).resolve().parent
@@ -33,11 +33,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- NEW: Register routers for pets and history ---
+# --- Register routers ---
 app.include_router(pets.router)
 app.include_router(history.router)
 app.include_router(settings.router)
 app.include_router(places.router)
+app.include_router(feedback.router)
+app.include_router(breeds.router)  # <-- ADDED breeds router
 
 # Load breed info
 if not BREED_INFO_PATH.exists():

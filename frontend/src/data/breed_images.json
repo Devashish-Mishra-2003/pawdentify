@@ -1,0 +1,1083 @@
+{
+  "0": {
+    "id": 0,
+    "name": "Afghan Hound",
+    "images": [
+      "https://www.healthypawspetinsurance.com/blog/wp-content/uploads/2024/12/long-haired-golden-afghan-hound-dog-standing-in-fall-leaves.jpg",
+      "https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/26151212/Afghan-Hound-standing-in-a-garden.jpg",
+      "https://media.istockphoto.com/id/1253720437/photo/afghan-hound-adult-standing-near-lake.jpg?s=612x612&w=0&k=20&c=wzegEnFuyh5r8eqhBTutAT00Mj49MdDYN57Uau0Mork="
+    ]
+  },
+  "2": {
+    "id": 2,
+    "name": "Airedale",
+    "images": [
+      "https://media.istockphoto.com/id/133843375/photo/airedale-terrier.jpg?s=612x612&w=0&k=20&c=dB2dmaUdzXNlyVTTifw-zMz7Qm59VPcmo5T67EsWv78=",
+      "https://cdn.sanity.io/images/4ij0poqn/production/5a26498079e7ddcafcc749408dfea84db1eb83ca-800x600.jpg",
+      "https://t3.ftcdn.net/jpg/03/30/28/62/360_F_330286210_ApGzKFADhNzzUTVM9lqGUuaCfpNlAJhA.jpg"
+    ]
+  },
+  "3": {
+    "id": 3,
+    "name": "American Staffordshire Terrier",
+    "images": [
+      "https://cdn.britannica.com/72/235372-050-B5FC844B/American-Staffordshire-terrier-dog.jpg",
+      "https://cdn.britannica.com/01/198001-050-AC33057E/ancestry-American-Staffordshire-Terrier-bulldogs-Staffie-mastiffs.jpg",
+      "https://media.istockphoto.com/id/1134664987/photo/american-staffordshire-terrier-playing.jpg?s=612x612&w=0&k=20&c=Alk2OSsx7DHpECT3SKTyrm8i3zAA18C_WSOknmLdLWw="
+    ]
+  },
+  "4": {
+    "id": 4,
+    "name": "Appenzeller",
+    "images": [
+      "https://www.zooplus.co.uk/magazine/wp-content/uploads/2021/08/Appenzeller-Mountain-Dog-on-grass.webp",
+      "https://upload.wikimedia.org/wikipedia/commons/a/a4/Appenzeller_-_Frodo.jpg",
+      "https://www.akc.org/wp-content/uploads/2017/11/AdobeStock_11176134.jpg"
+    ]
+  },
+  "5": {
+    "id": 5,
+    "name": "Australian Terrier",
+    "images": [
+      "https://image.petmd.com/files/styles/863x625/public/2024-04/australian-terrier.jpg",
+      "https://dogsqueensland.org.au/media/img/BrowseAllBreed/Australian-Terrier.jpg",
+      "https://images.ctfassets.net/m5ehn3s5t7ec/4W1SQkTLfsrP8IxhZTdwhM/e649cfb1add037b56d0bb9958c73ff42/Australian_Terrier.jpeg"
+    ]
+  },
+  "6": {
+    "id": 6,
+    "name": "Bedlington Terrier",
+    "images": [
+      "https://cdn.britannica.com/84/6384-050-9D7E19AD/Bedlington-terrier.jpg",
+      "https://cdn.shopify.com/s/files/1/0568/0450/7691/files/iStock-1483086082_600x600.jpg?v=1719587648",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Boutchie_apres_championnat_004.JPG/1200px-Boutchie_apres_championnat_004.JPG"
+    ]
+  },
+  "7": {
+    "id": 7,
+    "name": "Bernese Mountain Dog",
+    "images": [
+      "https://cdn.britannica.com/49/161649-050-3F458ECF/Bernese-mountain-dog-grass.jpg",
+      "https://azure2.wgp-cdn.co.uk/app-yourdog/posts/bernesemountaindog.jpg?&format=webp&webp.quality=40&scale=both",
+      "https://pethelpful.com/.image/t_share/MjA4NjA5NDc0MzU5ODYyNTc5/shutterstock_2411499335-1.jpg"
+    ]
+  },
+  "8": {
+    "id": 8,
+    "name": "Blenheim Spaniel",
+    "images": [
+      "https://media.istockphoto.com/id/492233144/photo/cavalier-king-charles-spaniel.jpg?s=612x612&w=0&k=20&c=e63ENN_nIC_rK-QJCof-vtbFGejE8SAOGM4kGT87mkQ=",
+      "https://www.akc.org/wp-content/uploads/2017/11/Cavalier-King-Charles-Spaniel-standing-in-the-grass.jpg",
+      "https://st.depositphotos.com/1497192/1959/i/450/depositphotos_19599231-Young-cavalier-king-charles-spaniel-blenheim-a-coat.jpg"
+    ]
+  },
+  "9": {
+    "id": 9,
+    "name": "Border Collie",
+    "images": [
+      "https://cdn.britannica.com/25/234625-050-6070814C/Border-Collie-dog.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvAVA_WHx-kUPBxe6QvWJnEpakM0HQqlEWTw&s",
+      "https://images.happypet.care/images/21096/-border-collie-on-lawn.webp"
+    ]
+  },
+  "10": {
+    "id": 10,
+    "name": "Border Terrier",
+    "images": [
+      "https://www.thesprucepets.com/thmb/XcxPAjlxNOoA5OSfkS0asVvivzA=/3832x0/filters:no_upscale():strip_icc()/BorderTerrierGettyImages-531551140CaptureLight-25a9cfa1a0b94bb68ea1848f84fe181c.jpg",
+      "https://static.wixstatic.com/media/nsplsh_a20b8ee15ba24bf5acfc6fd668ed577e~mv2.jpg/v1/fill/w_640,h_554,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/nsplsh_a20b8ee15ba24bf5acfc6fd668ed577e~mv2.jpg",
+      "https://media.istockphoto.com/id/472717486/photo/border-terrier-bitch-lying.jpg?s=612x612&w=0&k=20&c=0bW_ktdy-pqfEdSMH4Riwjkh0rR8CACrz6Eurl5ETCY="
+    ]
+  },
+  "11": {
+    "id": 11,
+    "name": "Boston Bull",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Boston-terrier-carlos-de.JPG/1200px-Boston-terrier-carlos-de.JPG",
+      "https://cdn.britannica.com/83/236683-050-84785C8B/Boston-Terrier-dog.jpg",
+      "https://cdn.britannica.com/75/8175-050-A9D609D6/Boston-terrier.jpg"
+    ]
+  },
+  "12": {
+    "id": 12,
+    "name": "Bouvier Des Flandres",
+    "images": [
+      "https://www.akc.org/wp-content/uploads/2017/11/Bouvier-des-Flandres-standing-atop-a-hill.jpg",
+      "https://www.zooplus.co.uk/magazine/wp-content/uploads/2025/07/AdobeStock_230700999-1024x732.webp",
+      "https://www.thesprucepets.com/thmb/p-b3BbZEqRFgzqbCo2S51YoIWNo=/5872x0/filters:no_upscale():strip_icc()/bouvier-des-flandres-568703357-59b5ca2d054ad9001184aab7.jpg"
+    ]
+  },
+  "13": {
+    "id": 13,
+    "name": "Brabancon Griffon",
+    "images": [
+      "https://images.dog.ceo/breeds/brabancon/n02112706_1586.jpg",
+      "https://images.dog.ceo/breeds/brabancon/n02112706_442.jpg",
+      "https://images.dog.ceo/breeds/brabancon/n02112706_967.jpg"
+    ]
+  },
+  "14": {
+    "id": 14,
+    "name": "Brittany Spaniel",
+    "images": [
+      "https://images.dog.ceo/breeds/spaniel-brittany/n02101388_1803.jpg",
+      "https://images.dog.ceo/breeds/spaniel-brittany/n02101388_4342.jpg",
+      "https://images.dog.ceo/breeds/spaniel-brittany/n02101388_96.jpg"
+    ]
+  },
+  "15": {
+    "id": 15,
+    "name": "Cardigan",
+    "images": [
+      "https://images.dog.ceo/breeds/corgi-cardigan/n02113186_13413.jpg",
+      "https://images.dog.ceo/breeds/corgi-cardigan/n02113186_6300.jpg",
+      "https://images.dog.ceo/breeds/corgi-cardigan/n02113186_9116.jpg"
+    ]
+  },
+  "16": {
+    "id": 16,
+    "name": "Chesapeake Bay Retriever",
+    "images": [
+      "https://pet-health-content-media.chewy.com/wp-content/uploads/2024/09/11162036/202107GettyImages-661221626-scaled-1.jpg",
+      "https://www.animalkingdomaz.com/wp-content/uploads/Chesapeake-Bay-Retriever-adult.jpg",
+      "https://a-z-animals.com/media/2023/09/shutterstock-1720566802-huge-licensed-scaled.jpg"
+    ]
+  },
+  "17": {
+    "id": 17,
+    "name": "Chihuahua",
+    "images": [
+      "https://cdn.britannica.com/70/8170-050-82AE83CD/Chihuahua-smooth-coat.jpg",
+      "https://apupabove.com/cdn/shop/articles/Chihuahua_2ab3f5c4-9781-48ed-8119-7f780902c133.jpg?v=1742407300&width=1600",
+      "https://www.dogster.com/wp-content/uploads/2024/04/Chihuahua-dog-standing-on-grass_anetapics_Shutterstock.jpg"
+    ]
+  },
+  "18": {
+    "id": 18,
+    "name": "Dandie Dinmont",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-dandie/n02096437_1551.jpg",
+      "https://images.dog.ceo/breeds/terrier-dandie/n02096437_1605.jpg",
+      "https://images.dog.ceo/breeds/terrier-dandie/n02096437_1650.jpg"
+    ]
+  },
+  "19": {
+    "id": 19,
+    "name": "Doberman",
+    "images": [
+      "https://www.akc.org/wp-content/uploads/2017/11/Doberman-Pinscher-standing-outdoors.jpg",
+      "https://worldanimalfoundation.org/wp-content/uploads/2022/12/ABOUT-THE-BREED-REVIEW-12.jpg",
+      "https://www.shutterstock.com/image-photo/female-doberman-7-years-old-600nw-2600767695.jpg"
+    ]
+  },
+  "20": {
+    "id": 20,
+    "name": "English Foxhound",
+    "images": [
+      "https://images.dog.ceo/breeds/hound-english/n02089973_1298.jpg",
+      "https://images.dog.ceo/breeds/hound-english/n02089973_1890.jpg",
+      "https://images.dog.ceo/breeds/hound-english/n02089973_4084.jpg"
+    ]
+  },
+  "21": {
+    "id": 21,
+    "name": "English Setter",
+    "images": [
+      "https://images.dog.ceo/breeds/setter-english/n02100735_7054.jpg",
+      "https://images.dog.ceo/breeds/setter-english/n02100735_8212.jpg",
+      "https://images.dog.ceo/breeds/setter-english/n02100735_9936.jpg"
+    ]
+  },
+  "22": {
+    "id": 22,
+    "name": "English Springer",
+    "images": [
+      "https://images.dog.ceo/breeds/springer-english/n02102040_3225.jpg",
+      "https://images.dog.ceo/breeds/springer-english/n02102040_682.jpg",
+      "https://images.dog.ceo/breeds/springer-english/n02102040_7195.jpg"
+    ]
+  },
+  "23": {
+    "id": 23,
+    "name": "Entlebucher",
+    "images": [
+      "https://images.dog.ceo/breeds/mountain-swiss/n02107574_2795.jpg",
+      "https://images.dog.ceo/breeds/mountain-swiss/n02107574_431.jpg",
+      "https://images.dog.ceo/breeds/mountain-swiss/n02107574_656.jpg"
+    ]
+  },
+  "24": {
+    "id": 24,
+    "name": "Eskimo Dog",
+    "images": [
+      "https://media.istockphoto.com/id/146784693/photo/american-eskimo-dog.jpg?s=612x612&w=0&k=20&c=kFT-g6PWcLCUbDWaEleisP86XglEAi2pHU77odDooEo=",
+      "https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/12153852/American-Eskimo-Dog-standing-in-the-grass-in-bright-sunlight.jpg",
+      "https://consumer-cms.petfinder.com/sites/default/files/images/content/Canadian%20Eskimo%20Dog%204.jpg"
+    ]
+  },
+  "25": {
+    "id": 25,
+    "name": "French Bulldog",
+    "images": [
+      "https://cdn.britannica.com/44/233844-050-A0F9F39C/French-bulldog.jpg",
+      "https://www.akc.org/wp-content/uploads/2017/11/French-Bulldog-standing-outdoors.jpg",
+      "https://www.zooplus.co.uk/magazine/wp-content/uploads/2019/08/French-bulldog-amongst-leafs.webp"
+    ]
+  },
+  "27": {
+    "id": 27,
+    "name": "German Short-Haired Pointer",
+    "images": [
+      "https://images.dog.ceo/breeds/pointer-german/n02100236_4428.jpg",
+      "https://images.dog.ceo/breeds/pointer-german/n02100236_521.jpg",
+      "https://images.dog.ceo/breeds/pointer-german/n02100236_5836.jpg"
+    ]
+  },
+  "28": {
+    "id": 28,
+    "name": "Gordon Setter",
+    "images": [
+      "https://images.dog.ceo/breeds/setter-gordon/n02101006_1506.jpg",
+      "https://images.dog.ceo/breeds/setter-gordon/n02101006_1963.jpg",
+      "https://images.dog.ceo/breeds/setter-gordon/n02101006_2232.jpg"
+    ]
+  },
+  "29": {
+    "id": 29,
+    "name": "Great Dane",
+    "images": [
+      "https://www.shutterstock.com/image-photo/portrait-great-dane-standing-nature-600nw-2482396353.jpg",
+      "https://www.thefarmersdog.com/digest/wp-content/uploads/2022/01/Great-dane-grey.jpg",
+      "https://www.akc.org/wp-content/uploads/2017/11/Great-Dane-looking-back-over-his-shoulder-outdoors-at-the-park.jpg"
+    ]
+  },
+  "30": {
+    "id": 30,
+    "name": "Great Pyrenees",
+    "images": [
+      "https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/01/21131618/Great-Pyrenees-head-portrait-outdoors-in-the-fall.jpg",
+      "https://www.petfinder.com/sites/default/files/images/content/great-pyrenees-detail-scaled.jpg",
+      "https://cdn.sanity.io/images/4ij0poqn/production/7edc24e9d75c116e91b3a5bca7e26201fc4e4a5f-800x600.jpg"
+    ]
+  },
+  "31": {
+    "id": 31,
+    "name": "Greater Swiss Mountain Dog",
+    "images": [
+      "https://consumer-cms.petfinder.com/sites/default/files/images/content/Greater%20Swiss%20Mountain%20Dog%204.jpg",
+      "https://www.petfinder.com/sites/default/files/images/content/greater-swiss-mountain-dog-detail-scaled.jpg",
+      "https://www.puppiezo.com/wp-content/uploads/2025/04/65b8243054f59cc4fc8554f2_Greater-Swiss-Mountain-Dog.jpg"
+    ]
+  },
+  "32": {
+    "id": 32,
+    "name": "Ibizan Hound",
+    "images": [
+      "https://images.dog.ceo/breeds/hound-ibizan/n02091244_2747.jpg",
+      "https://images.dog.ceo/breeds/hound-ibizan/n02091244_3425.jpg",
+      "https://images.dog.ceo/breeds/hound-ibizan/n02091244_5517.jpg"
+    ]
+  },
+  "33": {
+    "id": 33,
+    "name": "Irish Setter",
+    "images": [
+      "https://images.dog.ceo/breeds/setter-irish/duke.jpg",
+      "https://images.dog.ceo/breeds/setter-irish/n02100877_4704.jpg",
+      "https://images.dog.ceo/breeds/setter-irish/n02100877_6642.jpg"
+    ]
+  },
+  "34": {
+    "id": 34,
+    "name": "Irish Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-irish/n02093991_202.jpg",
+      "https://images.dog.ceo/breeds/terrier-irish/n02093991_2663.jpg",
+      "https://images.dog.ceo/breeds/terrier-irish/n02093991_4396.jpg"
+    ]
+  },
+  "35": {
+    "id": 35,
+    "name": "Irish Water Spaniel",
+    "images": [
+      "https://images.dog.ceo/breeds/spaniel-irish/n02102973_3642.jpg",
+      "https://images.dog.ceo/breeds/spaniel-irish/n02102973_4304.jpg",
+      "https://images.dog.ceo/breeds/spaniel-irish/n02102973_4464.jpg"
+    ]
+  },
+  "36": {
+    "id": 36,
+    "name": "Irish Wolfhound",
+    "images": [
+      "https://images.dog.ceo/breeds/wolfhound-irish/n02090721_2552.jpg",
+      "https://images.dog.ceo/breeds/wolfhound-irish/n02090721_4326.jpg",
+      "https://images.dog.ceo/breeds/wolfhound-irish/n02090721_957.jpg"
+    ]
+  },
+  "37": {
+    "id": 37,
+    "name": "Italian Greyhound",
+    "images": [
+      "https://images.dog.ceo/breeds/greyhound-italian/n02091032_11812.jpg",
+      "https://images.dog.ceo/breeds/greyhound-italian/n02091032_12144.jpg",
+      "https://images.dog.ceo/breeds/greyhound-italian/n02091032_9660.jpg"
+    ]
+  },
+  "38": {
+    "id": 38,
+    "name": "Japanese Chin",
+    "images": [
+      "https://images.dog.ceo/breeds/shihtzu/Rudy_Small.jpg",
+      "https://images.dog.ceo/breeds/shihtzu/n02086240_3186.jpg",
+      "https://images.dog.ceo/breeds/shihtzu/n02086240_7728.jpg"
+    ]
+  },
+  "41": {
+    "id": 41,
+    "name": "Lakeland Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-lakeland/n02095570_1088.jpg",
+      "https://images.dog.ceo/breeds/terrier-lakeland/n02095570_126.jpg",
+      "https://images.dog.ceo/breeds/terrier-lakeland/n02095570_1663.jpg"
+    ]
+  },
+  "42": {
+    "id": 42,
+    "name": "Leonberg",
+    "images": [
+      "https://images.dog.ceo/breeds/leonberg/n02111129_3045.jpg",
+      "https://images.dog.ceo/breeds/leonberg/n02111129_3573.jpg",
+      "https://images.dog.ceo/breeds/leonberg/n02111129_3828.jpg"
+    ]
+  },
+  "43": {
+    "id": 43,
+    "name": "Lhasa Apso",
+    "images": [
+      "https://images.dog.ceo/breeds/lhasa/n02098413_10144.jpg",
+      "https://images.dog.ceo/breeds/lhasa/n02098413_3114.jpg",
+      "https://images.dog.ceo/breeds/lhasa/n02098413_8687.jpg"
+    ]
+  },
+  "44": {
+    "id": 44,
+    "name": "Maltese",
+    "images": [
+      "https://www.zooplus.co.uk/magazine/wp-content/uploads/2021/09/Maltese-dog-on-the-grass.webp",
+      "https://ohmypetgrooming.in/wp-content/uploads/2024/12/Maltese-Dog.webp",
+      "https://framerusercontent.com/images/BshlkyWmUNfQunw6ABacCRGM.jpg?width=1920&height=1282"
+    ]
+  },
+  "46": {
+    "id": 46,
+    "name": "Newfoundland",
+    "images": [
+      "https://www.akc.org/wp-content/uploads/2017/11/Newfoundland-standing-outdoors.jpg",
+      "https://images.pexels.com/photos/21952861/pexels-photo-21952861/free-photo-of-newfoundland-dog-on-grass.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      "https://image.petmd.com/files/inline-images/newfoundland-6.jpg?VersionId=9U9Gq_rGXtuEwdQ23XH8QiyIl8oXwqRd"
+    ]
+  },
+  "47": {
+    "id": 47,
+    "name": "Norfolk Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-norfolk/n02094114_1173.jpg",
+      "https://images.dog.ceo/breeds/terrier-norfolk/n02094114_2206.jpg",
+      "https://images.dog.ceo/breeds/terrier-norfolk/n02094114_2819.jpg"
+    ]
+  },
+  "48": {
+    "id": 48,
+    "name": "Norwegian Elkhound",
+    "images": [
+      "https://images.dog.ceo/breeds/elkhound-norwegian/n02091467_3503.jpg",
+      "https://images.dog.ceo/breeds/elkhound-norwegian/n02091467_5985.jpg",
+      "https://images.dog.ceo/breeds/elkhound-norwegian/n02091467_872.jpg"
+    ]
+  },
+  "49": {
+    "id": 49,
+    "name": "Norwich Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-norwich/n02094258_1065.jpg",
+      "https://images.dog.ceo/breeds/terrier-norwich/n02094258_3555.jpg",
+      "https://images.dog.ceo/breeds/terrier-norwich/n02094258_645.jpg"
+    ]
+  },
+  "50": {
+    "id": 50,
+    "name": "Old English Sheepdog",
+    "images": [
+      "https://media.istockphoto.com/id/1449852425/photo/old-english-sheepdog-standing-in-a-field-looking-at-the-camera.jpg?s=612x612&w=0&k=20&c=Wn3edunpq1f6fKppGA5VlB8vmyNuz8k1uofc5S46-r4=",
+      "https://www.dogster.com/wp-content/uploads/2024/03/old-english-sheepdog-1.jpg",
+      "https://www.thesprucepets.com/thmb/J08BTVZmjICNnOE9GZb19IFm0fE=/4256x0/filters:no_upscale():strip_icc()/old-english-sheepdog-sticking-out-tongue-713838563-5c0a7582c9e77c0001e281c7.jpg"
+    ]
+  },
+  "51": {
+    "id": 51,
+    "name": "Pekingese",
+    "images": [
+      "https://images.dog.ceo/breeds/pekinese/n02086079_18764.jpg",
+      "https://images.dog.ceo/breeds/pekinese/n02086079_3493.jpg",
+      "https://images.dog.ceo/breeds/pekinese/n02086079_5106.jpg"
+    ]
+  },
+  "52": {
+    "id": 52,
+    "name": "Pembroke Welsh Corgi",
+    "images": [
+      "https://www.akc.org/wp-content/uploads/2017/11/Pembroke-Welsh-Corgi-standing-outdoors-in-the-fall.jpg",
+      "https://cdn.britannica.com/80/232780-050-404D6708/Pembroke-welsh-corgi-dog.jpg",
+      "https://plexidors.com/wp-content/uploads/2021/01/welsh-corgi-side-view-1024x713.jpg"
+    ]
+  },
+  "53": {
+    "id": 53,
+    "name": "Pomeranian",
+    "images": [
+      "https://cdn.britannica.com/41/233841-050-4FFECCF1/Pomeranian-dog.jpg",
+      "https://www.zooplus.ie/magazine/wp-content/uploads/2021/03/white-pomeranian-puppies-1.webp",
+      "https://www.dogster.com/wp-content/uploads/2023/04/white-pomeranian-dog_leungchopan_Shutterstock.jpg"
+    ]
+  },
+  "54": {
+    "id": 54,
+    "name": "Rhodesian Ridgeback",
+    "images": [
+      "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_3663.jpg",
+      "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_7480.jpg",
+      "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_831.jpg"
+    ]
+  },
+  "55": {
+    "id": 55,
+    "name": "Rottweiler",
+    "images": [
+      "https://media.istockphoto.com/id/1497955407/photo/adorable-black-and-tan-rottweiler-dog-outdoors-a-strong-rottweiler-dog-stands-in-a-rack-on-an.jpg?s=612x612&w=0&k=20&c=WDppM4U002Wt57A0IEJCtrV2RELESXmFmWg-vrU6AH4=",
+      "https://www.dogster.com/wp-content/uploads/2024/06/rottweiler-dog-smiling-with-its-tongue-out_Phillip-van-Zyl_Shutterstock.jpeg",
+      "https://www.trupanion.com/images/trupanionwebsitelibraries/pet-blogs/rottweiler-1-.jpg?sfvrsn=b53e3100_6"
+    ]
+  },
+  "56": {
+    "id": 56,
+    "name": "Saint Bernard",
+    "images": [
+      "https://kennelclubofbeverlyhills.org/wp-content/uploads/2019/12/Saint-Bernard.jpg",
+      "https://cdn.britannica.com/68/235668-050-A8F37B6D/Saint-bernard-dog-st-bernard-standing-short-haired.jpg",
+      "https://www.k9rl.com/wp-content/uploads/2015/12/Saint-Bernard-Dog.jpg"
+    ]
+  },
+  "57": {
+    "id": 57,
+    "name": "Saluki",
+    "images": [
+      "https://images.dog.ceo/breeds/saluki/n02091831_410.jpg",
+      "https://images.dog.ceo/breeds/saluki/n02091831_8160.jpg",
+      "https://images.dog.ceo/breeds/saluki/n02091831_961.jpg"
+    ]
+  },
+  "58": {
+    "id": 58,
+    "name": "Samoyed",
+    "images": [
+      "https://images.happypet.care/images/21758/samoyed-on-autumn-leaves.webp",
+      "https://dogtime.com/wp-content/uploads/sites/12/2011/01/GettyImages-997016774-e1694111248101.jpg?w=1024",
+      "https://t4.ftcdn.net/jpg/01/20/32/33/360_F_120323312_fs6ei52vjj2toS5SZkT25wtsSc8opRgL.jpg"
+    ]
+  },
+  "59": {
+    "id": 59,
+    "name": "Scottish Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-scottish/n02097298_5074.jpg",
+      "https://images.dog.ceo/breeds/terrier-scottish/n02097298_7629.jpg",
+      "https://images.dog.ceo/breeds/terrier-scottish/n02097298_8262.jpg"
+    ]
+  },
+  "60": {
+    "id": 60,
+    "name": "Scottish Deerhound",
+    "images": [
+      "https://images.dog.ceo/breeds/deerhound-scottish/n02092002_10693.jpg",
+      "https://images.dog.ceo/breeds/deerhound-scottish/n02092002_11245.jpg",
+      "https://images.dog.ceo/breeds/deerhound-scottish/n02092002_15010.jpg"
+    ]
+  },
+  "61": {
+    "id": 61,
+    "name": "Sealyham Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-sealyham/n02095889_1313.jpg",
+      "https://images.dog.ceo/breeds/terrier-sealyham/n02095889_4306.jpg",
+      "https://images.dog.ceo/breeds/terrier-sealyham/n02095889_6442.jpg"
+    ]
+  },
+  "62": {
+    "id": 62,
+    "name": "Shetland Sheepdog",
+    "images": [
+      "https://images.dog.ceo/breeds/sheepdog-shetland/n02105855_17258.jpg",
+      "https://images.dog.ceo/breeds/sheepdog-shetland/n02105855_3434.jpg",
+      "https://images.dog.ceo/breeds/sheepdog-shetland/n02105855_3549.jpg"
+    ]
+  },
+  "63": {
+    "id": 63,
+    "name": "Shih Tzu",
+    "images": [
+      "https://worldanimalfoundation.org/wp-content/uploads/2024/01/types-of-shih-tzu.jpg",
+      "https://cdn.britannica.com/05/234205-050-F8D2E018/Shih-tzu-dog.jpg",
+      "https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=1200,height=675,fit=cover/animal/breed/dog/adult/66fbf02c9b9f9512342532.jpg"
+    ]
+  },
+  "64": {
+    "id": 64,
+    "name": "Siberian Husky",
+    "images": [
+      "https://cdn.britannica.com/84/232784-050-1769B477/Siberian-Husky-dog.jpg",
+      "https://media.istockphoto.com/id/1338954116/photo/dog-portrait-outside-at-the-park-on-summer.jpg?s=612x612&w=0&k=20&c=6sRSNWMhZj4QxeTuLS2JZLzjR_os-Gbfnil6mNjga6I=",
+      "https://www.metlifepetinsurance.com/content/dam/metlifecom/us/metlifepetinsurance/siberian-huskies-min.webp"
+    ]
+  },
+  "65": {
+    "id": 65,
+    "name": "Staffordshire Bull Terrier",
+    "images": [
+      "https://www.zooplus.co.uk/magazine/wp-content/uploads/2017/11/Staffordshire-Bullterrier.webp",
+      "https://landing-media.dosty.co/storage/uploads/Blue%20and%20White%20Staffordshire%20Bull%20Terrier%20Dog_1736337071.webp",
+      "https://www.bonza.dog/wp-content/uploads/Staffordshire-Bull-Terrier-Problems-Comprehensive-Guide-to-Common-Issues.webp"
+    ]
+  },
+  "66": {
+    "id": 66,
+    "name": "Sussex Spaniel",
+    "images": [
+      "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_6620.jpg",
+      "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_6922.jpg",
+      "https://images.dog.ceo/breeds/spaniel-sussex/n02102480_7449.jpg"
+    ]
+  },
+  "67": {
+    "id": 67,
+    "name": "Tibetan Mastiff",
+    "images": [
+      "https://images.dog.ceo/breeds/mastiff-tibetan/n02108551_240.jpg",
+      "https://images.dog.ceo/breeds/mastiff-tibetan/n02108551_634.jpg",
+      "https://images.dog.ceo/breeds/mastiff-tibetan/n02108551_899.jpg"
+    ]
+  },
+  "68": {
+    "id": 68,
+    "name": "Tibetan Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-tibetan/n02097474_3343.jpg",
+      "https://images.dog.ceo/breeds/terrier-tibetan/n02097474_5066.jpg",
+      "https://images.dog.ceo/breeds/terrier-tibetan/n02097474_7480.jpg"
+    ]
+  },
+  "69": {
+    "id": 69,
+    "name": "Walker Hound",
+    "images": [
+      "https://images.dog.ceo/breeds/hound-walker/n02089867_1048.jpg",
+      "https://images.dog.ceo/breeds/hound-walker/n02089867_1452.jpg",
+      "https://images.dog.ceo/breeds/hound-walker/n02089867_724.jpg"
+    ]
+  },
+  "70": {
+    "id": 70,
+    "name": "Weimaraner",
+    "images": [
+      "https://www.zooplus.co.uk/magazine/wp-content/uploads/2025/04/weimaraner-768x512.webp",
+      "https://cdn.britannica.com/09/256409-050-5F4A3252/Two-Weimaraner-dogs-hunting-sporting-group.jpg",
+      "https://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/14/2024/03/A4TF95-920x518.jpg"
+    ]
+  },
+  "71": {
+    "id": 71,
+    "name": "Welsh Springer Spaniel",
+    "images": [
+      "https://images.dog.ceo/breeds/spaniel-welsh/n02102177_1022.jpg",
+      "https://images.dog.ceo/breeds/spaniel-welsh/n02102177_2911.jpg",
+      "https://images.dog.ceo/breeds/spaniel-welsh/n02102177_555.jpg"
+    ]
+  },
+  "72": {
+    "id": 72,
+    "name": "West Highland White Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_1009.jpg",
+      "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_526.jpg",
+      "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_696.jpg"
+    ]
+  },
+  "73": {
+    "id": 73,
+    "name": "Yorkshire Terrier",
+    "images": [
+      "https://cdn.britannica.com/48/233848-050-C8254DF7/Yorkshire-Terrier-dog.jpg",
+      "https://consumer-cms.petfinder.com/sites/default/files/images/content/Yorkshire%20Terrier%204.jpg",
+      "https://www.zooplus.ie/magazine/wp-content/uploads/2020/11/yorkshire-terrier-am-meer-1.webp"
+    ]
+  },
+  "74": {
+    "id": 74,
+    "name": "Affenpinscher",
+    "images": [
+      "https://images.dog.ceo/breeds/affenpinscher/n02110627_11279.jpg",
+      "https://images.dog.ceo/breeds/affenpinscher/n02110627_13590.jpg",
+      "https://images.dog.ceo/breeds/affenpinscher/n02110627_8099.jpg"
+    ]
+  },
+  "75": {
+    "id": 75,
+    "name": "Basenji",
+    "images": [
+      "https://images.dog.ceo/breeds/basenji/n02110806_1396.jpg",
+      "https://images.dog.ceo/breeds/basenji/n02110806_1525.jpg",
+      "https://images.dog.ceo/breeds/basenji/n02110806_4291.jpg"
+    ]
+  },
+  "76": {
+    "id": 76,
+    "name": "Basset Hound",
+    "images": [
+      "https://petscare-assets-prod.s3.amazonaws.com/media/original_images/basset-hound-adult-size-weight-guide-95638.webp",
+      "https://www.zooplus.co.uk/magazine/wp-content/uploads/2018/07/Basset-Hound-breed.webp",
+      "https://image.petmd.com/files/inline-images/basset-hound-5.jpg?VersionId=rXEeeuRyxyChNzLb29IVrkDUjXuIAfJo"
+    ]
+  },
+  "77": {
+    "id": 77,
+    "name": "Beagle",
+    "images": [
+      "https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg",
+      "https://cdn.britannica.com/17/234217-050-F74C669C/Beagle-hound-dog-puppy.jpg",
+      "https://media.istockphoto.com/id/1411469044/photo/brown-dog-beagle-sitting-on-path-in-autumn-natural-park-location-among-orange-yellow-fallen.jpg?s=612x612&w=0&k=20&c=Ul6dwTVshdIYOACMbUEbA0WDiNbbTamtXL5GOL0KKK0="
+    ]
+  },
+  "78": {
+    "id": 78,
+    "name": "Black And Tan Coonhound",
+    "images": [
+      "https://images.dog.ceo/breeds/coonhound/n02089078_2684.jpg",
+      "https://images.dog.ceo/breeds/coonhound/n02089078_2801.jpg",
+      "https://images.dog.ceo/breeds/coonhound/n02089078_393.jpg"
+    ]
+  },
+  "79": {
+    "id": 79,
+    "name": "Bloodhound",
+    "images": [
+      "https://images.dog.ceo/breeds/hound-blood/n02088466_10408.jpg",
+      "https://images.dog.ceo/breeds/hound-blood/n02088466_11398.jpg",
+      "https://images.dog.ceo/breeds/hound-blood/n02088466_1671.jpg"
+    ]
+  },
+  "80": {
+    "id": 80,
+    "name": "Bluetick Coonhound",
+    "images": [
+      "https://images.dog.ceo/breeds/coonhound/n02089078_2021.jpg",
+      "https://images.dog.ceo/breeds/coonhound/n02089078_2108.jpg",
+      "https://images.dog.ceo/breeds/coonhound/n02089078_4140.jpg"
+    ]
+  },
+  "81": {
+    "id": 81,
+    "name": "Borzoi",
+    "images": [
+      "https://images.dog.ceo/breeds/borzoi/n02090622_1726.jpg",
+      "https://images.dog.ceo/breeds/borzoi/n02090622_5057.jpg",
+      "https://images.dog.ceo/breeds/borzoi/n02090622_7615.jpg"
+    ]
+  },
+  "82": {
+    "id": 82,
+    "name": "Boxer",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Male_fawn_Boxer_undocked.jpg/1200px-Male_fawn_Boxer_undocked.jpg",
+      "https://media.istockphoto.com/id/1489772212/photo/boxer-dog.jpg?s=612x612&w=0&k=20&c=V6I8wz6Ssu17_ANpbu4fJ7UE0OUkkUBKwUMYlMd0oAM=",
+      "https://petsworld.in/cdn/shop/files/Treats-boxer.jpg?v=1727083259&width=1500"
+    ]
+  },
+  "83": {
+    "id": 83,
+    "name": "Briard",
+    "images": [
+      "https://images.dog.ceo/breeds/briard/n02105251_6301.jpg",
+      "https://images.dog.ceo/breeds/briard/n02105251_7127.jpg",
+      "https://images.dog.ceo/breeds/briard/n02105251_8891.jpg"
+    ]
+  },
+  "84": {
+    "id": 84,
+    "name": "Bull Mastiff",
+    "images": [
+      "https://www.thesprucepets.com/thmb/Yyu0oat4O7UIb5tL3AHnML3xfIE=/3168x0/filters:no_upscale():strip_icc()/GettyImages-979115200-9c329a5a009945e6997707c0befaac9f.jpg",
+      "https://www.akc.org/wp-content/uploads/2017/11/Bullmastiff-standing-in-a-field.jpg",
+      "https://www.dogster.com/wp-content/uploads/2024/01/bullmastiff-dog-standing-in-an-open-field_Michael-J-Magee_Shutterstock.jpg"
+    ]
+  },
+  "85": {
+    "id": 85,
+    "name": "Cardigan",
+    "images": [
+      "https://images.dog.ceo/breeds/corgi-cardigan/n02113186_2431.jpg",
+      "https://images.dog.ceo/breeds/corgi-cardigan/n02113186_9579.jpg",
+      "https://images.dog.ceo/breeds/corgi-cardigan/n02113186_9924.jpg"
+    ]
+  },
+  "86": {
+    "id": 86,
+    "name": "Chow Chow",
+    "images": [
+      "https://images.dog.ceo/breeds/chow/n02112137_1614.jpg",
+      "https://images.dog.ceo/breeds/chow/n02112137_17437.jpg",
+      "https://images.dog.ceo/breeds/chow/n02112137_6898.jpg"
+    ]
+  },
+  "88": {
+    "id": 88,
+    "name": "Cocker Spaniel",
+    "images": [
+      "https://www.jadpo.co.uk/cdn-cgi/image/fit=cover,format=auto,width=607,height=420/https://images.ctfassets.net/4cuokmrwdiqv/4noC1obraWMKnREtxgUNTK/848f37787dcaa678d7059289ce1d0787/cocker-spaniel-breed-page-large-image-1.jpg",
+      "https://www.akc.org/wp-content/uploads/2017/11/Cocker-Spaniel-running-in-the-yard.jpg",
+      "https://media.istockphoto.com/id/92009449/photo/cocker-spaniel.jpg?s=612x612&w=0&k=20&c=cbIC_ZR73ZPwkkn5UfrDrz8bUGM-L2JKS10G_O4tFTU="
+    ]
+  },
+  "89": {
+    "id": 89,
+    "name": "Collie",
+    "images": [
+      "https://image.petmd.com/files/styles/863x625/public/2022-10/collie-dog.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/6/65/Rough-Collie-japan08_%28cropped%29.jpg",
+      "https://consumer-cms.petfinder.com/sites/default/files/images/content/Rough%20Collie2.jpg"
+    ]
+  },
+  "90": {
+    "id": 90,
+    "name": "Curly Coated Retriever",
+    "images": [
+      "https://sportingdogsaz.com/wp1/wp-content/uploads/2021/01/Curly-Coated-Retriever.jpg",
+      "https://www.dogster.com/wp-content/uploads/2024/04/curly-coated-retriever-puppy-posing-outdoors-in-summer_otsphoto_Shutterstock.jpg",
+      "https://media.istockphoto.com/id/1440544275/photo/selective-focus-shot-of-an-adorable-curly-coated-retriever.jpg?s=612x612&w=0&k=20&c=q1zPmCunrgkuO9rC9-keJ_1MG-jD6qz6_Xu-XsomaF8="
+    ]
+  },
+  "91": {
+    "id": 91,
+    "name": "Dhole",
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/7/7c/Cuon.alpinus-cut.jpg",
+      "https://a-z-animals.com/media/Dhole-1024x684.jpg",
+      "https://d18x2uyjeekruj.cloudfront.net/wp-content/uploads/2021/10/dhole.jpg"
+    ]
+  },
+  "92": {
+    "id": 92,
+    "name": "Dingo",
+    "images": [
+      "https://cdn.britannica.com/92/171292-050-AA6ABC3A/species-authorities-dingos-wolf-subspecies.jpg",
+      "https://media.istockphoto.com/id/998425352/photo/dingo-puppy.jpg?s=612x612&w=0&k=20&c=MP_zWHbfTsF6_VAHa2YoSlnOWwmvZHpd62OR14oRKBw=",
+      "https://t4.ftcdn.net/jpg/04/89/79/19/360_F_489791920_7qFCWBig9E55h3AwQkPSO5uarCoH5z3t.jpg"
+    ]
+  },
+  "93": {
+    "id": 93,
+    "name": "Flat-Coated Retriever",
+    "images": [
+      "https://pet-health-content-media.chewy.com/wp-content/uploads/2024/09/11162858/202107FlatCoatedRetriever-FeaturedImage.jpg",
+      "https://www.akc.org/wp-content/uploads/2017/11/Flat-Coated-Retrievers-sitting-outdoors.jpg",
+      "https://pet-health-content-media.chewy.com/wp-content/uploads/2024/09/11162844/202107flat-coated-retriever-2.jpg"
+    ]
+  },
+  "94": {
+    "id": 94,
+    "name": "Giant Schnauzer",
+    "images": [
+      "https://images.dog.ceo/breeds/schnauzer-giant/n02097130_3359.jpg",
+      "https://images.dog.ceo/breeds/schnauzer-giant/n02097130_5907.jpg",
+      "https://images.dog.ceo/breeds/schnauzer-giant/n02097130_800.jpg"
+    ]
+  },
+  "95": {
+    "id": 95,
+    "name": "Golden Retriever",
+    "images": [
+      "https://heronscrossing.vet/wp-content/uploads/Golden-Retriever.jpg",
+      "https://www.thesprucepets.com/thmb/F-6m45bLy1Ecu2p-egqup7BPVzI=/2124x0/filters:no_upscale():strip_icc()/GoldenPuppy185743593-56a9c1f23df78cf772aa4a33.jpg",
+      "https://image.petmd.com/files/inline-images/golden-retriever-2.jpg?VersionId=9HAclc1bWh8XvyNoGi2.UxpdEp1gygb_"
+    ]
+  },
+  "97": {
+    "id": 97,
+    "name": "Keeshond",
+    "images": [
+      "https://images.dog.ceo/breeds/keeshond/n02112350_10085.jpg",
+      "https://images.dog.ceo/breeds/keeshond/n02112350_2640.jpg",
+      "https://images.dog.ceo/breeds/keeshond/n02112350_8184.jpg"
+    ]
+  },
+  "98": {
+    "id": 98,
+    "name": "Australian Kelpie",
+    "images": [
+      "https://www.bil-jac.com/wp-content/uploads/2024/12/australian-kelpie-638420436.webp",
+      "https://images.ctfassets.net/440y9b545yd9/3pRA8hd6Wf1MbZQQRUAC8M/441f590202d2f2f8f9433d3f28a0ea2a/Australian_kelpie850.jpg",
+      "https://www.thesprucepets.com/thmb/BVWTmYnvlvOfh7Q3wuUAoC3GCM0=/2119x0/filters:no_upscale():strip_icc()/GettyImages-713869107-39e43f2374514fc89b06680938abd7bf.jpg"
+    ]
+  },
+  "99": {
+    "id": 99,
+    "name": "Komondor",
+    "images": [
+      "https://images.dog.ceo/breeds/komondor/n02105505_1145.jpg",
+      "https://images.dog.ceo/breeds/komondor/n02105505_4256.jpg",
+      "https://images.dog.ceo/breeds/komondor/n02105505_572.jpg"
+    ]
+  },
+  "100": {
+    "id": 100,
+    "name": "Kuvasz",
+    "images": [
+      "https://images.dog.ceo/breeds/kuvasz/n02104029_1599.jpg",
+      "https://images.dog.ceo/breeds/kuvasz/n02104029_2071.jpg",
+      "https://images.dog.ceo/breeds/kuvasz/n02104029_4679.jpg"
+    ]
+  },
+  "101": {
+    "id": 101,
+    "name": "Maltese",
+    "images": [
+      "https://www.zooplus.co.uk/magazine/wp-content/uploads/2021/09/Maltese-dog-on-the-grass.webp",
+      "https://ohmypetgrooming.in/wp-content/uploads/2024/12/Maltese-Dog.webp",
+      "https://framerusercontent.com/images/BshlkyWmUNfQunw6ABacCRGM.jpg?width=1920&height=1282"
+    ]
+  },
+  "102": {
+    "id": 102,
+    "name": "Belgian Malinois",
+    "images": [
+      "https://cdn.britannica.com/85/232785-050-0EE871BE/Belgian-Malinois-dog.jpg",
+      "https://www.thesprucepets.com/thmb/jlNO0ifq3v-lhs7VKiwaUPBy32Y=/3256x0/filters:no_upscale():strip_icc()/BelgianMalinoispuppy-GettyImages-102998750-8fc8c1d59aa7466896697a86620bcb90.jpg",
+      "https://pet-health-content-media.chewy.com/wp-content/uploads/2024/09/11180637/202105iStock-1026229726.jpg"
+    ]
+  },
+  "103": {
+    "id": 103,
+    "name": "Miniature Pinscher",
+    "images": [
+      "https://images.dog.ceo/breeds/pinscher-miniature/n02107312_281.jpg",
+      "https://images.dog.ceo/breeds/pinscher-miniature/n02107312_5407.jpg",
+      "https://images.dog.ceo/breeds/pinscher/Coffee_Soul_Bari030.jpg"
+    ]
+  },
+  "104": {
+    "id": 104,
+    "name": "Miniature Poodle",
+    "images": [
+      "https://image.petmd.com/files/inline-images/miniature-poodle-3.jpg?VersionId=fpfO.9DF7skG7rVVTpU5rlHLT_0PKTv0",
+      "https://www.puppiezo.com/wp-content/uploads/2025/04/MINIATURE-POODLE-5.jpg",
+      "https://cdn.mos.cms.futurecdn.net/zPtcQJsjyUG4nLJZ7YN2x6.jpg"
+    ]
+  },
+  "105": {
+    "id": 105,
+    "name": "Miniature Schnauzer",
+    "images": [
+      "https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_2497.jpg",
+      "https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_581.jpg",
+      "https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_6567.jpg"
+    ]
+  },
+  "106": {
+    "id": 106,
+    "name": "Otterhound",
+    "images": [
+      "https://images.dog.ceo/breeds/otterhound/n02091635_1337.jpg",
+      "https://images.dog.ceo/breeds/otterhound/n02091635_4626.jpg",
+      "https://images.dog.ceo/breeds/otterhound/n02091635_873.jpg"
+    ]
+  },
+  "107": {
+    "id": 107,
+    "name": "Papillon",
+    "images": [
+      "https://images.dog.ceo/breeds/papillon/n02086910_21.jpg",
+      "https://images.dog.ceo/breeds/papillon/n02086910_3553.jpg",
+      "https://images.dog.ceo/breeds/papillon/n02086910_6483.jpg"
+    ]
+  },
+  "108": {
+    "id": 108,
+    "name": "Pug",
+    "images": [
+      "https://cdn.britannica.com/34/233234-050-1649BFA9/Pug-dog.jpg",
+      "https://media.istockphoto.com/id/454238885/photo/pug-puppy-dog.jpg?s=612x612&w=0&k=20&c=Da9JqQ3ViGeNvM6IPGBprXBt8PLSQ8_rPgvYWhEtpHU=",
+      "https://cdn05.zipify.com/SeAXrZgkldgROAHxVRkunyo8ph8=/fit-in/3840x0/d72a83335cd5479c869636cea1031e9f/_-pot013-oct-blogs.jpeg"
+    ]
+  },
+  "109": {
+    "id": 109,
+    "name": "Great Dane",
+    "images": [
+      "https://a-z-animals.com/media/2021/12/White-Animals-White-Great-Dane.jpg",
+      "https://www.hund.ch/wp-content/uploads/2017/07/Great-Dane.jpg",
+      "https://image.petmd.com/files/inline-images/great-dane-5.jpg?VersionId=s_HKryETYVtUvss_RChuH3Aen3phEShs"
+    ]
+  },
+  "110": {
+    "id": 110,
+    "name": "Schipperke",
+    "images": [
+      "https://images.dog.ceo/breeds/schipperke/n02104365_481.jpg",
+      "https://images.dog.ceo/breeds/schipperke/n02104365_6291.jpg",
+      "https://images.dog.ceo/breeds/schipperke/n02104365_9954.jpg"
+    ]
+  },
+  "111": {
+    "id": 111,
+    "name": "Silky Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-silky/n02097658_271.jpg",
+      "https://images.dog.ceo/breeds/terrier-silky/n02097658_3207.jpg",
+      "https://images.dog.ceo/breeds/terrier-silky/n02097658_8095.jpg"
+    ]
+  },
+  "112": {
+    "id": 112,
+    "name": "Soft Coated Wheaten Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-wheaten/n02098105_2256.jpg",
+      "https://images.dog.ceo/breeds/terrier-wheaten/n02098105_597.jpg",
+      "https://images.dog.ceo/breeds/terrier-wheaten/n02098105_637.jpg"
+    ]
+  },
+  "113": {
+    "id": 113,
+    "name": "Standard Poodle",
+    "images": [
+      "https://www.trupanion.com/images/trupanionwebsitelibraries/bg/standard-poodle-white.jpg?sfvrsn=7f8302e6_5",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs3AF5tzZNBm_dILJxqWPB3RHZFJdZR6YUXg&s",
+      "https://image.petmd.com/files/inline-images/standard-poodle.jpg?VersionId=1Pjx5emdAPxmImIlwCR0tX3HXxxm_NhT"
+    ]
+  },
+  "114": {
+    "id": 114,
+    "name": "Standard Schnauzer",
+    "images": [
+      "https://images.dog.ceo/breeds/schnauzer-giant/n02097130_2421.jpg",
+      "https://images.dog.ceo/breeds/schnauzer-giant/n02097130_4236.jpg",
+      "https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_6534.jpg"
+    ]
+  },
+  "115": {
+    "id": 115,
+    "name": "Toy Poodle",
+    "images": [
+      "https://pet-health-content-media.chewy.com/wp-content/uploads/2025/03/04180100/brown-toy-poodle-pup.jpg",
+      "https://www.dogster.com/wp-content/uploads/2023/08/red-toy-poodle-in-the-park_Mykhaylo_Kozelko_Shutterstock.jpg",
+      "https://pet-health-content-media.chewy.com/wp-content/uploads/2025/03/04180734/red-toy-poodle-outside.jpg"
+    ]
+  },
+  "116": {
+    "id": 116,
+    "name": "Toy Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-toy/n02087046_1206.jpg",
+      "https://images.dog.ceo/breeds/terrier-toy/n02087046_4426.jpg",
+      "https://images.dog.ceo/breeds/terrier-toy/n02087046_7015.jpg"
+    ]
+  },
+  "117": {
+    "id": 117,
+    "name": "Vizsla",
+    "images": [
+      "https://images.dog.ceo/breeds/vizsla/n02100583_10367.jpg",
+      "https://images.dog.ceo/breeds/vizsla/n02100583_264.jpg",
+      "https://images.dog.ceo/breeds/vizsla/n02100583_5921.jpg"
+    ]
+  },
+  "118": {
+    "id": 118,
+    "name": "Whippet",
+    "images": [
+      "https://images.dog.ceo/breeds/whippet/n02091134_1425.jpg",
+      "https://images.dog.ceo/breeds/whippet/n02091134_15827.jpg",
+      "https://images.dog.ceo/breeds/whippet/n02091134_39.jpg"
+    ]
+  },
+  "119": {
+    "id": 119,
+    "name": "Wire-Haired Fox Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-fox/n02095314_1866.jpg",
+      "https://images.dog.ceo/breeds/terrier-fox/n02095314_2038.jpg",
+      "https://images.dog.ceo/breeds/terrier-fox/n02095314_3372.jpg"
+    ]
+  },
+  "1": {
+    "id": 1,
+    "name": "African Wild Dog",
+    "images": [
+      "https://images.dog.ceo/breeds/dhole/n02115913_1449.jpg",
+      "https://images.dog.ceo/breeds/dhole/n02115913_2014.jpg",
+      "https://images.dog.ceo/breeds/dhole/n02115913_257.jpg"
+    ]
+  },
+  "26": {
+    "id": 26,
+    "name": "German Shepherd",
+    "images": [
+      "https://cdn.mos.cms.futurecdn.net/Tdom4TwTjsVFLhXrNqnZHS.jpg",
+      "https://www.wiggles.in/cdn/shop/articles/shutterstock_245621623.jpg?v=1706863987",
+      "https://www.bellaandduke.com/wp-content/uploads/2024/10/A-guide-to-German-Shepherds-characteristics-personality-lifespan-and-more-featured-image.webp"
+    ]
+  },
+  "39": {
+    "id": 39,
+    "name": "Kerry Blue Terrier",
+    "images": [
+      "https://images.dog.ceo/breeds/terrier-scottish/n02097298_5074.jpg",
+      "https://images.dog.ceo/breeds/terrier-scottish/n02097298_7629.jpg",
+      "https://images.dog.ceo/breeds/terrier-scottish/n02097298_8262.jpg"
+    ]
+  },
+  "40": {
+    "id": 40,
+    "name": "Labrador Retriever",
+    "images": [
+      "https://media.istockphoto.com/id/168438879/photo/labrador-retriever-dog-in-a-grassy-field.jpg?s=612x612&w=0&k=20&c=7eCHztEUR1QYTmWFQPfi4ZHEnOe3YYCFidJAwxVsm4A=",
+      "https://bestforpet.com.au/wp-content/uploads/2025/07/Labrador_Retriever_1200x800.jpg",
+      "https://cdn.royalcanin-weshare-online.io/AugNBIoBaPOZra8qGQsX/v3/labrador-retriever-on-a-walk-in-a-meadow"
+    ]
+  },
+  "45": {
+    "id": 45,
+    "name": "Mexican Hairless (Xoloitzcuintli)",
+    "images": [
+      "https://images.dog.ceo/breeds/chihuahua/msdaisy.jpg",
+      "https://images.dog.ceo/breeds/chihuahua/n02085620_14413.jpg",
+      "https://images.dog.ceo/breeds/chihuahua/n02085620_712.jpg"
+    ]
+  },
+  "87": {
+    "id": 87,
+    "name": "Clumber Spaniel",
+    "images": [
+      "https://images.dog.ceo/breeds/spaniel-cocker/audrey.jpg",
+      "https://images.dog.ceo/breeds/spaniel-cocker/n02102318_1458.jpg",
+      "https://images.dog.ceo/breeds/spaniel-cocker/n02102318_4716.jpg"
+    ]
+  },
+  "96": {
+    "id": 96,
+    "name": "Groenendael",
+    "images": [
+      "https://cdn.britannica.com/85/232785-050-0EE871BE/Belgian-Malinois-dog.jpg",
+      "https://www.thesprucepets.com/thmb/jlNO0ifq3v-lhs7VKiwaUPBy32Y=/3256x0/filters:no_upscale():strip_icc()/BelgianMalinoispuppy-GettyImages-102998750-8fc8c1d59aa7466896697a86620bcb90.jpg",
+      "https://pet-health-content-media.chewy.com/wp-content/uploads/2024/09/11180637/202105iStock-1026229726.jpg"
+    ]
+  }
+
+}

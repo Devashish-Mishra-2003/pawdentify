@@ -106,7 +106,7 @@ export default function SignInPage() {
         {!isResetting ? (
           <>
             <h1 
-              className="text-3xl font-bold mb-2"
+              className="text-3xl mb-2"
               style={{ color: 'var(--color-auth-title)' }}
             >
               {t('auth.signIn.title')}

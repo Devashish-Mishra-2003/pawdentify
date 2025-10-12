@@ -1,9 +1,9 @@
-// src/components/Settings.jsx
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@clerk/clerk-react';
 import pawLogo from '../assets/PAWS_white_text.png';
 import i18n from '../i18n';
+import LoadingSpinner from './LoadingSpinner';
 
 const LS_KEY = 'pawdentify-settings';
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -32,7 +32,6 @@ const Settings = ({ onBack }) => {
       setLoading(true);
       
       if (isSignedIn) {
-        // Try to load from backend first
         try {
           const token = await getToken();
           const response = await fetch(`${API_URL}/api/settings`, {
@@ -42,7 +41,6 @@ const Settings = ({ onBack }) => {
           if (response.ok) {
             const backendSettings = await response.json();
             setSettings(backendSettings);
-            // Also save to localStorage as backup
             localStorage.setItem(LS_KEY, JSON.stringify(backendSettings));
             setLoading(false);
             return;
@@ -52,12 +50,10 @@ const Settings = ({ onBack }) => {
         }
       }
       
-      // Fallback to localStorage
       try {
         const saved = localStorage.getItem(LS_KEY);
         if (saved) {
           const parsed = JSON.parse(saved);
-          // Remove old fields if they exist
           const { theme, anonymousMode, ...rest } = parsed;
           setSettings({ 
             imageQuality: 'high', 
@@ -82,18 +78,16 @@ const Settings = ({ onBack }) => {
   // Save settings when they change
   useEffect(() => {
     const saveSettings = async () => {
-      if (loading) return; // Don't save during initial load
+      if (loading) return;
       
       setSaving(true);
       
-      // Always save to localStorage
       try {
         localStorage.setItem(LS_KEY, JSON.stringify(settings));
       } catch (e) {
         console.error('Failed to save settings to localStorage', e);
       }
       
-      // Save to backend if signed in
       if (isSignedIn) {
         try {
           const token = await getToken();
@@ -116,7 +110,7 @@ const Settings = ({ onBack }) => {
     saveSettings();
   }, [settings, isSignedIn, getToken, loading]);
 
-  // Change language when language setting changes
+  // Change language
   useEffect(() => {
     if (settings.language && i18n && i18n.changeLanguage) {
       i18n.changeLanguage(settings.language).catch(() => {});
@@ -129,7 +123,6 @@ const Settings = ({ onBack }) => {
     if (!window.confirm(t('settings.privacy.clearData.confirm'))) return;
     
     try {
-      // If signed in, clear backend data first
       if (isSignedIn) {
         const confirmCloud = window.confirm(t('settings.privacy.clearData.confirmCloudData'));
         
@@ -137,15 +130,12 @@ const Settings = ({ onBack }) => {
           try {
             const token = await getToken();
             
-            // Get all pets
             const petsRes = await fetch(`${API_URL}/api/pets`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             
             if (petsRes.ok) {
               const pets = await petsRes.json();
-              
-              // Delete all pets
               await Promise.all(
                 pets.map(pet => 
                   fetch(`${API_URL}/api/pets/${pet._id || pet.id}`, {
@@ -156,15 +146,12 @@ const Settings = ({ onBack }) => {
               );
             }
             
-            // Get all history
             const historyRes = await fetch(`${API_URL}/api/history`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             
             if (historyRes.ok) {
               const history = await historyRes.json();
-              
-              // Delete all history
               await Promise.all(
                 history.map(item => 
                   fetch(`${API_URL}/api/history/${item._id || item.id}`, {
@@ -175,7 +162,6 @@ const Settings = ({ onBack }) => {
               );
             }
             
-            // Reset settings on backend
             await fetch(`${API_URL}/api/settings`, {
               method: 'DELETE',
               headers: { Authorization: `Bearer ${token}` }
@@ -189,7 +175,6 @@ const Settings = ({ onBack }) => {
         }
       }
       
-      // Clear localStorage
       Object.keys(localStorage).forEach((k) => {
         if (k.startsWith('pawdentify') || k === LS_KEY) {
           if (k !== 'pawdentify-theme') {
@@ -198,7 +183,6 @@ const Settings = ({ onBack }) => {
         }
       });
       
-      // Reset settings to defaults
       const defaultSettings = {
         imageQuality: 'high',
         saveHistory: true,
@@ -206,7 +190,6 @@ const Settings = ({ onBack }) => {
       };
       
       setSettings(defaultSettings);
-      
       alert(t('settings.privacy.clearData.success'));
     } catch (e) {
       console.error('Failed clearing data', e);
@@ -216,7 +199,6 @@ const Settings = ({ onBack }) => {
 
   const clearCache = () => {
     if (!window.confirm(t('settings.advanced.cache.confirm'))) return;
-    // Clear browser cache (limited to what JS can do)
     if ('caches' in window) {
       caches.keys().then(names => {
         names.forEach(name => caches.delete(name));
@@ -226,13 +208,7 @@ const Settings = ({ onBack }) => {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "var(--color-settings-page-bg)" }}>
-        <div className="text-xl" style={{ color: "var(--color-settings-title)" }}>
-          {t('common.loading')}...
-        </div>
-      </div>
-    );
+    return <LoadingSpinner message={t('common.loading')} />;
   }
 
   return (
@@ -282,67 +258,70 @@ const Settings = ({ onBack }) => {
           {/* Left column */}
           <div className="space-y-12">
             {/* Functionality */}
-            <section className="section-card border rounded-3xl p-8" style={{ borderColor: "var(--color-settings-border)" }}>
-              <h2 className="text-3xl font-alfa mb-6" style={{ color: "var(--color-settings-section-title)" }}>
-                {t("settings.functionality.title")}
-              </h2>
+           {/* Functionality */}
+<section className="section-card border rounded-3xl p-8" style={{ borderColor: "var(--color-settings-border)" }}>
+  <h2 className="text-3xl font-alfa mb-6" style={{ color: "var(--color-settings-section-title)" }}>
+    {t("settings.functionality.title")}
+  </h2>
 
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-lg font-semibold mb-3" style={{ color: "var(--color-settings-label)" }}>
-                    {t("settings.functionality.imageQuality.label")}
-                  </label>
-                  <p className="mb-4" style={{ color: "var(--color-settings-description)" }}>
-                    {t("settings.functionality.imageQuality.description")}
-                  </p>
-                  <div className="flex gap-3 flex-wrap">
-                    {[
-                      { value: 'high', label: t("settings.functionality.imageQuality.high") },
-                      { value: 'medium', label: t("settings.functionality.imageQuality.medium") },
-                      { value: 'low', label: t("settings.functionality.imageQuality.low") },
-                    ].map((opt) => (
-                      <button
-                        key={opt.value}
-                        onClick={() => updateSetting('imageQuality', opt.value)}
-                        className="btn-anim px-4 py-2 rounded-full font-semibold transition-all hover:scale-105"
-                        style={settings.imageQuality === opt.value ? {
-                          background: "var(--color-settings-btn-active-bg)",
-                          color: "var(--color-settings-btn-active-text)",
-                          boxShadow: "var(--color-settings-btn-active-shadow)",
-                        } : {
-                          backgroundColor: "var(--color-settings-btn-inactive-bg)",
-                          color: "var(--color-settings-btn-inactive-text)",
-                        }}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+  <div className="space-y-6">
+    <div>
+      <h3 className="block font-alfa text-xl mb-2" style={{ color: "var(--color-settings-label)" }}>
+        {t("settings.functionality.imageQuality.label")}
+      </h3>
+      <p className="mb-4" style={{ color: "var(--color-settings-description)" }}>
+        {t("settings.functionality.imageQuality.description")}
+      </p>
+      <div className="flex gap-3 flex-wrap">
+        {[
+          { value: 'high', label: t("settings.functionality.imageQuality.high") },
+          { value: 'medium', label: t("settings.functionality.imageQuality.medium") },
+          { value: 'low', label: t("settings.functionality.imageQuality.low") },
+        ].map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => updateSetting('imageQuality', opt.value)}
+            className="btn-anim px-4 py-2 rounded-full font-semibold transition-all hover:scale-105"
+            style={settings.imageQuality === opt.value ? {
+              background: "var(--color-settings-btn-active-bg)",
+              color: "var(--color-settings-btn-active-text)",
+              boxShadow: "var(--color-settings-btn-active-shadow)",
+            } : {
+              backgroundColor: "var(--color-settings-btn-inactive-bg)",
+              color: "var(--color-settings-btn-inactive-text)",
+            }}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+    </div>
 
-                <div className="mt-6">
-                  <label className="block text-lg font-semibold mb-3" style={{ color: "var(--color-settings-label)" }}>
-                    {t("settings.functionality.language.label")}
-                  </label>
-                  <p className="mb-4" style={{ color: "var(--color-settings-description)" }}>
-                    {t("settings.functionality.language.description")}
-                  </p>
-                  <select
-                    value={settings.language}
-                    onChange={(e) => updateSetting('language', e.target.value)}
-                    className="px-4 py-2 rounded-lg border"
-                    style={{
-                      backgroundColor: "var(--color-settings-select-bg)",
-                      borderColor: "var(--color-settings-select-border)",
-                    }}
-                  >
-                    {LANG_OPTIONS.map((opt) => (
-                      <option key={opt.code} value={opt.code}>{opt.label}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </section>
+    {/* Divider Line */}
+    <div className="border-t pt-6" style={{ borderColor: "var(--color-settings-border)" }}>
+      <h3 className="text-xl mb-2" style={{ color: "var(--color-settings-label)" }}>
+        {t("settings.functionality.language.label")}
+      </h3>
+      <p className="mb-4" style={{ color: "var(--color-settings-description)" }}>
+        {t("settings.functionality.language.description")}
+      </p>
+      <select
+        value={settings.language}
+        onChange={(e) => updateSetting('language', e.target.value)}
+        className="px-4 py-2 rounded-lg border"
+        style={{
+          backgroundColor: "var(--color-settings-select-bg)",
+          borderColor: "var(--color-settings-select-border)",
+        }}
+      >
+        {LANG_OPTIONS.map((opt) => (
+          <option key={opt.code} value={opt.code}>{opt.label}</option>
+        ))}
+      </select>
+    </div>
+  </div>
+</section>
+
           </div>
 
           {/* Right column */}
@@ -484,5 +463,6 @@ const Settings = ({ onBack }) => {
 };
 
 export default Settings;
+
 
 

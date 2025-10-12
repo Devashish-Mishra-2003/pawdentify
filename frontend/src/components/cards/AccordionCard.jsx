@@ -11,12 +11,22 @@ export default function AccordionCard({ title, icon, data }) {
   const entries = Object.entries(data).filter(([_, value]) => value);
 
   return (
-    <div
+    <motion.div
       className="w-full rounded-2xl shadow-md border transition-all duration-300"
       style={{
         backgroundColor: "var(--color-accordion-bg)",
         borderColor: "var(--color-accordion-border)",
       }}
+      whileHover={{ 
+        y: -4,
+        boxShadow: "0 12px 30px rgba(140, 82, 255, 0.2)",
+        scale: 1.01
+      }}
+      animate={isExpanded ? {
+        y: -4,
+        boxShadow: "0 12px 30px rgba(140, 82, 255, 0.2)",
+        scale: 1.01
+      } : {}}
     >
       {/* Header - Clickable */}
       <button
@@ -80,6 +90,7 @@ export default function AccordionCard({ title, icon, data }) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
+

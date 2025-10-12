@@ -13,3 +13,5 @@ db = client[DATABASE_NAME]
 # Collections
 pets_collection = db["pets"]
 history_collection = db["search_history"]
+feedback_collection = db["feedback"]
+breed_searches_collection = db["breed_searches"]  # <-- ADDED breed searches collection

@@ -289,6 +289,48 @@
   --color-services-phone-badge-text: #16a34a;
   --color-services-no-phone-badge-bg: rgba(249, 115, 22, 0.1);
   --color-services-no-phone-badge-text: #ea580c;
+
+  /* Feedback Component Colors */
+
+    --color-feedback-container-bg: #ffffff;
+  --color-feedback-container-border: #e5e7eb;
+  --color-feedback-title: #1f2937;
+  --color-feedback-btn-border: #d1d5db;
+  --color-feedback-btn-bg: #ffffff;
+  --color-feedback-btn-hover-border: #8b5cf6;
+  --color-feedback-upvote-active-border: #10b981;
+  --color-feedback-upvote-active-bg: #ecfdf5;
+  --color-feedback-upvote-active-text: #047857;
+  --color-feedback-downvote-active-border: #ef4444;
+  --color-feedback-downvote-active-bg: #fef2f2;
+  --color-feedback-downvote-active-text: #b91c1c;
+  --color-feedback-label: #374151;
+  --color-feedback-textarea-border: #d1d5db;
+  --color-feedback-textarea-focus-ring: #8b5cf6;
+  --color-feedback-error: #dc2626;
+  --color-feedback-submit-bg: #8b5cf6;
+  --color-feedback-submit-hover-bg: #7c3aed;
+  --color-feedback-submit-text: #ffffff;
+  --color-feedback-success-bg: #ecfdf5;
+  --color-feedback-success-border: #d1fae5;
+  --color-feedback-success-text: #047857;
+
+  /* Admin Page Colors */
+    --color-admin-page-bg: #f9fafb;
+  --color-admin-title: #1f2937;
+  --color-admin-text: #4b5563;
+  --color-admin-error-title: #dc2626;
+  --color-admin-error-text: #ef4444;
+  --color-admin-table-bg: #ffffff;
+  --color-admin-table-header-bg: #f9fafb;
+  --color-admin-table-header-text: #6b7280;
+  --color-admin-table-text: #1f2937;
+  --color-admin-table-border: #e5e7eb;
+  --color-admin-upvote-bg: #d1fae5;
+  --color-admin-upvote-text: #065f46;
+  --color-admin-downvote-bg: #fee2e2;
+  --color-admin-downvote-text: #991b1b;
+  --color-admin-empty-text: #6b7280;
 }
 
 /* ===== DARK MODE THEME ===== */
@@ -560,6 +602,47 @@
   --color-services-phone-badge-text: #4ade80;
   --color-services-no-phone-badge-bg: rgba(249, 115, 22, 0.2);
   --color-services-no-phone-badge-text: #fb923c;
+
+  /* Feedback Component - Dark Mode */
+    --color-feedback-container-bg: #1e293b;
+  --color-feedback-container-border: #334155;
+  --color-feedback-title: #f1f5f9;
+  --color-feedback-btn-border: #475569;
+  --color-feedback-btn-bg: #0f172a;
+  --color-feedback-btn-hover-border: #8b5cf6;
+  --color-feedback-upvote-active-border: #10b981;
+  --color-feedback-upvote-active-bg: rgba(16, 185, 129, 0.2);
+  --color-feedback-upvote-active-text: #4ade80;
+  --color-feedback-downvote-active-border: #ef4444;
+  --color-feedback-downvote-active-bg: rgba(239, 68, 68, 0.2);
+  --color-feedback-downvote-active-text: #fb7185;
+  --color-feedback-label: #cbd5e1;
+  --color-feedback-textarea-border: #475569;
+  --color-feedback-textarea-focus-ring: #8b5cf6;
+  --color-feedback-error: #f87171;
+  --color-feedback-submit-bg: #8b5cf6;
+  --color-feedback-submit-hover-bg: #7c3aed;
+  --color-feedback-submit-text: #ffffff;
+  --color-feedback-success-bg: rgba(16, 185, 129, 0.2);
+  --color-feedback-success-border: rgba(16, 185, 129, 0.3);
+  --color-feedback-success-text: #4ade80;
+
+  /* Admin Page Colors - Dark Mode */
+    --color-admin-page-bg: #0f172a;
+  --color-admin-title: #f1f5f9;
+  --color-admin-text: #cbd5e1;
+  --color-admin-error-title: #f87171;
+  --color-admin-error-text: #fca5a5;
+  --color-admin-table-bg: #1e293b;
+  --color-admin-table-header-bg: #0f172a;
+  --color-admin-table-header-text: #94a3b8;
+  --color-admin-table-text: #e2e8f0;
+  --color-admin-table-border: #334155;
+  --color-admin-upvote-bg: rgba(16, 185, 129, 0.2);
+  --color-admin-upvote-text: #4ade80;
+  --color-admin-downvote-bg: rgba(239, 68, 68, 0.2);
+  --color-admin-downvote-text: #fb7185;
+  --color-admin-empty-text: #94a3b8;
 }
 
 

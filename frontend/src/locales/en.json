@@ -71,7 +71,8 @@
     "nav": {
       "home": "Home",
       "info": "Info",
-      "services": "Services"
+      "services": "Services",
+      "browseBreeds": "Browse"
     },
     "faq": "FAQ",
     "services": "Services",
@@ -84,7 +85,24 @@
     "getStarted": "Get Started",
     "logoAlt": "Pawdentify Logo",
     "lightMode": "Switch to Light Mode",
-    "darkMode": "Switch to Dark Mode"
+    "darkMode": "Switch to Dark Mode",
+    "admin": {
+      "feedback": "Feedback"
+    }
+  },
+"searchBreed": {
+    "title": "Explore Dog Breeds",
+    "subtitle": "Search from 100+ breeds in our database",
+    "searchPlaceholder": "Type breed name (e.g., 'germen sheperd')...",
+    "searchResults": "Search Results",
+    "noResults": "No breeds found. Try different spelling!",
+    "topSearched": "Top Searched Breeds",
+    "featured": "Featured Breeds",
+    "card": {
+      "size": "Size",
+      "weight": "Weight",
+      "height": "Height"
+    }
   },
   "services": {
     "title": "Find Pet Services Near You",
@@ -199,7 +217,7 @@
       "lastUpdated": "Last Updated:",
       "lastUpdatedDate": "January 2025",
       "breedsDatabase": "Breeds:",
-      "breedsDatabaseCount": "120+",
+      "breedsDatabaseCount": "120",
       "support": "Support:",
       "supportEmail": "support@pawdentify.com"
     }
@@ -376,5 +394,40 @@
     "edit": "Edit",
     "close": "Close",
     "back": "Back"
+  },
+  "feedback": {
+    "helpfulQuestion": "Was this helpful?",
+    "title": "Feedback",
+    "upvote": "Correct",
+    "downvote": "Incorrect",
+    "youSelected": "You selected:",
+    "additionalFeedback": "Tell us more (optional)",
+    "placeholder": "What could we improve?",
+    "submitButton": "Submit Feedback",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "selectVoteError": "Please select upvote or downvote",
+    "submitError": "Failed to submit feedback",
+    "networkError": "Network error. Please try again.",
+    "thankYou": "Thank you for your feedback!"
+  },
+  "admin": {
+    "feedback": {
+      "title": "Admin Feedback Dashboard",
+      "accessDenied": "Access Denied",
+      "noPermission": "You do not have permission to view this page.",
+      "errorTitle": "Error",
+      "fetchError": "Failed to fetch feedbacks",
+      "networkError": "Network error",
+      "noFeedbacks": "No feedbacks available.",
+      "table": {
+        "userId": "User ID",
+        "predictedBreed": "Predicted Breed",
+        "voteType": "Vote Type",
+        "message": "Feedback Message",
+        "timestamp": "Timestamp",
+        "noMessage": "N/A"
+      }
+    }
   }
 }

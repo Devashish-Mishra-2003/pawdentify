@@ -14,6 +14,7 @@
     "@clerk/themes": "^2.4.25",
     "@tailwindcss/vite": "^4.1.13",
     "framer-motion": "^12.23.22",
+    "fuse.js": "^7.1.0",
     "i18next": "^25.5.3",
     "i18next-browser-languagedetector": "^8.2.0",
     "lucide-react": "^0.544.0",

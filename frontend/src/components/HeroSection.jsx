@@ -32,7 +32,7 @@ const HeroSection = () => {
   return (
     <motion.section
       id="hero"
-      className="min-h-screen pt-20 flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen pt-30 sm:pt-24 md:pt-10 flex items-center justify-center relative overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2, ease: "easeOut" }}

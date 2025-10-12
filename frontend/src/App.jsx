@@ -1,6 +1,5 @@
-// src/App.jsx
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { SignedIn, SignedOut, RedirectToSignIn, AuthenticateWithRedirectCallback } from '@clerk/clerk-react';
 
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -10,18 +9,62 @@ import HeroSection from './components/HeroSection';
 import PredictionGuidelines from './components/PredictionGuidelines';
 import PredictionUpload from './components/PredictionUpload';
 import BreedInfoDisplay from './components/BreedInfoDisplay';
-import KnowMorePage from './components/KnowMorePage';
-import FAQ from './pages/FAQ';
+import LoadingSpinner from './components/LoadingSpinner';
 import Footer from './components/Footer';
-import Settings from './components/Settings';
-import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
-import Dashboard from './pages/Dashboard';
-import Services from './pages/Services';
+
+// Lazy load components
+const KnowMorePage = lazy(() => import('./components/KnowMorePage'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const Settings = lazy(() => import('./components/Settings'));
+const SignInPage = lazy(() => import('./pages/SignInPage'));
+const SignUpPage = lazy(() => import('./pages/SignUpPage'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Services = lazy(() => import('./pages/Services'));
+const AdminFeedback = lazy(() => import('./pages/AdminFeedback'));
+const SearchBreed = lazy(() => import('./pages/SearchBreed')); // <- NEW LINE ADDED
 
 const PREDICTION_STORAGE_KEY = 'pawdentify-current-prediction';
 
-// Component to conditionally render Header and Footer
+// Wrapper component that shows full-page loader without header/footer
+function SuspenseWrapper({ children, showHeaderFooter }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <Suspense 
+      fallback={
+        <div style={{ minHeight: '100vh' }}>
+          <LoadingSpinner message="Loading page..." />
+        </div>
+      }
+    >
+      <LoadingHandler setIsLoading={setIsLoading}>
+        {isLoading ? (
+          <LoadingSpinner message="Loading page..." />
+        ) : (
+          <>
+            {showHeaderFooter && <Header />}
+            {children}
+            {showHeaderFooter && <Footer />}
+          </>
+        )}
+      </LoadingHandler>
+    </Suspense>
+  );
+}
+
+// Helper component to detect when content is loaded
+function LoadingHandler({ children, setIsLoading }) {
+  useEffect(() => {
+    // Small delay to ensure smooth transition
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [setIsLoading]);
+
+  return <>{children}</>;
+}
+
 function Layout({ children, showHeaderFooter }) {
   return (
     <>
@@ -112,54 +155,81 @@ const App = () => {
     );
   }
 
-  // Hook to check current location
   function AppRoutes() {
     const location = useLocation();
     const authRoutes = ['/sign-in', '/sign-up', '/sso-callback'];
     const isAuthRoute = authRoutes.some(route => location.pathname.startsWith(route));
+    const isHomePage = location.pathname === '/';
 
     return (
       <>
         <GlobalStyles />
-        <Layout showHeaderFooter={!isAuthRoute}>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={HomeContent} />
-            <Route path="/know-more" element={<KnowMorePage />} />
-            <Route path="/faq" element={<FAQ />} />
-            
-            {/* Auth Routes */}
-            <Route path="/sign-in/*" element={<SignInPage />} />
-            <Route path="/sign-up/*" element={<SignUpPage />} />
-            <Route path="/sso-callback" element={<AuthenticateWithRedirectCallback />} />
-            
-            {/* Protected Routes */}
-            <Route 
-              path="/services" 
-              element={
-                <ProtectedRoute>
-                  <Services />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/settings" 
-              element={
-                <ProtectedRoute>
-                  <SettingsPageWrapper />
-                </ProtectedRoute>
-              } 
-            />
-          </Routes>
-        </Layout>
+        
+        {/* Home page - no lazy loading, show immediately with header/footer */}
+        {isHomePage ? (
+          <Layout showHeaderFooter={true}>
+            <Routes>
+              <Route path="/" element={HomeContent} />
+            </Routes>
+          </Layout>
+        ) : (
+          /* Other pages - lazy load with full-page loader */
+          <Suspense 
+            fallback={
+              <div style={{ minHeight: '100vh' }}>
+                <LoadingSpinner message="Loading page..." />
+              </div>
+            }
+          >
+            <Layout showHeaderFooter={!isAuthRoute}>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/know-more" element={<KnowMorePage />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/search-breed" element={<SearchBreed />} /> {/* <- NEW LINE ADDED */}
+                
+                {/* Auth Routes */}
+                <Route path="/sign-in/*" element={<SignInPage />} />
+                <Route path="/sign-up/*" element={<SignUpPage />} />
+                <Route path="/sso-callback" element={<AuthenticateWithRedirectCallback />} />
+                
+                {/* Protected Routes */}
+                <Route 
+                  path="/services" 
+                  element={
+                    <ProtectedRoute>
+                      <Services />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/dashboard" 
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/settings" 
+                  element={
+                    <ProtectedRoute>
+                      <SettingsPageWrapper />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin" 
+                  element={
+                    <ProtectedRoute>
+                      <AdminFeedback />
+                    </ProtectedRoute>
+                  } 
+                />
+              </Routes>
+            </Layout>
+          </Suspense>
+        )}
       </>
     );
   }
@@ -174,6 +244,5 @@ const App = () => {
 };
 
 export default App;
-
 
 
