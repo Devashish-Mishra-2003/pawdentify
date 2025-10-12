@@ -102,10 +102,12 @@ npm run dev
 Backend setup
 ```
 cd backend
-python -m venv venv
-source venv/bin/activate
+conda create -n pawdentify python=3.10
+conda activate pawdentify
 pip install -r requirements.txt
 cp .env.example .env
+Add MONGODB_URL, CLERK_SECRET_KEY, CLOUDINARY credentials
+uvicorn main:app --reload
 ```
 Add MONGODB_URI, CLERK_SECRET_KEY, ClOUDINARY, MAPMYINDIA credentials
 ```
@@ -125,8 +127,8 @@ Backend .env:
 ```
 MONGODB_URI=mongodb://localhost:27017/pawdentify
 CLERK_SECRET_KEY=sk_test_...
-AWS_ACCESS_KEY_ID=your_key
-AWS_SECRET_ACCESS_KEY=your_secret
+CLOUDINARY_ACCESS_KEY_ID=your_key
+CLOUDINARY_SECRET_ACCESS_KEY=your_secret
 MODEL_PATH=./models/breed_classifier.h5
 ```
 
