@@ -64,9 +64,9 @@ Backend
 
 -   MongoDB database
 
--   TensorFlow/PyTorch for ML
+-   TensorFlow for ML
 
--   AWS S3 for image storage
+-   Cloudinary for image storage
 
 Installation
 ------------
@@ -85,29 +85,29 @@ Prerequisites
 Setup
 -----
 
-Clone repository\
+Clone repository
 ```
-git clone <https://github.com/yourusername/pawdentify.git>\
+git clone <https://github.com/yourusername/pawdentify.git>
 cd pawdentify
 ```
 
-Frontend setup\
+Frontend setup
 ```
-npm install\
-cp .env.example .env\
-Add VITE_API_URL and VITE_CLERK_PUBLISHABLE_KEY\
+npm install
+cp .env.example .env
+Add VITE_API_URL and VITE_CLERK_PUBLISHABLE_KEY
 npm run dev
 ```
 
-Backend setup\
+Backend setup
 ```
-cd backend\
-python -m venv venv\
-source venv/bin/activate\
-pip install -r requirements.txt\
-cp .env.example .env\
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
 ```
-Add MONGODB_URI, CLERK_SECRET_KEY, ClOUDINARY, MAPMYINDIA credentials\
+Add MONGODB_URI, CLERK_SECRET_KEY, ClOUDINARY, MAPMYINDIA credentials
 ```
 uvicorn main:app --reload
 ```
@@ -115,18 +115,18 @@ uvicorn main:app --reload
 Environment Variables
 ---------------------
 
-Frontend .env:\
+Frontend .env:
 ```
-VITE_API_URL=[http://localhost:8000](http://localhost:8000/)\
+VITE_API_URL=[http://localhost:8000](http://localhost:8000/)
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
 ```
 
-Backend .env:\
+Backend .env:
 ```
-MONGODB_URI=mongodb://localhost:27017/pawdentify\
-CLERK_SECRET_KEY=sk_test_...\
-AWS_ACCESS_KEY_ID=your_key\
-AWS_SECRET_ACCESS_KEY=your_secret\
+MONGODB_URI=mongodb://localhost:27017/pawdentify
+CLERK_SECRET_KEY=sk_test_...
+AWS_ACCESS_KEY_ID=your_key
+AWS_SECRET_ACCESS_KEY=your_secret
 MODEL_PATH=./models/breed_classifier.h5
 ```
 
