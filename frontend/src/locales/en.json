@@ -90,6 +90,57 @@
       "feedback": "Feedback"
     }
   },
+  "breeds": {
+  "search": {
+    "placeholder": "Search for a breed...",
+    "filters": {
+      "title": "Filter Breeds",
+      "clear": "Clear Filters",
+      "size": {
+        "label": "Size",
+        "all": "All Sizes",
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large",
+        "giant": "Giant"
+      },
+      "energy": {
+        "label": "Energy Level",
+        "all": "All Levels",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      },
+      "grooming": {
+        "label": "Grooming Needs",
+        "all": "All Levels",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      },
+      "children": {
+        "label": "Good with Children",
+        "all": "All",
+        "yes": "Yes",
+        "no": "No"
+      },
+      "shedding": {
+        "label": "Shedding Level",
+        "all": "All Levels",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      }
+    },
+    "results": {
+      "showing": "Showing",
+      "of": "of",
+      "breeds": "breeds",
+      "noResults": "No breeds found matching your criteria"
+    }
+  }
+}
+,
 "searchBreed": {
     "title": "Explore Dog Breeds",
     "subtitle": "Search from 100+ breeds in our database",
@@ -271,78 +322,88 @@
     }
   },
   "dashboard": {
-    "profile": {
-      "joined": "Joined",
-      "location": "Location"
-    },
-    "tabs": {
-      "pets": "My Pets",
-      "history": "Search History"
-    },
-    "pets": {
-      "title": "My Pets",
-      "noPets": "You haven't added any pets yet",
-      "addPet": "Add Your Pet",
-      "viewDetails": "View Details",
-      "delete": "Delete",
-      "confirmDelete": "Are you sure you want to delete",
-      "birthday": "Birthday",
-      "age": "Age",
-      "yearsOld": "years old",
-      "monthsOld": "months old",
+  "profile": {
+    "joined": "Joined",
+    "location": "Location",
+    "pets": "Pets",
+    "pet": "Pet",
+    "searches": "Searches"
+  },
+  "tabs": {
+    "pets": "My Pets",
+    "history": "Search History"
+  },
+  "pets": {
+    "title": "My Pets",
+    "noPets": "You haven't added any pets yet",
+    "noPetsDesc": "Start building your pet collection today",
+    "addPet": "Add Your Pet",
+    "addFirstPet": "Add Your First Pet",
+    "viewDetails": "View Details",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete",
+    "birthday": "Birthday",
+    "age": "Age",
+    "yearsOld": "years old",
+    "monthsOld": "months old",
+    "petBreed": "Breed",
+    "addedOn": "Added on",
+    "addPetModal": {
+      "saving": "Saving...",
+      "title": "Add Your Pet",
+      "petName": "Pet Name",
+      "petNamePlaceholder": "e.g., Max, Luna, Buddy",
       "petBreed": "Breed",
-      "addedOn": "Added on",
-      "addPetModal": {
-        "saving": "Saving...",
-        "title": "Add Your Pet",
-        "petName": "Pet Name",
-        "petNamePlaceholder": "e.g., Max, Luna, Buddy",
-        "petBreed": "Breed",
-        "petBreedPlaceholder": "e.g., Golden Retriever, Beagle",
-        "petBirthday": "Birthday (Optional)",
-        "petImage": "Pet Photo",
-        "uploadImage": "Upload Photo",
-        "changeImage": "Change Photo",
-        "cancel": "Cancel",
-        "save": "Save Pet",
-        "imageRequired": "Please upload a photo of your pet"
-      },
-      "petDetails": {
-        "title": "Pet Details",
-        "journal": "Pet Journal",
-        "addNote": "Add Note",
-        "noNotes": "No journal entries yet. Start documenting your pet's journey!",
-        "notePlaceholder": "Write about your pet...",
-        "noteCategory": "Category",
-        "saveNote": "Save Note",
-        "deleteNote": "Delete",
-        "close": "Close",
-        "filterByCategory": "Filter by category",
-        "allCategories": "All Categories",
-        "categories": {
-          "health": "Health",
-          "vaccination": "Vaccination",
-          "treats": "Treats & Rewards",
-          "dailyLife": "Daily Life",
-          "milestone": "Milestone",
-          "other": "Other"
-        }
-      },
-      "adoptTitle": "Looking to Adopt?",
-      "adoptDesc": "Millions of pets are waiting for their forever home. Discover the joy of adoption and learn why it's one of the most rewarding decisions you can make.",
-      "adoptCTA": "Find Pets to Adopt"
+      "petBreedPlaceholder": "e.g., Golden Retriever, Beagle",
+      "petBirthday": "Birthday (Optional)",
+      "petImage": "Pet Photo",
+      "uploadImage": "Upload Photo",
+      "changeImage": "Change Photo",
+      "cancel": "Cancel",
+      "save": "Save Pet",
+      "imageRequired": "Please upload a photo of your pet"
     },
-    "history": {
-      "title": "Search History",
-      "noHistory": "No search history yet",
-      "searchDesc": "Upload a photo to identify your dog's breed",
-      "startSearch": "Identify a Breed",
-      "breed": "Breed",
-      "confidence": "Confidence",
-      "searchedOn": "Searched on",
-      "viewDetails": "View Details"
+    "petDetails": {
+      "title": "Pet Details",
+      "journal": "Pet Journal",
+      "addNote": "Add Note",
+      "noNotes": "No journal entries yet. Start documenting your pet's journey!",
+      "notePlaceholder": "Write about your pet...",
+      "noteCategory": "Category",
+      "saveNote": "Save Note",
+      "deleteNote": "Delete",
+      "close": "Close",
+      "filterByCategory": "Filter by category",
+      "allCategories": "All Categories",
+      "categories": {
+        "health": "Health",
+        "vaccination": "Vaccination",
+        "treats": "Treats & Rewards",
+        "dailyLife": "Daily Life",
+        "milestone": "Milestone",
+        "other": "Other"
+      }
+    },
+    "adoptTitle": "Looking to Adopt?",
+    "adoptDesc": "Millions of pets are waiting for their forever home. Discover the joy of adoption and learn why it's one of the most rewarding decisions you can make.",
+    "adoptCTA": "Find Pets to Adopt",
+    "adoption": {
+      "title": "Consider Adopting a Pet",
+      "description": "Thousands of pets are waiting for loving homes. Adoption saves lives!",
+      "findPets": "Find Adoptable Pets Near You"
     }
   },
+  "history": {
+    "title": "Prediction History",
+    "noHistory": "No search history yet",
+    "noHistoryDesc": "Start identifying dog breeds to build your history",
+    "startSearch": "Start Identifying Breeds",
+    "confidence": "Confidence",
+    "searchedOn": "Searched on",
+    "remove": "Remove"
+  },
+  "loading": "Loading..."
+},
   "breedInfo": {
     "noInfoFound": "No detailed info found for the predicted breed.",
     "unknownBreed": "Unknown",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@clerk/clerk-react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import BreedCard from '../components/BreedCard';
 import BreedDetailModal from '../components/BreedDetailModal';
 import breedImages from '../data/breed_images.json';
+import BREEDS_JSON from '../pawdentify_final_corrected.json';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -25,9 +26,18 @@ const SearchBreed = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
+  
+  // Filter state (removed shedding)
+  const [filters, setFilters] = useState({
+    size: 'all',
+    energy: 'all',
+    grooming: 'all',
+    children: 'all'
+  });
 
   // Convert breed_images object to array for Fuse.js
   const breedsArray = Object.values(breedImages);
+  const ALL_BREEDS = Array.isArray(BREEDS_JSON) ? BREEDS_JSON : (BREEDS_JSON.breeds || []);
 
   // Featured breeds for initial display
   const FEATURED_BREEDS = [95, 26, 40, 77, 82, 55, 53, 64, 29, 25];
@@ -63,7 +73,59 @@ const SearchBreed = () => {
     minMatchCharLength: 2
   });
 
-  // Typing animation effect - stops when focused
+  // Filter breeds by criteria (removed shedding)
+  const applyFilters = (breeds) => {
+    return breeds.filter((breed) => {
+      const breedData = ALL_BREEDS.find(b => b.id === breed.id);
+      if (!breedData) return true;
+
+      // Size filter
+      const matchesSize = filters.size === 'all' || 
+                         breedData.physical_traits?.size?.toLowerCase().includes(filters.size);
+
+      // Energy filter
+      const matchesEnergy = filters.energy === 'all' || 
+                           breedData.trainability_exercise?.energy_level?.toLowerCase().includes(filters.energy);
+
+      // Grooming filter
+      const matchesGrooming = filters.grooming === 'all' || 
+                             breedData.care_grooming?.grooming_needs?.toLowerCase().includes(filters.grooming);
+
+      // Children filter
+      const matchesChildren = filters.children === 'all' || 
+                             (filters.children === 'yes' 
+                               ? breedData.social_traits?.good_with_kids?.toLowerCase().includes('yes') || breedData.social_traits?.good_with_kids?.toLowerCase() === 'moderate'
+                               : breedData.social_traits?.good_with_kids?.toLowerCase() === 'no');
+
+      return matchesSize && matchesEnergy && matchesGrooming && matchesChildren;
+    });
+  };
+
+  const handleFilterChange = (filterType, value) => {
+    setFilters(prev => ({ ...prev, [filterType]: value }));
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      size: 'all',
+      energy: 'all',
+      grooming: 'all',
+      children: 'all'
+    });
+  };
+
+  const hasActiveFilters = Object.values(filters).some(f => f !== 'all');
+
+  // Check if we should show all breeds (filters active, no search)
+  const shouldShowAllBreeds = hasActiveFilters && searchQuery.trim().length === 0;
+
+  // Get all filtered breeds when filters are active
+  const allFilteredBreeds = useMemo(() => {
+    if (!shouldShowAllBreeds) return [];
+    return applyFilters(breedsArray);
+  }, [shouldShowAllBreeds, filters]);
+
+  // Typing animation effect
   useEffect(() => {
     if (isFocused) return;
 
@@ -149,8 +211,16 @@ const SearchBreed = () => {
 
     const results = fuse.search(query);
     const breeds = results.slice(0, 12).map(result => result.item);
-    setSearchResults(breeds);
+    const filtered = applyFilters(breeds);
+    setSearchResults(filtered);
   };
+
+  // Re-apply filters when they change
+  useEffect(() => {
+    if (searchQuery.trim().length > 0) {
+      handleSearch(searchQuery);
+    }
+  }, [filters]);
 
   // Handle suggestion pill click
   const handleSuggestionClick = (suggestion) => {
@@ -264,7 +334,7 @@ const SearchBreed = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-3 mb-8"
         >
           {suggestions.map((suggestion, index) => (
             <motion.button
@@ -301,6 +371,216 @@ const SearchBreed = () => {
               <span>{suggestion}</span>
             </motion.button>
           ))}
+        </motion.div>
+
+        {/* Filters Section (4 filters now) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          style={{
+            backgroundColor: 'var(--color-filter-bg)',
+            border: '2px solid var(--color-filter-border)',
+            borderRadius: '1rem',
+            padding: '1.5rem',
+            marginBottom: '2rem'
+          }}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-alfa" style={{ color: 'var(--color-text-primary)' }}>
+              {t('breeds.search.filters.title')}
+            </h2>
+            <button
+              onClick={clearFilters}
+              disabled={!hasActiveFilters}
+              style={{
+                backgroundColor: 'var(--color-filter-button-bg)',
+                color: 'var(--color-filter-button-text)',
+                border: 'none',
+                padding: '0.5rem 1rem',
+                borderRadius: '0.5rem',
+                fontFamily: 'Archivo, sans-serif',
+                fontWeight: '600',
+                cursor: hasActiveFilters ? 'pointer' : 'not-allowed',
+                opacity: hasActiveFilters ? 1 : 0.5,
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                if (hasActiveFilters) {
+                  e.target.style.backgroundColor = 'var(--color-filter-button-hover-bg)';
+                  e.target.style.transform = 'translateY(-1px)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = 'var(--color-filter-button-bg)';
+                e.target.style.transform = 'translateY(0)';
+              }}
+            >
+              {t('breeds.search.filters.clear')}
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {/* Size Filter */}
+            <div>
+              <label className="block mb-2" style={{ 
+                color: 'var(--color-filter-label)',
+                fontFamily: 'Archivo, sans-serif',
+                fontWeight: '600',
+                fontSize: '0.875rem'
+              }}>
+                {t('breeds.search.filters.size.label')}
+              </label>
+              <select
+                value={filters.size}
+                onChange={(e) => handleFilterChange('size', e.target.value)}
+                className="w-full"
+                style={{
+                  backgroundColor: 'var(--color-filter-select-bg)',
+                  border: '2px solid var(--color-filter-select-border)',
+                  color: 'var(--color-filter-select-text)',
+                  borderRadius: '0.5rem',
+                  padding: '0.5rem 0.75rem',
+                  fontFamily: 'Archivo, sans-serif',
+                  fontWeight: '600'
+                }}
+              >
+                <option value="all">{t('breeds.search.filters.size.all')}</option>
+                <option value="small">{t('breeds.search.filters.size.small')}</option>
+                <option value="medium">{t('breeds.search.filters.size.medium')}</option>
+                <option value="large">{t('breeds.search.filters.size.large')}</option>
+                <option value="giant">{t('breeds.search.filters.size.giant')}</option>
+              </select>
+            </div>
+
+            {/* Energy Filter */}
+            <div>
+              <label className="block mb-2" style={{ 
+                color: 'var(--color-filter-label)',
+                fontFamily: 'Archivo, sans-serif',
+                fontWeight: '600',
+                fontSize: '0.875rem'
+              }}>
+                {t('breeds.search.filters.energy.label')}
+              </label>
+              <select
+                value={filters.energy}
+                onChange={(e) => handleFilterChange('energy', e.target.value)}
+                className="w-full"
+                style={{
+                  backgroundColor: 'var(--color-filter-select-bg)',
+                  border: '2px solid var(--color-filter-select-border)',
+                  color: 'var(--color-filter-select-text)',
+                  borderRadius: '0.5rem',
+                  padding: '0.5rem 0.75rem',
+                  fontFamily: 'Archivo, sans-serif',
+                  fontWeight: '600'
+                }}
+              >
+                <option value="all">{t('breeds.search.filters.energy.all')}</option>
+                <option value="low">{t('breeds.search.filters.energy.low')}</option>
+                <option value="medium">{t('breeds.search.filters.energy.medium')}</option>
+                <option value="high">{t('breeds.search.filters.energy.high')}</option>
+              </select>
+            </div>
+
+            {/* Grooming Filter */}
+            <div>
+              <label className="block mb-2" style={{ 
+                color: 'var(--color-filter-label)',
+                fontFamily: 'Archivo, sans-serif',
+                fontWeight: '600',
+                fontSize: '0.875rem'
+              }}>
+                {t('breeds.search.filters.grooming.label')}
+              </label>
+              <select
+                value={filters.grooming}
+                onChange={(e) => handleFilterChange('grooming', e.target.value)}
+                className="w-full"
+                style={{
+                  backgroundColor: 'var(--color-filter-select-bg)',
+                  border: '2px solid var(--color-filter-select-border)',
+                  color: 'var(--color-filter-select-text)',
+                  borderRadius: '0.5rem',
+                  padding: '0.5rem 0.75rem',
+                  fontFamily: 'Archivo, sans-serif',
+                  fontWeight: '600'
+                }}
+              >
+                <option value="all">{t('breeds.search.filters.grooming.all')}</option>
+                <option value="low">{t('breeds.search.filters.grooming.low')}</option>
+                <option value="medium">{t('breeds.search.filters.grooming.medium')}</option>
+                <option value="high">{t('breeds.search.filters.grooming.high')}</option>
+              </select>
+            </div>
+
+            {/* Children Filter */}
+            <div>
+              <label className="block mb-2" style={{ 
+                color: 'var(--color-filter-label)',
+                fontFamily: 'Archivo, sans-serif',
+                fontWeight: '600',
+                fontSize: '0.875rem'
+              }}>
+                {t('breeds.search.filters.children.label')}
+              </label>
+              <select
+                value={filters.children}
+                onChange={(e) => handleFilterChange('children', e.target.value)}
+                className="w-full"
+                style={{
+                  backgroundColor: 'var(--color-filter-select-bg)',
+                  border: '2px solid var(--color-filter-select-border)',
+                  color: 'var(--color-filter-select-text)',
+                  borderRadius: '0.5rem',
+                  padding: '0.5rem 0.75rem',
+                  fontFamily: 'Archivo, sans-serif',
+                  fontWeight: '600'
+                }}
+              >
+                <option value="all">{t('breeds.search.filters.children.all')}</option>
+                <option value="yes">{t('breeds.search.filters.children.yes')}</option>
+                <option value="no">{t('breeds.search.filters.children.no')}</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Active Filters */}
+          {hasActiveFilters && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {Object.entries(filters).map(([key, value]) => {
+                if (value !== 'all') {
+                  return (
+                    <span 
+                      key={key}
+                      style={{
+                        backgroundColor: 'var(--color-filter-badge-bg)',
+                        color: 'var(--color-filter-badge-text)',
+                        border: '1px solid var(--color-filter-badge-border)',
+                        padding: '0.25rem 0.75rem',
+                        borderRadius: '9999px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}
+                    >
+                      {t(`breeds.search.filters.${key}.label`)}: {t(`breeds.search.filters.${key}.${value}`)}
+                      <button
+                        onClick={() => handleFilterChange(key, 'all')}
+                        style={{ cursor: 'pointer', marginLeft: '0.25rem' }}
+                      >
+                        ×
+                      </button>
+                    </span>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          )}
         </motion.div>
 
         {/* Results Section */}
@@ -351,8 +631,54 @@ const SearchBreed = () => {
                 </div>
               )}
             </motion.div>
+          ) : shouldShowAllBreeds ? (
+            // All Breeds (when filters active, no search)
+            <motion.div
+              key="all-filtered-breeds"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              <motion.h3 
+                className="text-3xl mb-8"
+                style={{ color: 'var(--color-text-primary)' }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                {t('breeds.search.results.showing')} {allFilteredBreeds.length} {t('breeds.search.results.breeds')}
+              </motion.h3>
+
+              {allFilteredBreeds.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {allFilteredBreeds.map((breed, index) => (
+                    <motion.div
+                      key={breed.id}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.02, duration: 0.5 }}
+                    >
+                      <BreedCard
+                        breed={breed}
+                        onClick={() => handleBreedClick(breed)}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-16">
+                  <p 
+                    className="text-xl font-archivo"
+                    style={{ color: 'var(--color-text-secondary)' }}
+                  >
+                    {t('breeds.search.results.noResults')}
+                  </p>
+                </div>
+              )}
+            </motion.div>
           ) : (
-            // Top 10 / Featured Breeds
+            // Top 10 / Featured Breeds (no filters, no search)
             <motion.div
               key="top-breeds"
               initial={{ opacity: 0, y: 20 }}
@@ -457,6 +783,10 @@ const SearchBreed = () => {
 };
 
 export default SearchBreed;
+
+
+
+
 
 
 

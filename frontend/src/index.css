@@ -331,6 +331,21 @@
   --color-admin-downvote-bg: #fee2e2;
   --color-admin-downvote-text: #991b1b;
   --color-admin-empty-text: #6b7280;
+
+  /* Filter Component Colors */
+    --color-filter-bg: #ffffff;
+  --color-filter-border: #e5e7eb;
+  --color-filter-label: #374151;
+  --color-filter-select-bg: #ffffff;
+  --color-filter-select-border: #d1d5db;
+  --color-filter-select-text: #1f2937;
+  --color-filter-select-focus: #8c52ff;
+  --color-filter-button-bg: #8c52ff;
+  --color-filter-button-text: #ffffff;
+  --color-filter-button-hover-bg: #7a3ef0;
+  --color-filter-badge-bg: rgba(140, 82, 255, 0.1);
+  --color-filter-badge-text: #8c52ff;
+  --color-filter-badge-border: rgba(140, 82, 255, 0.3);
 }
 
 /* ===== DARK MODE THEME ===== */
@@ -643,6 +658,21 @@
   --color-admin-downvote-bg: rgba(239, 68, 68, 0.2);
   --color-admin-downvote-text: #fb7185;
   --color-admin-empty-text: #94a3b8;
+
+  /* Filter Component - Dark Mode */
+    --color-filter-bg: #1f2937;
+  --color-filter-border: #374151;
+  --color-filter-label: #e5e7eb;
+  --color-filter-select-bg: #374151;
+  --color-filter-select-border: #4b5563;
+  --color-filter-select-text: #f3f4f6;
+  --color-filter-select-focus: #a78bfa;
+  --color-filter-button-bg: #8c52ff;
+  --color-filter-button-text: #ffffff;
+  --color-filter-button-hover-bg: #7a3ef0;
+  --color-filter-badge-bg: rgba(140, 82, 255, 0.2);
+  --color-filter-badge-text: #c4b5fd;
+  --color-filter-badge-border: rgba(140, 82, 255, 0.4);
 }
 
 
