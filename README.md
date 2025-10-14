@@ -24,13 +24,9 @@ Core Functionality
 
 -   Detailed Breed Information - Access comprehensive data on physical traits, temperament, care requirements, health, and nutrition
 
--   Image Gallery - View multiple high-quality images for each breed with automatic cycling
-
 -   User Dashboard - Track prediction history and manage pet profiles
 
 -   Veterinary Locator - Find nearby veterinary services
-
--   Pet Adoption - Browse adoptable dogs from partnered shelters
 
 User Experience
 ---------------
@@ -38,8 +34,6 @@ User Experience
 -   Multi-language Support - English, Hindi, Urdu, and French
 
 -   Dark/Light Mode - Toggle between themes
-
--   Responsive Design - Optimized for desktop, tablet, and mobile
 
 -   User Authentication - Secure login via Clerk
 
@@ -86,32 +80,36 @@ Prerequisites
 
 -   Clerk account
 
+-   Cloudinary account
+
+-   MapMyIndia account
+
 Setup
 -----
 
+Branch Name : DevashishMishra
+
 Clone repository
 ```
-git clone <https://github.com/yourusername/pawdentify.git>
+git clone https://github.com/Springboard-Internship-2025/AI-Model-for-Dog-Breed-Detection-and-Information-Generation_September_2025.git
 cd pawdentify
 ```
 
 Frontend setup
 ```
+cd frontend
 npm install
-cp .env.example .env
-Add VITE_API_URL and VITE_CLERK_PUBLISHABLE_KEY
 npm run dev
 ```
 
 Backend setup
 ```
 cd backend
-conda create -n pawdentify python=3.10
-conda activate pawdentify
-pip install -r requirements.txt
-cp .env.example .env
-Add MONGODB_URL, CLERK_SECRET_KEY, CLOUDINARY credentials
-uvicorn main:app --reload
+conda env create -f requirements.yml
+conda activate <env-name>   # use the name defined inside requirements.yml
+conda list
+uvicorn backend.main:app --reload
+
 ```
 Add MONGODB_URI, CLERK_SECRET_KEY, ClOUDINARY, MAPMYINDIA credentials
 ```
@@ -123,17 +121,32 @@ Environment Variables
 
 Frontend .env:
 ```
-VITE_API_URL=[http://localhost:8000](http://localhost:8000/)
-VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
+#Clerk Publishable Key here
+VITE_CLERK_PUBLISHABLE_KEY=
+VITE_API_URL=http://localhost:8000
+
+#MapMyIndai sdk key here
+VITE_MAPPLS_MAP_SDK_KEY= 
 ```
 
 Backend .env:
 ```
-MONGODB_URI=mongodb://localhost:27017/pawdentify
-CLERK_SECRET_KEY=sk_test_...
-CLOUDINARY_ACCESS_KEY_ID=your_key
-CLOUDINARY_SECRET_ACCESS_KEY=your_secret
-MODEL_PATH=./models/breed_classifier.h5
+MODEL_PATH=./app/model/efficientnetv2b2_320.keras
+CONFIDENCE_THRESHOLD=0.6
+ALLOWED_EXTENSIONS=png,jpg,jpeg
+
+MONGODB_URI=mongodb://localhost:27017
+DATABASE_NAME=dogbreed_db
+
+#Cloudinary Keys here
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+#MapMyIndia keys here
+MAPPLS_REST_API_KEY=
+MAPPLS_CLIENT_ID=
+MAPPLS_CLIENT_SECRET=
 ```
 
 Roadmap
