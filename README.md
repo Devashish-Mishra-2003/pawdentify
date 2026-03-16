@@ -113,7 +113,7 @@ graph TD
 * **Model Backbone:** EfficientNetV2B2 (Transfer Learning)
 * **Top-1 Accuracy:** 89%
 * **Average API Latency:** 2.4s
-* **Localization:** 4 Languages (i18next)
+* ~~**Localization:** 4 Languages (i18next)~~
 
 ---
 
