@@ -59,7 +59,7 @@ graph TD
     * **Activity:** Monitor exercise and training progress.
 
 ### **Localized Experience**
-* **Multilingual Support:** Fully localized UI in **English, Hindi, Urdu, and French** via `i18next`.
+* ~~**Multilingual Support:** Fully localized UI in **English, Hindi, Urdu, and French** via `i18next`.~~
 * **Veterinary Locator:** Real-time clinic discovery integrated with **MapMyIndia SDK**.
 
 ---
