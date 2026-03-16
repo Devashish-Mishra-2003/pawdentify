@@ -75,11 +75,14 @@ graph TD
 
 | **Home & Landing** | **AI Breed Prediction** |
 | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/9374d337-dd56-446c-b680-3b7588229430" width="400" /> | <img src="https://github.com/user-attachments/assets/618458d9-50e5-47df-b6d9-7cc3f18daab9" width="400" /> |
+| <img width="1903" height="864" alt="image" src="https://github.com/user-attachments/assets/3bd8a533-4b1a-4c47-b0c7-b9016d096797" />
+ | <img width="1898" height="862" alt="image" src="https://github.com/user-attachments/assets/65cc11fb-a5f7-4128-9965-ab46718996a8" /> |
 | **Breed Identification Results** | **Detailed Breed Insights** |
-| <img src="https://github.com/user-attachments/assets/a445e309-6aa8-410a-9224-ce559d3ba2fb" width="400" /> | <img src="https://github.com/user-attachments/assets/50a2bbdc-faff-446b-aa34-99985c2e4b04" width="400" /> |
+| <img width="1901" height="857" alt="image" src="https://github.com/user-attachments/assets/ae588987-2084-46d2-b67f-e579945f4923" />
+ | <img width="1891" height="867" alt="image" src="https://github.com/user-attachments/assets/92e3a2a0-508e-4712-8762-c914c0d0af8a" /> |
 | **Veterinary Locator (Map)** | **Breed Search & Ranking** |
-| <img src="https://github.com/user-attachments/assets/807f3598-ea54-4b17-b1ea-33a3692dd4b1" width="400" /> | <img src="https://github.com/user-attachments/assets/820e8d7c-a791-499e-ab27-4d2101c654cf" width="400" /> |
+| <img width="1890" height="855" alt="image" src="https://github.com/user-attachments/assets/6d471268-f9fd-49a7-859e-49f8e4b64d23" />
+ | <img width="1896" height="859" alt="image" src="https://github.com/user-attachments/assets/55a9c6be-6efd-43f1-a734-8d7347fc617f" /> |
 | **Pet Profiles & Management** | **Health Tracking & Notes** |
 | <img src="https://github.com/user-attachments/assets/67c92234-688b-4230-a027-4807bd732375" width="400" /> | <img src="https://github.com/user-attachments/assets/21135040-640a-4626-8483-406f3ae8d402" width="250" /> |
 
