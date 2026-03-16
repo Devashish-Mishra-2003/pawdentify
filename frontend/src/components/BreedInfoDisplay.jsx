@@ -1,11 +1,10 @@
-import React, { useMemo, useState, useRef } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useBreedData } from "../contexts/BreedDataContext"; // ← NEW IMPORT
-import TextCard from "./cards/TextCard";
-import AccordionCard from "./cards/AccordionCard";
+import { useBreedData } from "../contexts/BreedDataContext";
 import BreedTabs from "./BreedTabs";
 import FeedbackForm from "./FeedbackForm";
+import AccordionCard from "./cards/AccordionCard";
 import { motion, AnimatePresence } from "framer-motion";
 
 const TAB_SECTIONS = [
@@ -17,9 +16,9 @@ const TAB_SECTIONS = [
 ];
 
 const ACCORDION_SECTIONS = [
-  { key: "environmental_traits", label: "breedInfo.tabs.environment", icon: "🏠" },
-  { key: "health", label: "breedInfo.tabs.health", icon: "🩺" },
-  { key: "nutrition_requirements", label: "breedInfo.tabs.nutrition", icon: "🍽️" },
+  { key: "environmental_traits", label: "breedInfo.tabs.environment" },
+  { key: "health", label: "breedInfo.tabs.health" },
+  { key: "nutrition_requirements", label: "breedInfo.tabs.nutrition" },
 ];
 
 function findBreedEntry(ALL_BREEDS, predId, predBreedName) {
@@ -55,7 +54,7 @@ function extractFunFact(breedEntry, t) {
 
 export default function BreedInfoDisplay({ predictionResult }) {
   const { t } = useTranslation();
-  const breedData = useBreedData(); // ← USE CONTEXT HOOK
+  const breedData = useBreedData();
   
   if (!predictionResult) return null;
 
@@ -69,13 +68,9 @@ export default function BreedInfoDisplay({ predictionResult }) {
 
   const [activeTab, setActiveTab] = useState(TAB_SECTIONS[0].key);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const infoRef = useRef(null);
 
-  // Show back to top button on scroll
   React.useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 500);
-    };
+    const handleScroll = () => setShowBackToTop(window.scrollY > 500);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -83,46 +78,37 @@ export default function BreedInfoDisplay({ predictionResult }) {
   const renderTextCardsFromObject = (obj) => {
     if (!obj) return null;
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <AnimatePresence>
+      <motion.div 
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <AnimatePresence mode="wait">
           {Object.entries(obj).map(([key, value]) => {
             if (!value) return null;
             const title = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
             const text = Array.isArray(value) ? value.join(", ") : (typeof value === "string" ? value : String(value));
             return (
-              <motion.div
-                key={key}
-                layout
-                initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.98 }}
-                transition={{ duration: 0.28, ease: "easeOut" }}
-              >
-                <TextCard title={title} text={text} />
-              </motion.div>
+      <div key={key} className="bento-card bg-white dark:bg-[#111111] p-6 border-gray-100 dark:border-white/10 border-2">
+                 <h4 className="text-sm font-semibold text-[#30A7DB] mb-2 uppercase tracking-widest">{title}</h4>
+                 <p className="text-xl text-black dark:text-white font-semibold leading-snug">{text}</p>
+              </div>
             );
           })}
         </AnimatePresence>
-      </div>
+      </motion.div>
     );
   };
 
   if (!breedEntry) {
     return (
-      <section id="info" className="py-16 max-w-5xl mx-auto px-6 text-center">
-        <h4 className="text-3xl font-archivo font-bold" style={{ color: "var(--color-breed-no-info)" }}>
-          {predBreedName || t("breedInfo.unknownBreed")}
-        </h4>
-        <p className="mt-4 font-archivo font-semibold" style={{ color: "var(--color-breed-no-info-text)" }}>
-          {t("breedInfo.noInfoFound")}
-        </p>
-        <div className="mt-6 pt-2.5 w-48 h-48 rounded-[18%_/12%] overflow-hidden shadow-md mx-auto">
-          <img
-            src={previewUrl || ""}
-            alt={predBreedName || "preview"}
-            className="w-full h-full object-cover"
-          />
-        </div>
+      <section id="info" className="py-24 max-w-6xl mx-auto px-6 text-center">
+         <div className="bento-card bg-white dark:bg-[#111111] inline-block">
+            <h4 className="text-4xl text-black dark:text-white mb-4">{predBreedName || t("breedInfo.unknownBreed")}</h4>
+            <p className="text-gray-500 dark:text-gray-400 text-lg mb-8">{t("breedInfo.noInfoFound")}</p>
+            <img src={previewUrl || ""} alt="preview" className="w-64 h-64 rounded-[40px] object-cover mx-auto border-4 border-gray-50 dark:border-white/10" />
+         </div>
       </section>
     );
   }
@@ -130,129 +116,83 @@ export default function BreedInfoDisplay({ predictionResult }) {
   const funFact = extractFunFact(breedEntry, t);
 
   return (
-    <section ref={infoRef} id="info" className="pt-20 pb-16 max-w-6xl mx-auto px-6">
-      {/* Breed Name */}
-      <div className="text-center mb-12">
-        <h2 className="text-5xl font-alfa" style={{ color: "var(--color-breed-title)" }}>
-          {breedEntry.breed || breedEntry.name || predBreedName}
-        </h2>
-      </div>
-
-      {/* Preview Image + Fun Fact */}
-      <div className="w-full flex flex-col items-center gap-6 mb-8">
-        <motion.div 
-          className="w-48 h-48 md:w-56 md:h-56 rounded-[18%_/12%] overflow-hidden shadow-md cursor-pointer"
-          whileHover={{ 
-            y: -8,
-            boxShadow: "0 20px 40px rgba(140, 82, 255, 0.4)",
-            scale: 1.05
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <img
-            src={previewUrl || breedEntry.image_url || ""}
-            alt={breedEntry.breed || predBreedName}
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-        <p className="text-xl font-archivo font-semibold text-center max-w-3xl" style={{ color: "var(--color-breed-fun-fact)" }}>
-          {funFact}
-        </p>
-      </div>
-
-      {/* Tabs */}
-      <BreedTabs activeSection={activeTab} onTabClick={(k) => setActiveTab(k)} />
-
-      {/* Active tab content */}
-      <div className="mt-6">
-        {TAB_SECTIONS.map(
-          ({ key }) =>
-            activeTab === key && (
-              <div key={key}>
-                {renderTextCardsFromObject(breedEntry[key])}
-              </div>
-            )
-        )}
-      </div>
-
-      {/* Accordion sections + Know More Button + Feedback Form */}
-      <div className="mt-12 space-y-6">
-        {ACCORDION_SECTIONS.map(({ key, label, icon }) => (
-          <AccordionCard
-            key={key}
-            title={t(label)}
-            icon={icon}
-            data={breedEntry[key]}
-          />
-        ))}
-
-        {/* Know More Button as Card */}
-        <motion.button
-          onClick={() =>
-            navigate("/know-more", {
-              state: { knowMoreData: breedEntry.know_more, breedEntry },
-            })
-          }
-          className="w-full rounded-2xl shadow-md border transition-all duration-300 px-6 py-4 flex items-center justify-between"
-          style={{
-            backgroundColor: "#8c52ff",
-            borderColor: "#7a3ef0",
-          }}
-          whileHover={{ 
-            y: -4,
-            boxShadow: "0 12px 30px rgba(140, 82, 255, 0.4)",
-            scale: 1.02
-          }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <div className="flex items-center gap-3">
-            <span className="text-2xl" aria-hidden="true">📖</span>
-            <h3 className="text-2xl font-alfa text-white">
-              {t("breedInfo.knowMore")}
-            </h3>
-          </div>
-          <svg
-            className="w-6 h-6 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+    <section id="info" className="py-24 bg-[var(--color-bg-app)] relative overflow-hidden">
+      <div className="bg-blob blob-purple top-0 right-0 opacity-5"></div>
+      
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row items-center gap-12 mb-20">
+          <motion.div 
+            className="flex-shrink-0 w-64 h-64 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl border-8 border-white dark:border-white/10 p-4 bg-gray-50 dark:bg-white/5"
+            whileHover={{ scale: 1.02, rotate: -1 }}
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </motion.button>
+            <img src={previewUrl || breedEntry.image_url || ""} alt={breedEntry.breed} className="w-full h-full object-cover rounded-full" />
+          </motion.div>
+          
+          <div className="flex-1 text-center md:text-left">
+            <span className="font-handwriting text-3xl text-[#7D64A3] dark:text-[#A892D1] mb-4 block">Meet your match</span>
+            <h2 className="text-5xl md:text-7xl text-black dark:text-white mb-6 leading-tight">
+              {breedEntry.breed || breedEntry.name || predBreedName}
+            </h2>
+            <div className="bento-card bg-gray-50 dark:bg-white/5 border-0 p-8 shadow-inner">
+              <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 italic font-medium leading-relaxed">
+                "{funFact}"
+              </p>
+            </div>
+          </div>
+        </div>
 
-        {/* Feedback Form - After Know More Button */}
-        <div>
-          <FeedbackForm prediction={predBreedName} />
+        <div className="mb-10">
+          <BreedTabs activeSection={activeTab} onTabClick={(k) => setActiveTab(k)} />
+        </div>
+
+        <div className="min-h-[400px]">
+          {TAB_SECTIONS.map(({ key }) => activeTab === key && (
+             <div key={key}>{renderTextCardsFromObject(breedEntry[key])}</div>
+          ))}
+        </div>
+
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+           <div className="space-y-6">
+              <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 mb-8 px-2">Deeper Insights</h3>
+              {ACCORDION_SECTIONS.map(({ key, label }) => (
+                <AccordionCard key={key} title={t(label)} data={breedEntry[key]} />
+              ))}
+              
+              <motion.button
+                onClick={() => navigate("/know-more", { state: { knowMoreData: breedEntry.know_more, breedEntry } })}
+                whileHover={{ scale: 1.01, borderColor: '#30A7DB' }}
+                whileTap={{ scale: 0.99 }}
+                className="w-full bento-card bg-white dark:bg-[#111111] border-2 border-gray-100 dark:border-white/10 px-8 py-6 flex items-center justify-between group text-left transition-all hover:border-[#30A7DB]"
+              >
+                 <div className="flex items-center gap-4">
+                    <h3 className="text-2xl font-extrabold text-black dark:text-white">Read Full Life Story</h3>
+                 </div>
+                 <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 group-hover:bg-[#30A7DB] group-hover:text-white transition-all">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" /></svg>
+                 </div>
+              </motion.button>
+           </div>
+           
+           <div className="flex flex-col justify-start pt-16">
+              <div className="bento-card border-dashed border-2 border-gray-100 dark:border-white/10 bg-gray-50/30 dark:bg-white/5 p-10">
+                 <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 mb-8">Verification</h3>
+                 <h2 className="text-3xl text-black dark:text-white mb-8 font-extrabold">Was this identity correct?</h2>
+                 <FeedbackForm prediction={predBreedName} />
+              </div>
+           </div>
         </div>
       </div>
 
-      {/* Modern Back to Top Button */}
       <AnimatePresence>
         {showBackToTop && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed bottom-8 right-8 w-14 h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer z-50"
-            style={{
-              backgroundColor: "#8c52ff",
-              color: "white",
-            }}
+            className="fixed bottom-10 right-10 w-16 h-16 rounded-full bg-[#30A7DB] text-white shadow-2xl flex items-center justify-center z-50 hover:-translate-y-2 transition-transform"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            whileHover={{ 
-              scale: 1.1,
-              boxShadow: "0 8px 25px rgba(140, 82, 255, 0.5)"
-            }}
-            whileTap={{ scale: 0.9 }}
-            aria-label={t("breedInfo.backToTop")}
           >
-            <svg 
-              className="w-6 h-6" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
           </motion.button>
@@ -261,13 +201,3 @@ export default function BreedInfoDisplay({ predictionResult }) {
     </section>
   );
 }
-
-
-
-
-
-
-
-
-
-

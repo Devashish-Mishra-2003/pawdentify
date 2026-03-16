@@ -20,14 +20,13 @@ const Services = () => {
   const [userLocation, setUserLocation] = useState(null);
 
   const categories = [
-    { id: 'vet', icon: '🏥', label: t('services.categories.vet') },
-    { id: 'pet_store', icon: '🛒', label: t('services.categories.pet_store') },
-    { id: 'food_store', icon: '🍖', label: t('services.categories.food_store') },
-    { id: 'shelter', icon: '🏠', label: t('services.categories.shelter') },
-    { id: 'ngo', icon: '🤝', label: t('services.categories.ngo') },
+    { id: 'vet', label: 'Veterinaries' },
+    { id: 'pet_store', label: 'Pet Stores' },
+    { id: 'food_store', label: 'Food Stores' },
+    { id: 'shelter', label: 'Shelters' },
+    { id: 'ngo', label: 'NGOs' },
   ];
 
-  // Pet Helpline Numbers (Professional)
   const helplines = [
     { name: 'People For Animals', number: '1800-102-1632', location: 'Pan India' },
     { name: 'Blue Cross of India', number: '044-2234-5959', location: 'Chennai' },
@@ -38,511 +37,167 @@ const Services = () => {
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const loc = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+        (pos) => {
+          const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
           setUserLocation(loc);
           initializeMap(loc);
         },
-        (error) => {
-          console.error('Geolocation error:', error);
-          setError(t('services.locationError'));
+        () => {
           const defaultLoc = { lat: 28.6139, lng: 77.2090 };
           setUserLocation(defaultLoc);
           initializeMap(defaultLoc);
         }
       );
-    } else {
-      setError(t('services.locationError'));
-      const defaultLoc = { lat: 28.6139, lng: 77.2090 };
-      setUserLocation(defaultLoc);
-      initializeMap(defaultLoc);
     }
   }, []);
 
   const initializeMap = (location) => {
     if (mapInstanceRef.current) return;
-
     const script = document.createElement('script');
     script.src = `https://apis.mappls.com/advancedmaps/api/${MAPPLS_MAP_SDK_KEY}/map_sdk?layer=vector&v=3.0`;
     script.async = true;
-    script.defer = true;
-
     script.onload = () => {
       setTimeout(() => {
-        if (window.mappls && window.mappls.Map) {
-          try {
-            const map = new window.mappls.Map(mapContainerRef.current, {
-              center: [location.lat, location.lng],
-              zoom: 13,
-              zoomControl: true,
-              location: true
-            });
-
-            mapInstanceRef.current = map;
-
-            if (window.mappls.Marker) {
-              new window.mappls.Marker({
-                map: map,
-                position: [location.lat, location.lng],
-                fitbounds: true
-              });
-            }
-          } catch (err) {
-            console.error('Map creation error:', err);
-            setError('Failed to initialize map');
-          }
+        if (window.mappls?.Map) {
+          const map = new window.mappls.Map(mapContainerRef.current, {
+            center: [location.lat, location.lng],
+            zoom: 13,
+            zoomControl: true,
+          });
+          mapInstanceRef.current = map;
         }
       }, 500);
     };
-
-    script.onerror = () => {
-      setError('Failed to load map library');
-    };
-
     document.head.appendChild(script);
   };
 
-  const clearMarkers = () => {
-    markersRef.current.forEach(marker => {
-      try {
-        if (marker && marker.remove) {
-          marker.remove();
-        }
-      } catch (err) {
-        console.error('Error removing marker:', err);
-      }
-    });
-    markersRef.current = [];
+  const fetchPlaces = async () => {
+    if (!isSignedIn) { setError('Sign in to explore nearby services'); return; }
+    setLoading(true);
+    setError('');
+    try {
+      const token = await getToken();
+      const res = await fetch(`${API_URL}/api/places/nearby?category=${selectedCategory}&lat=${userLocation.lat}&lon=${userLocation.lng}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.places) setPlaces(data.places);
+      else setError(data.message || 'No places found');
+    } catch { setError('Error fetching locations'); }
+    setLoading(false);
   };
 
   useEffect(() => {
-    if (selectedCategory && userLocation && mapInstanceRef.current) {
-      fetchPlaces();
-    }
+    if (selectedCategory && userLocation && mapInstanceRef.current) fetchPlaces();
   }, [selectedCategory, userLocation]);
 
-  const fetchPlaces = async () => {
-    if (!isSignedIn) {
-      setError('Please sign in to use this feature');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-    clearMarkers();
-
-    try {
-      const token = await getToken();
-      const url = `${API_URL}/api/places/nearby?category=${selectedCategory}&lat=${userLocation.lat}&lon=${userLocation.lng}`;
-
-      const response = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      const data = await response.json();
-
-      if (data.error) {
-        if (data.error === 'no_results') {
-          setError(`😔 ${data.message}`);
-        } else if (data.error === 'rate_limited') {
-          setError(`⏰ ${data.message}`);
-        } else if (data.error === 'authentication_failed') {
-          setError('🔐 Authentication failed. Please refresh and try again.');
-        } else {
-          setError(data.message || 'Unable to fetch places. Please try again.');
-        }
-        setPlaces([]);
-      } else {
-        setPlaces(data.places || []);
-        addMarkersToMap(data.places || []);
-        
-        if ((data.places || []).length > 0) {
-          setError('');
-        }
-      }
-    } catch (err) {
-      console.error('Fetch error:', err);
-      setError('❌ Network error. Please check your connection and try again.');
-      setPlaces([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const addMarkersToMap = (places) => {
-    if (!mapInstanceRef.current || !window.mappls || !window.mappls.Marker) {
-      return;
-    }
-
-    places.forEach((place) => {
-      if (place.latitude && place.longitude) {
-        try {
-          const marker = new window.mappls.Marker({
-            map: mapInstanceRef.current,
-            position: [place.latitude, place.longitude],
-            title: place.name
-          });
-
-          markersRef.current.push(marker);
-        } catch (err) {
-          console.error('Error adding marker:', err);
-        }
-      }
-    });
-  };
-
-  const PlaceCard = ({ place, index }) => (
-    <motion.div
-      id={`place-${place.id}`}
-      className="p-5 rounded-xl border transition-all"
-      style={{
-        backgroundColor: 'var(--color-services-card-bg)',
-        borderColor: 'var(--color-services-card-border)',
-        boxShadow: 'var(--color-services-card-shadow)'
-      }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ 
-        delay: index * 0.05,
-        duration: 0.3
-      }}
-      whileHover={{ 
-        boxShadow: 'var(--color-services-card-hover-shadow)',
-        y: -3
-      }}
-    >
-      <div className="flex items-start justify-between mb-3">
-        <h3 
-          className="text-lg flex-1 font-archivo"
-          style={{ color: 'var(--color-services-title)' }}
-        >
-          {place.name}
-        </h3>
-        <span className="text-xl">📍</span>
-      </div>
-
-      <p 
-        className="text-sm mb-3"
-        style={{ color: 'var(--color-services-subtitle)' }}
-      >
-        {place.address}
-      </p>
-
-      <div className="flex items-center gap-2 text-sm mb-3 px-3 py-2 rounded-lg"
-        style={{ 
-          backgroundColor: 'rgba(140, 82, 255, 0.1)',
-          color: '#8c52ff'
-        }}
-      >
-        <span>🚗</span>
-        <span className="font-semibold">{(place.distance / 1000).toFixed(2)} km away</span>
-      </div>
-
-      <button
-        onClick={() => {
-          const destination = place.eloc 
-            ? `https://www.mappls.com/${place.eloc}`
-            : `https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}`;
-          window.open(destination, '_blank');
-        }}
-        className="w-full px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 hover:opacity-90"
-        style={{
-          backgroundColor: '#8c52ff',
-          color: 'white'
-        }}
-      >
-        <span>🧭</span>
-        <span>{t('services.getDirections')}</span>
-      </button>
-    </motion.div>
-  );
-
   return (
-    <div 
-      className="min-h-screen pt-28 pb-16"
-      style={{ backgroundColor: 'var(--color-services-bg)' }}
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h1 
-            className="text-4xl md:text-5xl font-alfa mb-4"
-            style={{ color: 'var(--color-services-title)' }}
-          >
-            {t('services.title')}
-          </h1>
-          <p 
-            className="text-lg"
-            style={{ color: 'var(--color-services-subtitle)' }}
-          >
-            {t('services.subtitle')}
-          </p>
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#050505] pt-32 pb-24 px-6 relative overflow-hidden transition-colors duration-300">
+      <div className="bg-blob blob-blue top-0 right-0 opacity-5"></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-16 px-4">
+           <span className="font-handwriting text-3xl text-[#30A7DB] mb-4 block">Neighborhood support</span>
+           <h1 className="text-5xl md:text-7xl text-black dark:text-white mb-6">Nearby Services.</h1>
+           <p className="text-gray-500 dark:text-gray-400 text-xl font-medium">Find everything your dog needs within reach</p>
         </div>
 
-        {/* Category Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-8">
-          {categories.map((cat) => (
-            <motion.button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className="px-5 py-2.5 rounded-full font-bold flex items-center gap-2 shadow-md"
-              style={{
-                backgroundColor: selectedCategory === cat.id 
-                  ? 'var(--color-services-category-btn-active-bg)' 
-                  : 'var(--color-services-category-btn-bg)',
-                color: selectedCategory === cat.id 
-                  ? 'var(--color-services-category-btn-active-text)' 
-                  : 'var(--color-services-category-btn-text)',
-                border: '2px solid var(--color-services-category-btn-border)'
-              }}
-              whileHover={{ 
-                scale: 1.05,
-                y: -4,
-                boxShadow: '0 8px 20px rgba(140, 82, 255, 0.3)'
-              }}
-              whileTap={{ 
-                scale: 0.95,
-                y: 0
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17
-              }}
-            >
-              <motion.span 
-                className="text-lg"
-                animate={selectedCategory === cat.id ? { rotate: [0, 10, -10, 0] } : {}}
-                transition={{ duration: 0.5 }}
+        <div className="flex overflow-x-auto no-scrollbar gap-4 mb-12 pb-4 scroll-smooth touch-pan-x select-none">
+          <div className="flex flex-nowrap gap-4 mx-auto min-w-max px-4">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`pill-button px-8 py-4 font-bold uppercase tracking-widest text-xs transition-all whitespace-nowrap ${selectedCategory === cat.id ? 'bg-[#30A7DB] text-white shadow-xl' : 'bg-white dark:bg-white/5 text-black dark:text-white border-2 border-gray-100 dark:border-white/10 shadow-sm'}`}
               >
-                {cat.icon}
-              </motion.span>
-              <span>{cat.label}</span>
-            </motion.button>
-          ))}
-        </div>
-
-        {/* Error Message */}
-        <AnimatePresence>
-          {error && (
-            <motion.div 
-              className="mb-6 p-4 rounded-xl text-center"
-              style={{
-                backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                color: '#ef4444',
-                border: '1px solid rgba(239, 68, 68, 0.3)'
-              }}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-            >
-              {error}
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
-          {/* Map Section */}
-          <div className="lg:col-span-2">
-            <div 
-              ref={mapContainerRef}
-              id="map-container"
-              className="w-full h-[600px] rounded-xl border overflow-hidden"
-              style={{
-                backgroundColor: 'var(--color-services-card-bg)',
-                borderColor: 'var(--color-services-card-border)',
-                boxShadow: 'var(--color-services-card-shadow)'
-              }}
-            />
-          </div>
-
-          {/* Places List */}
-          <div className="lg:col-span-1">
-            <AnimatePresence mode="wait">
-              {!selectedCategory && (
-                <motion.div 
-                  key="select"
-                  className="h-[600px] p-8 rounded-xl text-center flex flex-col items-center justify-center"
-                  style={{
-                    backgroundColor: 'var(--color-services-card-bg)',
-                    borderColor: 'var(--color-services-card-border)',
-                    border: '2px dashed'
-                  }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <div className="text-6xl mb-4">🐾</div>
-                  <p 
-                    className="text-lg"
-                    style={{ color: 'var(--color-services-subtitle)' }}
-                  >
-                    {t('services.selectCategory')}
-                  </p>
-                </motion.div>
-              )}
-
-              {loading && (
-                <motion.div 
-                  key="loading"
-                  className="h-[600px] p-8 rounded-xl text-center flex flex-col items-center justify-center"
-                  style={{
-                    backgroundColor: 'var(--color-services-card-bg)'
-                  }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <div className="animate-spin w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full mb-4"></div>
-                  <p style={{ color: 'var(--color-services-subtitle)' }}>
-                    {t('services.loading')}
-                  </p>
-                </motion.div>
-              )}
-
-              {!loading && selectedCategory && (
-                <div className="h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-                  {places.length > 0 ? (
-                    <div className="space-y-3">
-                      {places.map((place, index) => (
-                        <PlaceCard key={place.id} place={place} index={index} />
-                      ))}
-                    </div>
-                  ) : !error && (
-                    <motion.div 
-                      className="h-full p-8 rounded-xl text-center flex flex-col items-center justify-center"
-                      style={{
-                        backgroundColor: 'var(--color-services-card-bg)',
-                        borderColor: 'var(--color-services-card-border)',
-                        border: '1px solid'
-                      }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                    >
-                      <div className="text-6xl mb-4">😔</div>
-                      <p style={{ color: 'var(--color-services-subtitle)' }}>
-                        {t('services.noResults')}
-                      </p>
-                    </motion.div>
-                  )}
-                </div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Pet Helpline Section - Professional */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          <div className="text-center mb-8">
-            <h2 
-              className="text-3xl font-alfa mb-3"
-              style={{ color: 'var(--color-services-title)' }}
-            >
-              Emergency Pet Helplines
-            </h2>
-            <p 
-              className="text-base"
-              style={{ color: 'var(--color-services-subtitle)' }}
-            >
-              24/7 emergency contacts for immediate pet care assistance
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">
-            {helplines.map((helpline, index) => (
-              <motion.div
-                key={helpline.number}
-                className="p-6 rounded-xl border"
-                style={{
-                  backgroundColor: 'var(--color-services-card-bg)',
-                  borderColor: 'var(--color-services-card-border)',
-                  boxShadow: 'var(--color-services-card-shadow)'
-                }}
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ 
-                  delay: 0.5 + index * 0.1,
-                  duration: 0.4,
-                  type: "spring",
-                  stiffness: 100
-                }}
-                whileHover={{ 
-                  y: -8,
-                  scale: 1.02,
-                  boxShadow: '0 12px 30px rgba(239, 68, 68, 0.2)'
-                }}
-              >
-                <div className="mb-4">
-                  <h3 
-                    className="text-lg font-archivo mb-1"
-                    style={{ color: 'var(--color-services-title)' }}
-                  >
-                    {helpline.name}
-                  </h3>
-                  <p 
-                    className="text-xs"
-                    style={{ color: 'var(--color-services-subtitle)' }}
-                  >
-                    {helpline.location}
-                  </p>
-                </div>
-                
-                <motion.a
-                  href={`tel:${helpline.number}`}
-                  className="block w-full px-4 py-3 rounded-lg text-center font-semibold transition-all"
-                  style={{
-                    backgroundColor: '#ef4444',
-                    color: 'white',
-                    fontSize: '15px'
-                  }}
-                  whileHover={{ 
-                    backgroundColor: '#dc2626',
-                    scale: 1.05
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {helpline.number}
-                </motion.a>
-              </motion.div>
+                {cat.label}
+              </button>
             ))}
           </div>
-        </motion.div>
-      </div>
+        </div>
 
-      {/* Custom Scrollbar */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
+           {/* Map */}
+           <div className="lg:col-span-2 bento-card bg-white dark:bg-[#111111] border-gray-100 dark:border-white/10 border-2 overflow-hidden h-[600px] shadow-xl">
+              <div ref={mapContainerRef} className="w-full h-full" />
+           </div>
+
+           {/* Places List */}
+           <div className="lg:col-span-1 flex flex-col gap-4 h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+              <AnimatePresence mode="wait">
+                {selectedCategory ? (
+                  loading ? (
+                    <div className="h-full flex items-center justify-center bento-card border-gray-100 dark:border-white/10 border-2 bg-white dark:bg-[#111111]">
+                       <div className="w-10 h-10 border-4 border-[#30A7DB] border-t-transparent animate-spin rounded-full"></div>
+                    </div>
+                  ) : places.length > 0 ? (
+                    places.map((place, i) => (
+                      <motion.div 
+                        key={place.id} 
+                        initial={{ opacity: 0, x: 20 }} 
+                        animate={{ opacity: 1, x: 0 }} 
+                        transition={{ delay: i * 0.05 }}
+                        className="bento-card bg-white dark:bg-[#111111] border-gray-100 dark:border-white/10 border-2 p-8 hover:border-[#30A7DB] transition-all cursor-pointer group"
+                      >
+                         <h3 className="text-2xl font-extrabold text-black dark:text-white mb-2 group-hover:text-[#30A7DB] transition-colors">{place.name}</h3>
+                         <p className="text-gray-400 dark:text-gray-500 font-medium text-sm mb-6">{place.address}</p>
+                         <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold uppercase tracking-widest text-[#8c52ff]">{(place.distance / 1000).toFixed(1)} km away</span>
+                            <button 
+                              onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}`, '_blank')}
+                              className="pill-button bg-[#111111] text-white text-[10px] px-6 py-3 font-bold uppercase tracking-[0.2em]"
+                            >
+                              Directions
+                            </button>
+                         </div>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <div className="h-full flex flex-col items-center justify-center bento-card border-dashed border-2 border-gray-200 dark:border-white/10 bg-white dark:bg-[#111111]">
+                       <p className="text-gray-300 dark:text-white/20 text-xl font-extrabold italic">No services found in this area.</p>
+                    </div>
+                  )
+                ) : (
+                  <div className="h-full flex flex-col items-center justify-center bento-card border-dashed border-2 border-gray-200 dark:border-white/10 bg-white dark:bg-[#111111] p-12 text-center">
+                     <div className="w-20 h-20 bg-gray-50 dark:bg-white/5 rounded-full mb-6 flex items-center justify-center">
+                        <svg className="w-10 h-10 text-gray-200 dark:text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                     </div>
+                     <p className="text-gray-300 dark:text-white/20 text-xl font-extrabold italic leading-relaxed">Select a category to explore nearby dog-friendly places.</p>
+                  </div>
+                )}
+              </AnimatePresence>
+           </div>
+        </div>
+
+        {/* Helplines */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+           <div className="md:col-span-2 lg:col-span-4 mb-4">
+              <h2 className="text-3xl text-black dark:text-white font-extrabold px-4">Emergency Helplines</h2>
+           </div>
+           {helplines.map((h, i) => (
+              <motion.div 
+                key={h.number} 
+                className="bento-card border-red-50 dark:border-white/10 border-2 bg-white dark:bg-[#111111] p-8 group hover:bg-red-500 hover:border-red-500 transition-all cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                 <h4 className="text-xl font-extrabold text-black dark:text-white mb-1 group-hover:text-white transition-colors">{h.name}</h4>
+                 <p className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6 group-hover:text-red-100 transition-colors">{h.location}</p>
+                 <a href={`tel:${h.number}`} className="pill-button bg-red-500 text-white w-full py-4 text-sm font-bold group-hover:bg-white group-hover:text-red-500 transition-colors flex items-center justify-center">Call Now</a>
+              </motion.div>
+           ))}
+        </div>
+      </div>
+      
       <style>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(140, 82, 255, 0.1);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #8c52ff;
-          border-radius: 10px;
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #30A7DB; border-radius: 10px; }
       `}</style>
     </div>
   );
 };
 
 export default Services;
-
-
-
-
-
-
-
-
-
-

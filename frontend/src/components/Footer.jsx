@@ -1,187 +1,68 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import paw from '../assets/icons8-cat-footprint-64.png';
+import { Link } from 'react-router-dom';
 
 const handleScrollTo = (id) => {
   const element = document.getElementById(id.substring(1));
-  if (element) {
-    window.scrollTo({
-      top: element.offsetTop - 80,
-      behavior: 'smooth',
-    });
-  }
+  if (element) window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
 };
 
 const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <motion.footer
-      className="text-white font-archivo py-16 relative overflow-hidden"
-      style={{ backgroundColor: "var(--color-footer-bg)" }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
-      {/* Animated gradient overlay */}
-      <motion.div
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{
-          background: `linear-gradient(45deg, var(--color-footer-gradient-overlay), var(--color-footer-gradient-overlay), var(--color-footer-gradient-overlay))`,
-        }}
-        animate={{ x: [0, 30, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        aria-hidden="true"
-      />
+    <footer className="bg-[#111111] text-white py-24 px-6 relative overflow-hidden">
+      <div className="bg-blob blob-purple -bottom-40 -left-20 opacity-10"></div>
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+          <div className="md:col-span-2">
+            <Link to="/" className="text-3xl font-extrabold text-white tracking-tighter flex items-center gap-3 mb-8">
+               Pawdentify
+            </Link>
+            <p className="text-gray-400 text-xl max-w-sm mb-8 leading-relaxed">
+              Bringing joy to dog lovers worldwide with the magic of AI. Let's find your pup's identity together.
+            </p>
+            <div className="flex gap-4">
+               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 cursor-pointer transition-colors border border-white/10 uppercase text-[10px] font-bold">IG</div>
+               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 cursor-pointer transition-colors border border-white/10 uppercase text-[10px] font-bold">X</div>
+               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 cursor-pointer transition-colors border border-white/10 uppercase text-[10px] font-bold">FB</div>
+            </div>
+          </div>
 
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-start space-y-12 md:space-y-0 relative z-10">
-        {/* Logo + copyright */}
-        <motion.div
-          className="flex flex-col space-y-4 items-center md:items-start"
-          initial={{ x: -40, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <motion.div
-            className="flex items-center space-x-3 text-2xl font-archivo font-bold tracking-wide relative"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.img
-              src={paw}
-              alt="paw"
-              className="w-12 h-12"
-              style={{ filter: 'brightness(0) invert(1)' }}
-              whileHover={{
-                rotate: 360,
-                scale: 1.15,
-              }}
-              transition={{ duration: 0.4 }}
-            />
+          <div>
+            <h4 className="text-sm font-bold uppercase tracking-widest text-[#30A7DB] mb-8">Platform</h4>
+            <ul className="space-y-4">
+              <li><button onClick={() => handleScrollTo("#hero")} className="text-gray-400 hover:text-white transition-colors text-lg font-medium">Home</button></li>
+              <li><button onClick={() => handleScrollTo("#predict")} className="text-gray-400 hover:text-white transition-colors text-lg font-medium">Predict</button></li>
+              <li><Link to="/search-breed" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">Search Breeds</Link></li>
+              <li><Link to="/faq" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">Help Center</Link></li>
+            </ul>
+          </div>
 
-            <span>AI Breed Classifier</span>
-          </motion.div>
+          <div>
+            <h4 className="text-sm font-bold uppercase tracking-widest text-[#F07E7E] mb-8">Say Hello</h4>
+            <ul className="space-y-4">
+              <li><a href="mailto:hello@pawdentify.ai" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">hello@pawdentify.ai</a></li>
+              <li className="text-gray-400 text-lg font-medium">+1 (555) 787 5683</li>
+              <li className="font-handwriting text-2xl text-yellow-300 pt-4 italic">We reply fast</li>
+            </ul>
+          </div>
+        </div>
 
-          <motion.p
-            className="text-sm"
-            style={{ color: "var(--color-footer-text-muted)" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            &copy; {new Date().getFullYear()} {t('footer.copyright')}
-          </motion.p>
-        </motion.div>
-
-        {/* Navigation links */}
-        <motion.div
-          className="flex flex-col space-y-3 items-center md:items-start"
-          initial={{ y: 40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.35 }}
-        >
-          <h4 className="text-xl font-alfa mb-2">
-            {t('footer.navigation.title')}
-          </h4>
-
-          {[
-            ['#hero', t('footer.navigation.home')],
-            ['#predict', t('footer.navigation.predict')],
-          ].map(([href, label], index) => (
-            <motion.a
-              key={href}
-              href={href}
-              className="font-bold text-base cursor-pointer relative group"
-              style={{ color: "var(--color-footer-link)" }}
-              onClick={(e) => {
-                e.preventDefault();
-                handleScrollTo(href);
-              }}
-              initial={{ x: 16, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.55 + index * 0.08 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <span className="relative z-10 transition-colors duration-150 group-hover:text-white">
-                {label}
-              </span>
-              
-              {/* Animated underline */}
-              <span 
-                className="absolute bottom-0 left-0 w-full h-0.5 origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"
-                style={{ backgroundColor: "var(--color-footer-link-hover)" }}
-              />
-            </motion.a>
-          ))}
-        </motion.div>
-
-        {/* Contact */}
-        <motion.div
-          className="flex flex-col space-y-3 items-center md:items-start"
-          initial={{ x: 40, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <h4 className="text-xl font-alfa mb-2">
-            {t('footer.contact.title')}
-          </h4>
-
-          <motion.a
-            href={`mailto:${t('footer.contact.email')}`}
-            className="font-bold text-base cursor-pointer relative group"
-            style={{ color: "var(--color-footer-link)" }}
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.82 }}
-            whileHover={{ scale: 1.05 }}
-          >
-            <span className="relative z-10 transition-colors duration-150 group-hover:text-white">
-              {t('footer.contact.email')}
-            </span>
-            
-            {/* Animated underline */}
-            <span 
-              className="absolute bottom-0 left-0 w-full h-0.5 origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"
-              style={{ backgroundColor: "var(--color-footer-link-hover)" }}
-            />
-          </motion.a>
-
-          <motion.p
-            className="font-bold text-base cursor-pointer relative group"
-            style={{ color: "var(--color-footer-link)" }}
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.92 }}
-            whileHover={{ scale: 1.05 }}
-          >
-            <span className="relative z-10 transition-colors duration-150 group-hover:text-white">
-              {t('footer.contact.phone')}
-            </span>
-            
-            {/* Animated underline */}
-            <span 
-              className="absolute bottom-0 left-0 w-full h-0.5 origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200"
-              style={{ backgroundColor: "var(--color-footer-link-hover)" }}
-            />
-          </motion.p>
-        </motion.div>
+        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-gray-500 font-medium text-sm">
+            &copy; {new Date().getFullYear()} Pawdentify AI. All rights reserved.
+          </p>
+          <div className="flex gap-8 text-gray-500 font-medium text-sm">
+             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+          </div>
+        </div>
       </div>
-
-      {/* Bottom wave effect */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-1 pointer-events-none"
-        style={{ background: "var(--color-footer-wave-bg)" }}
-        animate={{ x: [0, 40, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-        aria-hidden="true"
-      />
-    </motion.footer>
+    </footer>
   );
 };
 
 export default Footer;
-
-
-
-

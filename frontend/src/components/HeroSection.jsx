@@ -1,222 +1,134 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import heroVideo from "../assets/hero_section_video.mp4";
-import breedsIcon from "../assets/breeds_icon.png";
-import accuracyIcon from "../assets/accuracy_icon.png";
-import speedIcon from "../assets/speed_icon.png";
-
-const handleScrollTo = (id) => {
-  const element = document.getElementById(id.substring(1));
-  if (element) window.scrollTo({ top: element.offsetTop - 80, behavior: "smooth" });
-};
-
-const cardContainerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.15,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { y: 20, opacity: 0, scale: 0.98 },
-  show: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
-};
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const { t } = useTranslation();
 
+  const handleScrollToPredict = () => {
+    const section = document.getElementById("predict");
+    if (section) {
+      window.scrollTo({ top: section.offsetTop - 80, behavior: "smooth" });
+    }
+  };
+
   return (
-    <motion.section
-      id="hero"
-      className="min-h-screen pt-30 sm:pt-24 md:pt-10 flex items-center justify-center relative overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, ease: "easeOut" }}
-    >
-      {/* Background video */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        src={heroVideo}
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-      />
+    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center pt-30 pb-16 overflow-hidden bg-[var(--color-bg-app)]">
+      {/* Background Blobs */}
+      <div className="bg-blob blob-purple top-[-10%] right-[-5%] opacity-10"></div>
+      <div className="bg-blob blob-blue bottom-[10%] left-[-5%] opacity-10"></div>
+      <div className="bg-blob blob-pink top-[20%] left-[20%] opacity-5 scale-150"></div>
 
-      {/* Violet overlay tint */}
-      <div
-        className="absolute inset-0 mix-blend-multiply pointer-events-none z-10"
-        style={{
-          backgroundColor: "var(--color-hero-overlay)",
-          opacity: "var(--color-hero-overlay-opacity)",
-        }}
-      ></div>
-
-      {/* Content */}
-      <div
-        className="relative z-20 max-w-5xl mx-auto w-full px-6 text-center -translate-y-6"
-        style={{ color: "var(--color-hero-text)" }}
-      >
-        <motion.h1
-          className="font-alfa text-5xl md:text-6xl leading-tight"
-          initial={{ y: 40, opacity: 0, scale: 0.95 }}
-          animate={{ y: 0, opacity: 1, scale: 1 }}
-          transition={{ duration: 1.1, delay: 0.3, type: "spring", stiffness: 90, damping: 12 }}
+      <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center">
+        {/* Playful Annotation */}
+        <motion.div 
+          initial={{ opacity: 0, x: 20, rotate: 10 }}
+          animate={{ opacity: 1, x: 0, rotate: -5 }}
+          className="absolute top-0 right-0 md:right-[10%] hidden md:block"
         >
-          {t("hero.title")}
-        </motion.h1>
-
-        <motion.div
-          className="font-archivo text-lg md:text-2xl mt-6 max-w-2xl mx-auto font-bold"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.9, delay: 0.6 }}
-        >
-          <p>
-            {t("hero.description.part1")}
-            <br />
-            <br />
-            {t("hero.description.part2")}
-          </p>
+          <span className="font-handwriting text-3xl text-[#7D64A3] dark:text-[#A892D1] bg-purple-50 dark:bg-purple-900/30 px-4 py-2 rounded-full border border-purple-100 dark:border-purple-800/50 italic">
+            Waiting for a pup
+          </span>
         </motion.div>
 
-        {/* Predict button */}
-        <motion.div
-          className="mt-10 flex justify-center"
-          initial={{ y: 40, opacity: 0, scale: 0.96 }}
-          animate={{ y: 0, opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, delay: 1.0, type: "spring", stiffness: 120, damping: 10 }}
-        >
-          <motion.button
-            onClick={(e) => {
-              e.preventDefault();
-              handleScrollTo("#predict");
-            }}
-            className="font-alfa text-xl md:text-2xl px-10 py-4 rounded-full shadow-lg transition-all relative overflow-hidden group"
-            style={{
-              background: "var(--color-hero-button-bg)",
-              color: "var(--color-hero-button-text)",
-              boxShadow: "var(--color-hero-button-shadow)",
-              maxWidth: "300px",
-            }}
-            whileHover={{
-              scale: 1.08,
-              y: -4,
-              boxShadow: "var(--color-hero-button-hover-shadow)",
-            }}
-            whileTap={{ scale: 0.95, y: -2 }}
-            animate={{ y: [0, -8, 0] }}
-            transition={{
-              y: { duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
-            }}
-          >
-            {/* Button shine effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: "100%" }}
-              transition={{ duration: 0.6 }}
-            />
+        {/* Main Content */}
+        <div className="text-center mb-16 max-w-4xl">
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             className="inline-block px-4 py-1.5 rounded-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 text-[#30A7DB] font-bold text-sm uppercase tracking-widest mb-6"
+           >
+             AI Powered Identification
+           </motion.div>
+           
+           <motion.h1 
+             initial={{ opacity: 0, y: 30 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.1 }}
+             className="text-6xl md:text-8xl lg:text-9xl text-black dark:text-white leading-[0.9] tracking-tighter mb-8"
+           >
+             Identify <span className="text-gray-300 dark:text-gray-700">every</span> dog breed.
+           </motion.h1>
 
-            <motion.span
-              className="relative z-10"
-              animate={{
-                textShadow: [
-                  "0 0 0px rgba(75,0,130,0.5)",
-                  "0 0 10px rgba(75,0,130,0.3)",
-                  "0 0 0px rgba(75,0,130,0.5)",
-                ],
-              }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              {t("hero.predictButton")}
-            </motion.span>
-          </motion.button>
-        </motion.div>
+           <motion.p 
+             initial={{ opacity: 0, y: 30 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.2 }}
+             className="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-medium leading-relaxed mb-12 max-w-2xl mx-auto"
+           >
+             The most advanced AI classifier for dog lovers. Discover breeds, temperaments, and histories in seconds.
+           </motion.p>
 
-        {/* Pill cards */}
-        <motion.div
-          className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6"
-          variants={cardContainerVariants}
-          initial="hidden"
-          animate="show"
-        >
-          {/* Card 1 - Breeds */}
-          <motion.div
-            variants={cardVariants}
-            whileHover={{ y: -6, scale: 1.02 }}
-            className="flex items-center font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] transition-shadow"
-            style={{
-              backgroundColor: "var(--color-hero-card-bg)",
-              color: "var(--color-hero-card-text)",
-              boxShadow: "var(--color-hero-card-shadow)",
-            }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          >
-            <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
-              <img src={breedsIcon} alt={t("hero.cards.breeds")} className="w-full h-full object-contain" />
-            </div>
-            <div className="text-left">
-              <div className="text-sm">120</div>
-              <div className="text-xs opacity-80">{t("hero.cards.breeds")}</div>
-            </div>
-          </motion.div>
+           <motion.div
+             initial={{ opacity: 0, y: 30 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.3 }}
+             className="flex flex-col sm:flex-row gap-4 justify-center"
+           >
+             <button 
+               onClick={handleScrollToPredict}
+               className="pill-button bg-purple-accent text-white py-6 px-12 text-xl shadow-xl hover:-translate-y-1 transition-transform"
+             >
+               Identify Now
+             </button>
+             <Link 
+               to="/search-breed"
+               className="pill-button bg-white dark:bg-white/5 border-2 border-gray-100 dark:border-white/10 text-black dark:text-white py-6 px-12 text-xl hover:bg-gray-50 dark:hover:bg-white/10 transition-colors"
+             >
+               Browse Breeds
+             </Link>
+           </motion.div>
+        </div>
 
-          {/* Card 2 - Accuracy */}
-          <motion.div
-            variants={cardVariants}
-            whileHover={{ y: -6, scale: 1.02 }}
-            className="flex items-center font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] transition-shadow"
-            style={{
-              backgroundColor: "var(--color-hero-card-bg)",
-              color: "var(--color-hero-card-text)",
-              boxShadow: "var(--color-hero-card-shadow)",
-            }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          >
-            <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
-              <img src={accuracyIcon} alt={t("hero.cards.accuracy")} className="w-full h-full object-contain" />
-            </div>
-            <div className="text-left">
-              <div className="text-sm">89%</div>
-              <div className="text-xs opacity-80">{t("hero.cards.accuracy")}</div>
-            </div>
-          </motion.div>
+        {/* Bento Stat Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-5xl mt-8">
+           <motion.div 
+             initial={{ opacity: 0, y: 40 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             className="bento-card border-none bg-gray-50 dark:bg-white/5 text-center flex flex-col items-center justify-center aspect-square md:aspect-auto md:h-48"
+           >
+              <div className="text-4xl font-bold text-black dark:text-white mb-1">100+</div>
+              <div className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Breeds</div>
+           </motion.div>
 
-          {/* Card 3 - Response */}
-          <motion.div
-            variants={cardVariants}
-            whileHover={{ y: -6, scale: 1.02 }}
-            className="flex items-center font-archivo font-bold px-4 py-2 rounded-full shadow min-w-[160px] transition-shadow"
-            style={{
-              backgroundColor: "var(--color-hero-card-bg)",
-              color: "var(--color-hero-card-text)",
-              boxShadow: "var(--color-hero-card-shadow)",
-            }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          >
-            <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
-              <img src={speedIcon} alt={t("hero.cards.response")} className="w-full h-full object-contain" />
-            </div>
-            <div className="text-left">
-              <div className="text-sm">&lt;3s</div>
-              <div className="text-xs opacity-80">{t("hero.cards.response")}</div>
-            </div>
-          </motion.div>
-        </motion.div>
+           <motion.div 
+             initial={{ opacity: 0, y: 40 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             transition={{ delay: 0.1 }}
+             className="bento-card border-none bg-red-50 dark:bg-red-950/20 text-center flex flex-col items-center justify-center aspect-square md:aspect-auto md:h-48"
+           >
+              <div className="text-4xl font-bold text-[#E11D48] mb-1">99%</div>
+              <div className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Accuracy</div>
+           </motion.div>
+
+           <motion.div 
+             initial={{ opacity: 0, y: 40 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             transition={{ delay: 0.2 }}
+             className="bento-card border-none bg-green-50 dark:bg-green-950/20 text-center flex flex-col items-center justify-center aspect-square md:aspect-auto md:h-48"
+           >
+              <div className="text-4xl font-bold text-[#16A34A] mb-1">2.5k</div>
+              <div className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Users</div>
+           </motion.div>
+
+           <motion.div 
+             initial={{ opacity: 0, y: 40 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             transition={{ delay: 0.3 }}
+             className="bento-card border-none bg-blue-50 dark:bg-blue-950/20 text-center flex flex-col items-center justify-center aspect-square md:aspect-auto md:h-48"
+           >
+              <div className="text-4xl font-bold text-[#2563EB] mb-1">Fast</div>
+              <div className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Processing</div>
+           </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 
 export default HeroSection;
-
-
-
-
-

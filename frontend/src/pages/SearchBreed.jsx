@@ -4,7 +4,7 @@ import { useAuth } from '@clerk/clerk-react';
 import { useTranslation } from 'react-i18next';
 import Fuse from 'fuse.js';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useBreedData } from '../contexts/BreedDataContext'; // ← NEW IMPORT
+import { useBreedData } from '../contexts/BreedDataContext';
 import BreedCard from '../components/BreedCard';
 import BreedDetailModal from '../components/BreedDetailModal';
 import breedImages from '../data/breed_images.json';
@@ -16,7 +16,7 @@ const SearchBreed = () => {
   const { getToken } = useAuth();
   const navigate = useNavigate();
   const inputRef = useRef(null);
-  const breedData = useBreedData(); // ← USE CONTEXT HOOK
+  const breedData = useBreedData();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -28,757 +28,200 @@ const SearchBreed = () => {
   const [loopNum, setLoopNum] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
   
-  // Filter state (removed shedding)
-  const [filters, setFilters] = useState({
-    size: 'all',
-    energy: 'all',
-    grooming: 'all',
-    children: 'all'
-  });
+  const [filters, setFilters] = useState({ size: 'all', energy: 'all', grooming: 'all', children: 'all' });
 
-  // Convert breed_images object to array for Fuse.js
   const breedsArray = Object.values(breedImages);
   const ALL_BREEDS = Array.isArray(breedData) ? breedData : (breedData.breeds || []);
-
-  // Featured breeds for initial display
   const FEATURED_BREEDS = [95, 26, 40, 77, 82, 55, 53, 64, 29, 25];
-  
-  // Random breed suggestions for pills
-  const BREED_SUGGESTIONS = [
-    'Golden Retriever',
-    'German Shepherd', 
-    'Labrador Retriever',
-    'French Bulldog',
-    'Beagle',
-    'Poodle',
-    'Rottweiler',
-    'Bulldog',
-    'Yorkshire Terrier',
-    'Boxer'
-  ];
+  const TYPING_TEXTS = ['Golden Retriever', 'German Shepherd', 'Labrador', 'Beagle', 'Bulldog'];
 
-  // Typing animation texts
-  const TYPING_TEXTS = [
-    'Golden Retriever',
-    'German Shepherd',
-    'Labrador',
-    'Beagle',
-    'Bulldog'
-  ];
+  const fuse = new Fuse(breedsArray, { keys: ['name'], threshold: 0.4, minMatchCharLength: 2 });
 
-  // Initialize Fuse.js for fuzzy search
-  const fuse = new Fuse(breedsArray, {
-    keys: ['name'],
-    threshold: 0.4,
-    includeScore: true,
-    minMatchCharLength: 2
-  });
-
-  // Filter breeds by criteria (removed shedding)
   const applyFilters = (breeds) => {
     return breeds.filter((breed) => {
-      const breedData = ALL_BREEDS.find(b => b.id === breed.id);
-      if (!breedData) return true;
-
-      // Size filter
-      const matchesSize = filters.size === 'all' || 
-                         breedData.physical_traits?.size?.toLowerCase().includes(filters.size);
-
-      // Energy filter
-      const matchesEnergy = filters.energy === 'all' || 
-                           breedData.trainability_exercise?.energy_level?.toLowerCase().includes(filters.energy);
-
-      // Grooming filter
-      const matchesGrooming = filters.grooming === 'all' || 
-                             breedData.care_grooming?.grooming_needs?.toLowerCase().includes(filters.grooming);
-
-      // Children filter
-      const matchesChildren = filters.children === 'all' || 
-                             (filters.children === 'yes' 
-                               ? breedData.social_traits?.good_with_kids?.toLowerCase().includes('yes') || breedData.social_traits?.good_with_kids?.toLowerCase() === 'moderate'
-                               : breedData.social_traits?.good_with_kids?.toLowerCase() === 'no');
-
-      return matchesSize && matchesEnergy && matchesGrooming && matchesChildren;
+      const bD = ALL_BREEDS.find(b => b.id === breed.id);
+      if (!bD) return true;
+      const mSize = filters.size === 'all' || bD.physical_traits?.size?.toLowerCase().includes(filters.size);
+      const mEnergy = filters.energy === 'all' || bD.trainability_exercise?.energy_level?.toLowerCase().includes(filters.energy);
+      const mGrooming = filters.grooming === 'all' || bD.care_grooming?.grooming_needs?.toLowerCase().includes(filters.grooming);
+      const mChildren = filters.children === 'all' || (filters.children === 'yes' ? bD.social_traits?.good_with_kids?.toLowerCase().includes('yes') : bD.social_traits?.good_with_kids?.toLowerCase() === 'no');
+      return mSize && mEnergy && mGrooming && mChildren;
     });
   };
 
-  const handleFilterChange = (filterType, value) => {
-    setFilters(prev => ({ ...prev, [filterType]: value }));
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      size: 'all',
-      energy: 'all',
-      grooming: 'all',
-      children: 'all'
-    });
-  };
-
+  const handleFilterChange = (type, val) => setFilters(prev => ({ ...prev, [type]: val }));
+  const clearFilters = () => setFilters({ size: 'all', energy: 'all', grooming: 'all', children: 'all' });
   const hasActiveFilters = Object.values(filters).some(f => f !== 'all');
-
-  // Check if we should show all breeds (filters active, no search)
   const shouldShowAllBreeds = hasActiveFilters && searchQuery.trim().length === 0;
 
-  // Get all filtered breeds when filters are active
-  const allFilteredBreeds = useMemo(() => {
-    if (!shouldShowAllBreeds) return [];
-    return applyFilters(breedsArray);
-  }, [shouldShowAllBreeds, filters]);
+  const allFilteredBreeds = useMemo(() => shouldShowAllBreeds ? applyFilters(breedsArray) : [], [shouldShowAllBreeds, filters]);
 
-  // Typing animation effect
   useEffect(() => {
     if (isFocused) return;
-
-    const typingSpeed = 100;
-    const deletingSpeed = 50;
-    const pauseDuration = 2000;
-
-    const handleTyping = () => {
-      const currentIndex = loopNum % TYPING_TEXTS.length;
-      const fullText = TYPING_TEXTS[currentIndex];
-
+    const interval = setTimeout(() => {
+      const fullText = TYPING_TEXTS[loopNum % TYPING_TEXTS.length];
       if (isDeleting) {
         setPlaceholder(fullText.substring(0, placeholder.length - 1));
-        
-        if (placeholder === '') {
-          setIsDeleting(false);
-          setLoopNum(loopNum + 1);
-        }
+        if (placeholder === '') { setIsDeleting(false); setLoopNum(loopNum + 1); }
       } else {
         setPlaceholder(fullText.substring(0, placeholder.length + 1));
-        
-        if (placeholder === fullText) {
-          setTimeout(() => setIsDeleting(true), pauseDuration);
-          return;
-        }
+        if (placeholder === fullText) setTimeout(() => setIsDeleting(true), 2000);
       }
-    };
-
-    const timer = setTimeout(
-      handleTyping,
-      isDeleting ? deletingSpeed : typingSpeed
-    );
-
-    return () => clearTimeout(timer);
+    }, isDeleting ? 50 : 100);
+    return () => clearTimeout(interval);
   }, [placeholder, isDeleting, loopNum, isFocused]);
 
-  // Fetch top 10 searched breeds on mount
   useEffect(() => {
-    fetchTopSearchedBreeds();
+    const fetchTop = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/breeds/top`);
+        const data = await res.json();
+        if (data.top_searched?.length) {
+          setTopSearchedBreeds(data.top_searched.map(i => breedImages[i.breed_id]).filter(Boolean));
+        } else {
+          setTopSearchedBreeds(FEATURED_BREEDS.map(id => breedImages[id]).filter(Boolean));
+        }
+      } catch {
+        setTopSearchedBreeds(FEATURED_BREEDS.map(id => breedImages[id]).filter(Boolean));
+      } finally { setLoading(false); }
+    };
+    fetchTop();
   }, []);
 
-  const fetchTopSearchedBreeds = async () => {
-    try {
-      const response = await fetch(`${API_URL}/api/breeds/top`);
-      const data = await response.json();
-      
-      if (data.top_searched && data.top_searched.length > 0) {
-        const topBreeds = data.top_searched.map(item => {
-          const breed = breedImages[item.breed_id];
-          return breed ? { ...breed, searchCount: item.count } : null;
-        }).filter(Boolean);
-        
-        setTopSearchedBreeds(topBreeds);
-      } else {
-        const featured = FEATURED_BREEDS.map(id => breedImages[id]).filter(Boolean);
-        setTopSearchedBreeds(featured);
-      }
-    } catch (error) {
-      console.error('Error fetching top breeds:', error);
-      const featured = FEATURED_BREEDS.map(id => breedImages[id]).filter(Boolean);
-      setTopSearchedBreeds(featured);
-    } finally {
-      setLoading(false);
-    }
+  const handleSearch = (q) => {
+    setSearchQuery(q);
+    if (!q.trim()) return setSearchResults([]);
+    setSearchResults(applyFilters(fuse.search(q).map(r => r.item)));
   };
 
-  // Get 3 random breed suggestions
-  const getRandomSuggestions = () => {
-    const shuffled = [...BREED_SUGGESTIONS].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3);
-  };
-
-  const [suggestions] = useState(getRandomSuggestions());
-
-  // Handle search input
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    
-    if (query.trim().length === 0) {
-      setSearchResults([]);
-      return;
-    }
-
-    const results = fuse.search(query);
-    const breeds = results.slice(0, 12).map(result => result.item);
-    const filtered = applyFilters(breeds);
-    setSearchResults(filtered);
-  };
-
-  // Re-apply filters when they change
-  useEffect(() => {
-    if (searchQuery.trim().length > 0) {
-      handleSearch(searchQuery);
-    }
-  }, [filters]);
-
-  // Handle suggestion pill click
-  const handleSuggestionClick = (suggestion) => {
-    setSearchQuery(suggestion);
-    handleSearch(suggestion);
-  };
-
-  // Handle breed selection
   const handleBreedClick = async (breed) => {
     setSelectedBreed(breed);
-
     try {
       const token = await getToken();
       await fetch(`${API_URL}/api/breeds/track`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          breed_id: String(breed.id),
-          breed_name: breed.name
-        })
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ breed_id: String(breed.id), breed_name: breed.name })
       });
-    } catch (error) {
-      console.error('Error tracking breed search:', error);
-    }
-  };
-
-  // Close breed info modal
-  const handleCloseBreedInfo = () => {
-    setSelectedBreed(null);
-  };
-
-  // Handle input focus
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  // Handle input blur
-  const handleBlur = () => {
-    setIsFocused(false);
-    if (!searchQuery) {
-      setPlaceholder('');
-      setIsDeleting(false);
-      setLoopNum(0);
-    }
+    } catch (e) { console.error(e); }
   };
 
   return (
-    <div className="min-h-screen py-8 px-4" style={{ paddingTop: '120px' }}>
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10"
-        >
-          <motion.h1 
-            className="text-5xl mb-4"
-            style={{ color: 'var(--color-text-primary)' }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            {t('searchBreed.title')}
-          </motion.h1>
+    <div className="min-h-screen bg-transparent pt-40 pb-24 px-6 relative overflow-hidden">
+      <div className="bg-blob blob-blue top-0 right-0 opacity-10"></div>
+      <div className="bg-blob blob-purple -bottom-48 -left-48 opacity-10"></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-24 max-w-4xl mx-auto">
+          <span className="font-handwriting text-4xl text-[#30A7DB] mb-6 block">Encyclopedia</span>
+          <h1 className="text-6xl md:text-8xl text-black dark:text-white mb-12 font-black tracking-tighter leading-none uppercase">
+            Browse <span className="text-[#8c52ff]">Breeds.</span>
+          </h1>
           
-          <motion.h4 
-            className="text-base font-archivo"
-            style={{ color: '#6b7280', fontWeight: 'bold' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            {t('searchBreed.subtitle')}
-          </motion.h4>
-        </motion.div>
-
-        {/* Search Bar with Typing Animation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="mb-6"
-        >
-          <div className="max-w-2xl mx-auto relative">
-            <input
-              ref={inputRef}
-              type="text"
-              value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              placeholder={placeholder}
-              className="w-full px-6 py-4 rounded-full border-2 text-lg focus:outline-none focus:ring-2 transition-all font-archivo search-input"
-              style={{
-                backgroundColor: 'var(--color-input-bg)',
-                borderColor: 'var(--color-input-border)',
-                color: 'var(--color-text-primary)',
-                '--tw-ring-color': 'var(--color-primary)'
-              }}
-            />
+          <div className="relative group">
+             <div className="absolute inset-0 bg-gradient-to-r from-[#30A7DB]/20 to-[#8c52ff]/20 blur-3xl rounded-full opacity-50 group-focus-within:opacity-100 transition-opacity"></div>
+             <input
+               ref={inputRef}
+               type="text"
+               value={searchQuery}
+               onChange={(e) => handleSearch(e.target.value)}
+               onFocus={() => setIsFocused(true)}
+               onBlur={() => setIsFocused(false)}
+               placeholder={placeholder || "Search by breed name..."}
+               className="relative w-full h-24 px-12 rounded-full border-2 border-gray-100 dark:border-white/10 bg-white dark:bg-black text-3xl font-bold dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-all shadow-2xl placeholder-gray-200 dark:placeholder-gray-800"
+             />
+             <div className="absolute right-8 top-1/2 -translate-y-1/2 w-14 h-14 bg-black rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+             </div>
           </div>
-        </motion.div>
-
-        {/* Suggestion Pills */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-3 mb-8"
-        >
-          {suggestions.map((suggestion, index) => (
-            <motion.button
-              key={suggestion}
-              onClick={() => handleSuggestionClick(suggestion)}
-              className="px-5 py-2.5 rounded-full shadow-md flex items-center gap-2"
-              style={{
-                backgroundColor: searchQuery === suggestion 
-                  ? 'var(--color-services-category-btn-active-bg)' 
-                  : 'var(--color-services-category-btn-bg)',
-                color: searchQuery === suggestion 
-                  ? 'var(--color-services-category-btn-active-text)' 
-                  : 'var(--color-services-category-btn-text)',
-                border: '2px solid var(--color-services-category-btn-border)',
-                fontWeight: 'bold'
-              }}
-              whileHover={{ 
-                scale: 1.05,
-                y: -4,
-                boxShadow: '0 8px 20px rgba(140, 82, 255, 0.3)'
-              }}
-              whileTap={{ 
-                scale: 0.95,
-                y: 0
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17
-              }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <span>{suggestion}</span>
-            </motion.button>
-          ))}
-        </motion.div>
-
-        {/* Filters Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          style={{
-            backgroundColor: 'var(--color-filter-bg)',
-            border: '2px solid var(--color-filter-border)',
-            borderRadius: '1rem',
-            padding: '1.5rem',
-            marginBottom: '2rem'
-          }}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-alfa" style={{ color: 'var(--color-text-primary)' }}>
-              {t('breeds.search.filters.title')}
-            </h2>
-            <button
-              onClick={clearFilters}
-              disabled={!hasActiveFilters}
-              style={{
-                backgroundColor: 'var(--color-filter-button-bg)',
-                color: 'var(--color-filter-button-text)',
-                border: 'none',
-                padding: '0.5rem 1rem',
-                borderRadius: '0.5rem',
-                fontFamily: 'Archivo, sans-serif',
-                fontWeight: '600',
-                cursor: hasActiveFilters ? 'pointer' : 'not-allowed',
-                opacity: hasActiveFilters ? 1 : 0.5,
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                if (hasActiveFilters) {
-                  e.target.style.backgroundColor = 'var(--color-filter-button-hover-bg)';
-                  e.target.style.transform = 'translateY(-1px)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = 'var(--color-filter-button-bg)';
-                e.target.style.transform = 'translateY(0)';
-              }}
-            >
-              {t('breeds.search.filters.clear')}
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* Size Filter */}
-            <div>
-              <label className="block mb-2" style={{ 
-                color: 'var(--color-filter-label)',
-                fontFamily: 'Archivo, sans-serif',
-                fontWeight: '600',
-                fontSize: '0.875rem'
-              }}>
-                {t('breeds.search.filters.size.label')}
-              </label>
-              <select
-                value={filters.size}
-                onChange={(e) => handleFilterChange('size', e.target.value)}
-                className="w-full"
-                style={{
-                  backgroundColor: 'var(--color-filter-select-bg)',
-                  border: '2px solid var(--color-filter-select-border)',
-                  color: 'var(--color-filter-select-text)',
-                  borderRadius: '0.5rem',
-                  padding: '0.5rem 0.75rem',
-                  fontFamily: 'Archivo, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
-                <option value="all">{t('breeds.search.filters.size.all')}</option>
-                <option value="small">{t('breeds.search.filters.size.small')}</option>
-                <option value="medium">{t('breeds.search.filters.size.medium')}</option>
-                <option value="large">{t('breeds.search.filters.size.large')}</option>
-                <option value="giant">{t('breeds.search.filters.size.giant')}</option>
-              </select>
-            </div>
-
-            {/* Energy Filter */}
-            <div>
-              <label className="block mb-2" style={{ 
-                color: 'var(--color-filter-label)',
-                fontFamily: 'Archivo, sans-serif',
-                fontWeight: '600',
-                fontSize: '0.875rem'
-              }}>
-                {t('breeds.search.filters.energy.label')}
-              </label>
-              <select
-                value={filters.energy}
-                onChange={(e) => handleFilterChange('energy', e.target.value)}
-                className="w-full"
-                style={{
-                  backgroundColor: 'var(--color-filter-select-bg)',
-                  border: '2px solid var(--color-filter-select-border)',
-                  color: 'var(--color-filter-select-text)',
-                  borderRadius: '0.5rem',
-                  padding: '0.5rem 0.75rem',
-                  fontFamily: 'Archivo, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
-                <option value="all">{t('breeds.search.filters.energy.all')}</option>
-                <option value="low">{t('breeds.search.filters.energy.low')}</option>
-                <option value="medium">{t('breeds.search.filters.energy.medium')}</option>
-                <option value="high">{t('breeds.search.filters.energy.high')}</option>
-              </select>
-            </div>
-
-            {/* Grooming Filter */}
-            <div>
-              <label className="block mb-2" style={{ 
-                color: 'var(--color-filter-label)',
-                fontFamily: 'Archivo, sans-serif',
-                fontWeight: '600',
-                fontSize: '0.875rem'
-              }}>
-                {t('breeds.search.filters.grooming.label')}
-              </label>
-              <select
-                value={filters.grooming}
-                onChange={(e) => handleFilterChange('grooming', e.target.value)}
-                className="w-full"
-                style={{
-                  backgroundColor: 'var(--color-filter-select-bg)',
-                  border: '2px solid var(--color-filter-select-border)',
-                  color: 'var(--color-filter-select-text)',
-                  borderRadius: '0.5rem',
-                  padding: '0.5rem 0.75rem',
-                  fontFamily: 'Archivo, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
-                <option value="all">{t('breeds.search.filters.grooming.all')}</option>
-                <option value="low">{t('breeds.search.filters.grooming.low')}</option>
-                <option value="medium">{t('breeds.search.filters.grooming.medium')}</option>
-                <option value="high">{t('breeds.search.filters.grooming.high')}</option>
-              </select>
-            </div>
-
-            {/* Children Filter */}
-            <div>
-              <label className="block mb-2" style={{ 
-                color: 'var(--color-filter-label)',
-                fontFamily: 'Archivo, sans-serif',
-                fontWeight: '600',
-                fontSize: '0.875rem'
-              }}>
-                {t('breeds.search.filters.children.label')}
-              </label>
-              <select
-                value={filters.children}
-                onChange={(e) => handleFilterChange('children', e.target.value)}
-                className="w-full"
-                style={{
-                  backgroundColor: 'var(--color-filter-select-bg)',
-                  border: '2px solid var(--color-filter-select-border)',
-                  color: 'var(--color-filter-select-text)',
-                  borderRadius: '0.5rem',
-                  padding: '0.5rem 0.75rem',
-                  fontFamily: 'Archivo, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
-                <option value="all">{t('breeds.search.filters.children.all')}</option>
-                <option value="yes">{t('breeds.search.filters.children.yes')}</option>
-                <option value="no">{t('breeds.search.filters.children.no')}</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Active Filters */}
+          
           {hasActiveFilters && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {Object.entries(filters).map(([key, value]) => {
-                if (value !== 'all') {
-                  return (
-                    <span 
-                      key={key}
-                      style={{
-                        backgroundColor: 'var(--color-filter-badge-bg)',
-                        color: 'var(--color-filter-badge-text)',
-                        border: '1px solid var(--color-filter-badge-border)',
-                        padding: '0.25rem 0.75rem',
-                        borderRadius: '9999px',
-                        fontSize: '0.875rem',
-                        fontWeight: '600',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.5rem'
-                      }}
-                    >
-                      {t(`breeds.search.filters.${key}.label`)}: {t(`breeds.search.filters.${key}.${value}`)}
-                      <button
-                        onClick={() => handleFilterChange(key, 'all')}
-                        style={{ cursor: 'pointer', marginLeft: '0.25rem' }}
-                      >
-                        ×
-                      </button>
-                    </span>
-                  );
-                }
-                return null;
-              })}
-            </div>
+             <button onClick={clearFilters} className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-red-500 hover:text-red-600">Reset All Filters</button>
           )}
-        </motion.div>
+        </div>
 
-        {/* Results Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-24">
+           {['size', 'energy', 'grooming', 'children'].map((type) => (
+              <div key={type} className="bento-card border-gray-100 dark:border-white/10 border-2 bg-white dark:bg-[#111111] px-8 py-6 hover:border-black dark:hover:border-white transition-all group">
+                 <label className="block text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 mb-3 group-hover:text-[#30A7DB]">{type}</label>
+                 <div className="relative">
+                    <select 
+                      value={filters[type]} 
+                      onChange={(e) => handleFilterChange(type, e.target.value)}
+                      className="w-full bg-transparent text-xl font-black text-black dark:text-white focus:outline-none cursor-pointer appearance-none relative z-10"
+                    >
+                       <option value="all">Any</option>
+                       {type === 'size' && ['small', 'medium', 'large', 'giant'].map(o => <option key={o} value={o}>{o}</option>)}
+                       {type === 'energy' && ['low', 'medium', 'high'].map(o => <option key={o} value={o}>{o}</option>)}
+                       {type === 'grooming' && ['low', 'medium', 'high'].map(o => <option key={o} value={o}>{o}</option>)}
+                       {type === 'children' && ['yes', 'no'].map(o => {
+                          const label = o === 'yes' ? 'Kid Friendly' : 'Reserved';
+                          return <option key={o} value={o}>{label}</option>
+                       })}
+                    </select>
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none">
+                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                 </div>
+              </div>
+           ))}
+        </div>
+
         <AnimatePresence mode="wait">
-          {searchQuery.trim().length > 0 ? (
-            // Search Results
-            <motion.div
-              key="search-results"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-            >
-              <motion.h3 
-                className="text-3xl mb-8"
-                style={{ color: 'var(--color-text-primary)' }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                {t('searchBreed.searchResults')} ({searchResults.length})
-              </motion.h3>
-              
-              {searchResults.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {searchResults.map((breed, index) => (
-                    <motion.div
-                      key={breed.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <BreedCard
-                        breed={breed}
-                        onClick={() => handleBreedClick(breed)}
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-16">
-                  <p 
-                    className="text-xl font-archivo"
-                    style={{ color: 'var(--color-text-secondary)' }}
-                  >
-                    {t('searchBreed.noResults')}
-                  </p>
-                </div>
-              )}
-            </motion.div>
-          ) : shouldShowAllBreeds ? (
-            // All Breeds (when filters active, no search)
-            <motion.div
-              key="all-filtered-breeds"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-            >
-              <motion.h3 
-                className="text-3xl mb-8"
-                style={{ color: 'var(--color-text-primary)' }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                {t('breeds.search.results.showing')} {allFilteredBreeds.length} {t('breeds.search.results.breeds')}
-              </motion.h3>
-
-              {allFilteredBreeds.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {allFilteredBreeds.map((breed, index) => (
-                    <motion.div
-                      key={breed.id}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.02, duration: 0.5 }}
-                    >
-                      <BreedCard
-                        breed={breed}
-                        onClick={() => handleBreedClick(breed)}
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-16">
-                  <p 
-                    className="text-xl font-archivo"
-                    style={{ color: 'var(--color-text-secondary)' }}
-                  >
-                    {t('breeds.search.results.noResults')}
-                  </p>
-                </div>
-              )}
-            </motion.div>
-          ) : (
-            // Top 10 / Featured Breeds (no filters, no search)
-            <motion.div
-              key="top-breeds"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-            >
-              <motion.h3 
-                className="text-3xl mb-8"
-                style={{ color: 'var(--color-text-primary)' }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                {topSearchedBreeds.some(b => b.searchCount) 
-                  ? t('searchBreed.topSearched') 
-                  : t('searchBreed.featured')}
-              </motion.h3>
-
-              {loading ? (
-                <div className="text-center py-16">
-                  <div 
-                    className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-t-transparent"
-                    style={{ borderColor: 'var(--color-primary)' }}
-                  ></div>
-                  <p 
-                    className="mt-4 text-lg font-archivo"
-                    style={{ color: 'var(--color-text-secondary)' }}
-                  >
-                    Loading breeds...
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {topSearchedBreeds.map((breed, index) => (
-                    <motion.div
-                      key={breed.id}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.08, duration: 0.5 }}
-                    >
-                      <BreedCard
-                        breed={breed}
-                        onClick={() => handleBreedClick(breed)}
-                        rank={index + 1}
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-            </motion.div>
-          )}
+          <motion.div
+            key={searchQuery ? 'results' : (shouldShowAllBreeds ? 'filtered' : 'featured')}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -40 }}
+            transition={{ type: "spring", damping: 25, stiffness: 100 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
+          >
+             {(searchQuery ? searchResults : (shouldShowAllBreeds ? allFilteredBreeds : topSearchedBreeds)).map((breed, i) => (
+                <motion.div 
+                  key={breed.id} 
+                  initial={{ opacity: 0, scale: 0.9 }} 
+                  animate={{ opacity: 1, scale: 1 }} 
+                  transition={{ delay: i * 0.05 }}
+                >
+                   <BreedCard breed={breed} onClick={() => handleBreedClick(breed)} rank={!searchQuery && !hasActiveFilters ? i + 1 : null} />
+                </motion.div>
+             ))}
+          </motion.div>
         </AnimatePresence>
 
-        {/* Breed Detail Modal */}
-        <AnimatePresence>
-          {selectedBreed && (
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center p-4"
-              style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={handleCloseBreedInfo}
-            >
-              <motion.div
-                className="w-full max-w-4xl max-h-[90vh] overflow-y-auto"
-                initial={{ scale: 0.8, y: 100 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.8, y: 100 }}
-                transition={{ type: "spring", damping: 25 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <BreedDetailModal
-                  breedId={selectedBreed.id}
-                  onClose={handleCloseBreedInfo}
-                />
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+        {!loading && !(searchQuery ? searchResults.length : (shouldShowAllBreeds ? allFilteredBreeds.length : topSearchedBreeds.length)) && (
+          <div className="text-center py-40">
+             <div className="inline-block p-10 bento-card border-dashed border-2 border-gray-200 dark:border-white/10">
+                <h3 className="text-4xl font-black text-gray-200 dark:text-white/10 uppercase tracking-tighter">No Breeds Located.</h3>
+                <p className="text-gray-400 dark:text-gray-600 mt-4 font-medium">Try broadening your search or resetting filters.</p>
+             </div>
+          </div>
+        )}
       </div>
 
-      {/* Styles */}
-      <style>{`
-        .search-input::placeholder {
-          color: var(--color-text-secondary) !important;
-          opacity: 0.6;
-        }
-
-        .search-input:-webkit-autofill,
-        .search-input:-webkit-autofill:hover,
-        .search-input:-webkit-autofill:focus {
-          -webkit-text-fill-color: var(--color-text-primary) !important;
-          -webkit-box-shadow: 0 0 0px 1000px var(--color-input-bg) inset !important;
-          transition: background-color 5000s ease-in-out 0s;
-        }
-      `}</style>
+      <AnimatePresence>
+        {selectedBreed && (
+          <motion.div 
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-6"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={() => setSelectedBreed(null)}
+          >
+            <motion.div 
+              className="w-full max-w-6xl bg-white dark:bg-[#050505] rounded-[40px] overflow-hidden relative shadow-2xl max-h-[95vh] overflow-y-auto border border-white/10"
+              initial={{ scale: 0.9, y: 100, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }}
+              transition={{ type: "spring", damping: 20 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="absolute top-8 right-8 z-[110]">
+                 <button onClick={() => setSelectedBreed(null)} className="w-12 h-12 bg-gray-100 dark:bg-white/10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all shadow-lg">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
+                 </button>
+              </div>
+              <BreedDetailModal breedId={selectedBreed.id} onClose={() => setSelectedBreed(null)} />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
