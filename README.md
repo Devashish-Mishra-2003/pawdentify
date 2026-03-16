@@ -75,16 +75,17 @@ graph TD
 
 | **Home & Landing** | **AI Breed Prediction** |
 | :---: | :---: |
-| <img width="1903" height="864" alt="image" src="https://github.com/user-attachments/assets/3bd8a533-4b1a-4c47-b0c7-b9016d096797" />
- | <img width="1898" height="862" alt="image" src="https://github.com/user-attachments/assets/65cc11fb-a5f7-4128-9965-ab46718996a8" /> |
+| <img width="1903" height="864" alt="image" src="https://github.com/user-attachments/assets/3bd8a533-4b1a-4c47-b0c7-b9016d096797" width="400"/>
+ | <img width="1898" height="862" alt="image" src="https://github.com/user-attachments/assets/65cc11fb-a5f7-4128-9965-ab46718996a8" width="400"/> |
 | **Breed Identification Results** | **Detailed Breed Insights** |
-| <img width="1901" height="857" alt="image" src="https://github.com/user-attachments/assets/ae588987-2084-46d2-b67f-e579945f4923" />
- | <img width="1891" height="867" alt="image" src="https://github.com/user-attachments/assets/92e3a2a0-508e-4712-8762-c914c0d0af8a" /> |
+| <img width="1901" height="857" alt="image" src="https://github.com/user-attachments/assets/ae588987-2084-46d2-b67f-e579945f4923" width="400"/>
+ | <img width="1891" height="867" alt="image" src="https://github.com/user-attachments/assets/92e3a2a0-508e-4712-8762-c914c0d0af8a" width="400"/> |
 | **Veterinary Locator (Map)** | **Breed Search & Ranking** |
-| <img width="1890" height="855" alt="image" src="https://github.com/user-attachments/assets/6d471268-f9fd-49a7-859e-49f8e4b64d23" />
- | <img width="1896" height="859" alt="image" src="https://github.com/user-attachments/assets/55a9c6be-6efd-43f1-a734-8d7347fc617f" /> |
+| <img width="1890" height="855" alt="image" src="https://github.com/user-attachments/assets/6d471268-f9fd-49a7-859e-49f8e4b64d23" width="400"/>
+ | <img width="1896" height="859" alt="image" src="https://github.com/user-attachments/assets/55a9c6be-6efd-43f1-a734-8d7347fc617f" width="400"/> |
 | **Pet Profiles & Management** | **Health Tracking & Notes** |
-| <img src="https://github.com/user-attachments/assets/67c92234-688b-4230-a027-4807bd732375" width="400" /> | <img src="https://github.com/user-attachments/assets/21135040-640a-4626-8483-406f3ae8d402" width="250" /> |
+| <img width="1894" height="854" alt="image" src="https://github.com/user-attachments/assets/ef685157-5c5a-4bb8-bb8a-ffdbe8295776" width="400"/>
+ | <img width="1899" height="855" alt="image" src="https://github.com/user-attachments/assets/8ce59c93-0c18-4b6b-b7c7-7e2fb933c282" width="400"/> |
 
 ---
 
